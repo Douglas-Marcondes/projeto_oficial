@@ -68,6 +68,28 @@
         </div>
     </div>
 
+    <!-- 🔥 Firebase SDK (obrigatório para HTML puro) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb4Rlzw-z9GSUFCS6TQ35SIyKETEgqg7g",
+            authDomain: "cadastro-tb-61070.firebaseapp.com",
+            databaseURL: "https://cadastro-tb-61070-default-rtdb.firebaseio.com",
+            projectId: "cadastro-tb-61070",
+            storageBucket: "cadastro-tb-61070.firebasestorage.app",
+            messagingSenderId: "80187170645",
+            appId: "1:80187170645:web:552d5cb4ab1972766019dc"
+        };
+
+        // Inicializa Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+    </script>
+
+    <!-- 🔥 Seu JavaScript original -->
     <script>
         // Verificar se está logado
         const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
@@ -83,7 +105,6 @@
             const textos = JSON.parse(localStorage.getItem('textos')) || [];
             textosFiltrados = textos.filter(t => t.usuarioId === usuarioLogado.id);
             
-            // Ordenar por data (mais recente primeiro)
             textosFiltrados.sort((a, b) => new Date(b.data) - new Date(a.data));
             
             filtrarTextos();
@@ -175,7 +196,6 @@
                 const textosAtualizados = textos.filter(t => t.id !== id);
                 localStorage.setItem('textos', JSON.stringify(textosAtualizados));
                 
-                // Recarregar a lista
                 carregarTextos();
                 alert('Texto excluído com sucesso!');
             }
@@ -186,7 +206,6 @@
             window.location.href = '../auth/login.html';
         }
 
-        // Carregar textos quando a página carregar
         document.addEventListener('DOMContentLoaded', carregarTextos);
     </script>
 </body>

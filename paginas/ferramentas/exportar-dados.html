@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exportar Dados - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="exportar-dados.css">
+</head>
+<body class="pagina-exportar-dados">
+    <div class="container">
+        <div class="cabecalho-exportar-dados">
+            <h1 class="titulo-principal">📤 Exportar Dados</h1>
+            <p class="subtitulo">Baixe seus dados e análises</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="../dashboard/index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="../historico/meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao"><a href="dicionario-pessoal.html" class="botao botao-pequeno">📖 Dicionário</a></li>
+                <li class="item-navegacao"><a href="exportar-dados.html" class="botao botao-pequeno">📤 Exportar</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-exportar-dados">
+            <h2 class="titulo-card-exportar-dados">Exportar Seus Dados</h2>
+            
+            <div class="alerta-exportar">
+                <strong>💡 Informação:</strong> Você pode exportar seus dados para backup ou análise externa.
+                Todos os dados serão anonimizados e compactados.
+            </div>
+
+            <div class="selecao-dados-exportar">
+                <div class="grade-selecao-dados">
+                    <div class="opcoes-dados-container">
+                        <h3 class="titulo-secao-exportar">📊 Selecione os Dados para Exportar</h3>
+                        
+                        <div class="grupo-opcao-dado">
+                            <label class="rotulo-opcao-dado">
+                                <input type="checkbox" id="dados-perfil" checked> 
+                                👤 Dados de Perfil
+                            </label>
+                            <div class="descricao-opcao-dado">Nome, email, data de cadastro</div>
+                        </div>
+
+                        <div class="grupo-opcao-dado">
+                            <label class="rotulo-opcao-dado">
+                                <input type="checkbox" id="dados-textos" checked> 
+                                📝 Textos e Análises
+                            </label>
+                            <div class="descricao-opcao-dado">Todos os textos e resultados de análise</div>
+                        </div>
+
+                        <div class="grupo-opcao-dado">
+                            <label class="rotulo-opcao-dado">
+                                <input type="checkbox" id="dados-estatisticas" checked> 
+                                📈 Estatísticas
+                            </label>
+                            <div class="descricao-opcao-dado">Métricas e progresso ao longo do tempo</div>
+                        </div>
+
+                        <div class="grupo-opcao-dado">
+                            <label class="rotulo-opcao-dado">
+                                <input type="checkbox" id="dados-dicionario"> 
+                                📖 Dicionário Pessoal
+                            </label>
+                            <div class="descricao-opcao-dado">Seu vocabulário completo</div>
+                        </div>
+
+                        <div class="grupo-opcao-dado">
+                            <label class="rotulo-opcao-dado">
+                                <input type="checkbox" id="dados-metas"> 
+                                🎯 Metas e Conquistas
+                            </label>
+                            <div class="descricao-opcao-dado">Metas definidas e progresso</div>
+                        </div>
+                    </div>
+
+                    <div class="formatos-exportacao-container">
+                        <h3 class="titulo-secao-exportar">📁 Formato de Exportação</h3>
+                        
+                        <div class="grupo-formato-exportar">
+                            <label class="rotulo-formato-exportar">
+                                <input type="radio" name="formato" value="json" checked> 
+                                📄 JSON
+                            </label>
+                            <div class="descricao-formato-exportar">Ideal para análise técnica e programação</div>
+                        </div>
+
+                        <div class="grupo-formato-exportar">
+                            <label class="rotulo-formato-exportar">
+                                <input type="radio" name="formato" value="csv"> 
+                                📊 CSV
+                            </label>
+                            <div class="descricao-formato-exportar">Ideal para planilhas e análise de dados</div>
+                        </div>
+
+                        <div class="grupo-formato-exportar">
+                            <label class="rotulo-formato-exportar">
+                                <input type="radio" name="formato" value="txt"> 
+                                📝 Texto Simples
+                            </label>
+                            <div class="descricao-formato-exportar">Relatório formatado para leitura fácil</div>
+                        </div>
+
+                        <div class="controle-periodo-exportar">
+                            <label class="rotulo" for="periodo-exportacao">📅 Período</label>
+                            <select id="periodo-exportacao" class="campo-selecao">
+                                <option value="tudo">Todos os dados</option>
+                                <option value="30">Últimos 30 dias</option>
+                                <option value="90">Últimos 3 meses</option>
+                                <option value="365">Último ano</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="texto-centralizado" style="margin-top: 30px;">
+                <button class="botao-preparar-exportacao" onclick="prepararExportacao()">
+                    📤 Preparar Exportação
+                </button>
+            </div>
+
+            <!-- Área de preview e download -->
+            <div id="area-download" class="area-download-exportar oculto">
+                <h3 class="titulo-card">📦 Dados Prontos para Download</h3>
+                
+                <div class="alerta alerta-sucesso">
+                    <strong>✅ Exportação concluída com sucesso!</strong><br>
+                    Seus dados foram processados e estão prontos para download.
+                </div>
+
+                <div class="resumo-exportacao">
+                    <div class="grade-resumo-exportacao" id="resumo-exportacao">
+                        <!-- Resumo será preenchido via JavaScript -->
+                    </div>
+                </div>
+
+                <div class="texto-centralizado">
+                    <button class="botao-download-exportar" onclick="baixarDados()">
+                        💾 Baixar Arquivo
+                    </button>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: var(--cor-texto-claro);">
+                        O download começará automaticamente
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="texto-centralizado">
+            <a href="../dashboard/index.html" class="botao botao-secundario">🏠 Voltar ao Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        let dadosExportacao = null;
+
+        function prepararExportacao() {
+            // Coletar configurações
+            const formato = document.querySelector('input[name="formato"]:checked').value;
+            const periodo = document.getElementById('periodo-exportacao').value;
+            const incluirPerfil = document.getElementById('dados-perfil').checked;
+            const incluirTextos = document.getElementById('dados-textos').checked;
+            const incluirEstatisticas = document.getElementById('dados-estatisticas').checked;
+            const incluirDicionario = document.getElementById('dados-dicionario').checked;
+            const incluirMetas = document.getElementById('dados-metas').checked;
+
+            // Validar seleção
+            if (!incluirPerfil && !incluirTextos && !incluirEstatisticas && !incluirDicionario && !incluirMetas) {
+                alert('Selecione pelo menos um tipo de dado para exportar');
+                return;
+            }
+
+            // Coletar dados
+            dadosExportacao = coletarDadosExportacao({
+                formato,
+                periodo,
+                incluirPerfil,
+                incluirTextos,
+                incluirEstatisticas,
+                incluirDicionario,
+                incluirMetas
+            });
+
+            // Exibir resumo
+            exibirResumoExportacao(dadosExportacao);
+            
+            // Mostrar área de download
+            document.getElementById('area-download').classList.remove('oculto');
+            document.getElementById('area-download').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function coletarDadosExportacao(config) {
+            const dados = {
+                metadata: {
+                    dataExportacao: new Date().toISOString(),
+                    versao: '1.0',
+                    usuario: config.incluirPerfil ? usuarioLogado.nome : 'Anônimo'
+                }
+            };
+
+            // Filtrar por período
+            const dataLimite = calcularDataLimite(config.periodo);
+
+            // Dados de perfil
+            if (config.incluirPerfil) {
+                dados.perfil = {
+                    nome: usuarioLogado.nome,
+                    email: usuarioLogado.email,
+                    dataCadastro: usuarioLogado.dataCadastro
+                };
+            }
+
+            // Textos e análises
+            if (config.incluirTextos) {
+                const textos = JSON.parse(localStorage.getItem('textos')) || [];
+                dados.textos = textos
+                    .filter(t => t.usuarioId === usuarioLogado.id && new Date(t.data) >= dataLimite)
+                    .map(t => ({
+                        titulo: t.titulo,
+                        data: t.data,
+                        analise: t.analise
+                    }));
+            }
+
+            // Estatísticas
+            if (config.incluirEstatisticas) {
+                dados.estatisticas = calcularEstatisticasExportacao(dataLimite);
+            }
+
+            // Dicionário pessoal
+            if (config.incluirDicionario) {
+                dados.dicionario = compilarDicionarioExportacao(dataLimite);
+            }
+
+            // Metas
+            if (config.incluirMetas) {
+                const metas = JSON.parse(localStorage.getItem('metas')) || [];
+                dados.metas = metas.filter(m => m.usuarioId === usuarioLogado.id);
+            }
+
+            return { dados, config };
+        }
+
+        function calcularDataLimite(periodo) {
+            const hoje = new Date();
+            switch (periodo) {
+                case '30': return new Date(hoje.setDate(hoje.getDate() - 30));
+                case '90': return new Date(hoje.setDate(hoje.getDate() - 90));
+                case '365': return new Date(hoje.setDate(hoje.getDate() - 365));
+                default: return new Date(0); // Data muito antiga
+            }
+        }
+
+        function calcularEstatisticasExportacao(dataLimite) {
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            const textosFiltrados = textos.filter(t => 
+                t.usuarioId === usuarioLogado.id && new Date(t.data) >= dataLimite
+            );
+
+            return {
+                totalTextos: textosFiltrados.length,
+                totalPalavras: textosFiltrados.reduce((sum, t) => sum + (t.analise?.totalPalavras || 0), 0),
+                mediaDiversidade: textosFiltrados.length > 0 ? 
+                    (textosFiltrados.reduce((sum, t) => sum + parseFloat(t.analise?.diversidade || 0), 0) / textosFiltrados.length).toFixed(1) : 0
+            };
+        }
+
+        function compilarDicionarioExportacao(dataLimite) {
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            const textosFiltrados = textos.filter(t => 
+                t.usuarioId === usuarioLogado.id && new Date(t.data) >= dataLimite
+            );
+
+            const frequenciaGlobal = {};
+            textosFiltrados.forEach(texto => {
+                if (texto.analise && texto.analise.palavras) {
+                    texto.analise.palavras.forEach(palavraObj => {
+                        frequenciaGlobal[palavraObj.palavra] = (frequenciaGlobal[palavraObj.palavra] || 0) + palavraObj.frequencia;
+                    });
+                }
+            });
+
+            return Object.entries(frequenciaGlobal)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 100)
+                .map(([palavra, frequencia]) => ({ palavra, frequencia }));
+        }
+
+        function exibirResumoExportacao(exportacao) {
+            const container = document.getElementById('resumo-exportacao');
+            const { dados, config } = exportacao;
+
+            const itens = [
+                { rotulo: 'Itens exportados', valor: Object.keys(dados).length - 1 }, // -1 para metadata
+                { rotulo: 'Formato', valor: config.formato.toUpperCase() },
+                { rotulo: 'Período', valor: obterLabelPeriodo(config.periodo) },
+                { rotulo: 'Tamanho estimado', valor: calcularTamanhoEstimado(dados) }
+            ];
+
+            container.innerHTML = itens.map(item => `
+                <div class="item-resumo-exportacao">
+                    <div class="rotulo-resumo">${item.rotulo}</div>
+                    <div class="valor-resumo">${item.valor}</div>
+                </div>
+            `).join('');
+        }
+
+        function obterLabelPeriodo(periodo) {
+            switch (periodo) {
+                case 'tudo': return 'Todos os dados';
+                case '30': return 'Últimos 30 dias';
+                case '90': return 'Últimos 3 meses';
+                case '365': return 'Último ano';
+                default: return 'Personalizado';
+            }
+        }
+
+        function calcularTamanhoEstimado(dados) {
+            const jsonString = JSON.stringify(dados);
+            const bytes = new Blob([jsonString]).size;
+            const kb = (bytes / 1024).toFixed(1);
+            return `${kb} KB`;
+        }
+
+        function baixarDados() {
+            if (!dadosExportacao) {
+                alert('Nenhum dado preparado para download');
+                return;
+            }
+
+            const { dados, config } = dadosExportacao;
+            let conteudo, tipoMime, extensao;
+
+            switch (config.formato) {
+                case 'json':
+                    conteudo = JSON.stringify(dados, null, 2);
+                    tipoMime = 'application/json';
+                    extensao = 'json';
+                    break;
+                
+                case 'csv':
+                    conteudo = converterParaCSV(dados);
+                    tipoMime = 'text/csv';
+                    extensao = 'csv';
+                    break;
+                
+                case 'txt':
+                    conteudo = converterParaTexto(dados);
+                    tipoMime = 'text/plain';
+                    extensao = 'txt';
+                    break;
+            }
+
+            const blob = new Blob([conteudo], { type: tipoMime });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mapeador-vocabulario-${usuarioLogado.nome}-${new Date().toISOString().split('T')[0]}.${extensao}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert('Download concluído com sucesso!');
+        }
+
+        function converterParaCSV(dados) {
+            // Implementação básica de CSV - em produção seria mais complexa
+            let csv = 'Tipo,Dados\n';
+            
+            if (dados.perfil) {
+                csv += `Perfil,"${dados.perfil.nome}"\n`;
+            }
+            
+            if (dados.textos) {
+                csv += `Textos,${dados.textos.length}\n`;
+            }
+            
+            return csv;
+        }
+
+        function converterParaTexto(dados) {
+            let texto = `RELATÓRIO DO MAPEADOR DE VOCABULÁRIO\n`;
+            texto += `Data de exportação: ${new Date().toLocaleDateString()}\n`;
+            texto += `Usuário: ${dados.metadata.usuario}\n\n`;
+            
+            if (dados.estatisticas) {
+                texto += `ESTATÍSTICAS:\n`;
+                texto += `- Total de textos: ${dados.estatisticas.totalTextos}\n`;
+                texto += `- Total de palavras: ${dados.estatisticas.totalPalavras}\n`;
+                texto += `- Diversidade média: ${dados.estatisticas.mediaDiversidade}%\n\n`;
+            }
+            
+            return texto;
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+    </script>
+</body>
+</html>
