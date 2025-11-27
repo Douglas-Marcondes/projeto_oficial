@@ -1,186 +1,159 @@
-/* Estilos específicos para Estatísticas de Progresso */
+/* CSS da página Estatísticas de Progresso - padrão unificado do site */
+
 .pagina-estatisticas-progresso {
-    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
-    min-height: 100vh;
+    background-color: #f4f6f9;
+    padding: 20px;
 }
 
 .cabecalho-estatisticas-progresso {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    text-align: center;
     margin-bottom: 25px;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.card-estatisticas-progresso {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .titulo-card-estatisticas-progresso {
-    color: var(--cor-texto);
-    margin-bottom: 25px;
     text-align: center;
-    font-size: 1.8em;
-    border-bottom: 3px solid #a29bfe;
-    padding-bottom: 15px;
+    margin-bottom: 25px;
+    font-size: 1.6rem;
 }
 
-/* Gráfico de Evolução */
-.grafico-evolucao-container {
-    background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%);
-    height: 250px;
+.card-estatisticas-progresso {
+    background: #ffffff;
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+/* Gráfico de evolução */
+.grafico-evolucao-container {
+    width: 100%;
+    height: 250px;
     position: relative;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    padding: 10px;
     overflow: hidden;
 }
 
 .linha-evolucao {
-    position: relative;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    position: relative;
 }
 
 .ponto-evolucao {
-    position: absolute;
     width: 12px;
     height: 12px;
-    background: #6c5ce7;
+    background-color: #4a6cf7;
     border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: absolute;
     transform: translate(-50%, -50%);
+    transition: 0.2s;
+}
+
+.ponto-evolucao:hover {
+    transform: scale(1.2) translate(-50%, -50%);
 }
 
 .linha-conexao {
     position: absolute;
     height: 3px;
-    background: #6c5ce7;
+    background-color: #4a6cf7;
     transform-origin: left center;
 }
 
-/* Métricas de Progresso */
+/* Métricas de progresso */
 .metricas-progresso-container {
-    background: rgba(108, 92, 231, 0.1);
-    padding: 20px;
+    background: #fafafa;
     border-radius: 10px;
-    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
 }
 
 .lista-metricas-progresso {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
 }
 
 .item-metrica-progresso {
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
     text-align: center;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-
-.item-metrica-progresso:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2);
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.04);
 }
 
 .valor-metrica-progresso {
-    font-size: 1.8em;
-    font-weight: bold;
-    color: #6c5ce7;
     display: block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #4a6cf7;
     margin-bottom: 5px;
 }
 
 .rotulo-metrica-progresso {
-    color: var(--cor-texto-claro);
-    font-size: 0.9em;
+    font-size: 0.95rem;
+    color: #555;
 }
 
-/* Padrões de Escrita */
+/* Padrões de escrita */
 .padroes-escrita-container {
-    background: white;
-    padding: 20px;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
     border-radius: 10px;
-    margin: 20px 0;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
 .lista-palavras-evolucao {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 10px;
+    gap: 10px;
+    margin-top: 8px;
 }
 
 .tag-evolucao {
     padding: 6px 12px;
-    border-radius: 15px;
-    font-size: 0.85em;
-    font-weight: 500;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .tag-aumento {
-    background: rgba(39, 174, 96, 0.1);
-    color: #27ae60;
-    border: 1px solid rgba(39, 174, 96, 0.3);
+    background-color: #d8e8ff;
+    color: #255bce;
 }
 
 .tag-reducao {
-    background: rgba(231, 76, 60, 0.1);
-    color: #e74c3c;
-    border: 1px solid rgba(231, 76, 60, 0.3);
+    background-color: #ffe0e0;
+    color: #b12525;
 }
 
 /* Conquistas */
 .conquistas-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 15px;
-    margin-top: 20px;
 }
 
 .conquista-item {
     padding: 15px;
     border-radius: 10px;
-    text-align: center;
-    transition: all 0.3s ease;
+    background: #ffffff;
+    border-left: 6px solid;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.06);
 }
 
-.conquista-item:hover {
-    transform: scale(1.02);
-}
+.conquista-sucesso { border-color: #35c94a; }
+.conquista-info { border-color: #4a6cf7; }
 
-.conquista-sucesso {
-    background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
-    color: white;
-}
+/* Responsividade */
+@media (max-width: 768px) {
+    .grafico-evolucao-container {
+        height: 200px;
+    }
 
-.conquista-info {
-    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
-    color: white;
-}
-
-.conquista-progresso {
-    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
-    color: #2d3436;
-}
-
-.botoes-progresso {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 30px;
-    flex-wrap: wrap;
+    .valor-metrica-progresso {
+        font-size: 1.5rem;
+    }
 }
