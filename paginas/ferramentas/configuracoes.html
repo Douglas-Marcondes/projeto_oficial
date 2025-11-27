@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="configuracoes.css">
+</head>
+<body class="pagina-configuracoes">
+    <div class="container">
+        <div class="cabecalho-configuracoes">
+            <h1 class="titulo-principal">⚙️ Configurações</h1>
+            <p class="subtitulo">Personalize sua experiência</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="../dashboard/index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="../historico/meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao"><a href="dicionario-pessoal.html" class="botao botao-pequeno">📖 Dicionário</a></li>
+                <li class="item-navegacao"><a href="configuracoes.html" class="botao botao-pequeno">⚙️ Configurações</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-configuracoes">
+            <h2 class="titulo-card-configuracoes">Configurações da Conta</h2>
+            
+            <div class="grade-dashboard">
+                <div class="item-grade">
+                    <div class="secao-configuracoes">
+                        <h3 class="titulo-secao-configuracoes">👤 Perfil do Usuário</h3>
+                        
+                        <div class="formulario-perfil">
+                            <div class="grupo-formulario-perfil">
+                                <label class="rotulo-perfil" for="nome-usuario">Nome Completo</label>
+                                <input type="text" id="nome-usuario" class="campo-perfil" value="${usuarioLogado.nome}">
+                            </div>
+
+                            <div class="grupo-formulario-perfil">
+                                <label class="rotulo-perfil" for="email-usuario">Email</label>
+                                <input type="email" id="email-usuario" class="campo-perfil" value="${usuarioLogado.email}">
+                            </div>
+
+                            <div class="grupo-formulario-perfil campo-bio">
+                                <label class="rotulo-perfil" for="bio-usuario">Biografia (Opcional)</label>
+                                <textarea id="bio-usuario" class="campo-perfil campo-bio" placeholder="Conte um pouco sobre você..."></textarea>
+                            </div>
+
+                            <button class="botao-salvar-perfil" onclick="atualizarPerfil()">
+                                💾 Salvar Alterações do Perfil
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="secao-configuracoes">
+                        <h3 class="titulo-secao-configuracoes">🔒 Segurança</h3>
+                        
+                        <div class="formulario-seguranca">
+                            <div class="grupo-formulario">
+                                <label class="rotulo" for="senha-atual">Senha Atual</label>
+                                <input type="password" id="senha-atual" class="campo-entrada" placeholder="Sua senha atual">
+                            </div>
+
+                            <div class="grupo-formulario">
+                                <label class="rotulo" for="nova-senha">Nova Senha</label>
+                                <input type="password" id="nova-senha" class="campo-entrada" placeholder="Nova senha (mínimo 6 caracteres)">
+                            </div>
+
+                            <div class="grupo-formulario">
+                                <label class="rotulo" for="confirmar-senha">Confirmar Nova Senha</label>
+                                <input type="password" id="confirmar-senha" class="campo-entrada" placeholder="Digite novamente">
+                            </div>
+
+                            <button class="botao-alterar-senha" onclick="alterarSenha()">
+                                🔑 Alterar Senha
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-grade">
+                    <div class="secao-configuracoes">
+                        <h3 class="titulo-secao-configuracoes">📊 Preferências de Análise</h3>
+                        
+                        <div class="grupo-preferencia">
+                            <label class="rotulo-preferencia">
+                                <input type="checkbox" id="analise-automatica" checked> 
+                                💾 Salvar análise automaticamente
+                            </label>
+                        </div>
+
+                        <div class="grupo-preferencia">
+                            <label class="rotulo-preferencia">
+                                <input type="checkbox" id="notificacoes-email"> 
+                                📧 Receber notificações por email
+                            </label>
+                        </div>
+
+                        <div class="grupo-preferencia">
+                            <div class="controle-preferencia">
+                                <label class="rotulo" for="idioma-padrao">🌐 Idioma Padrão</label>
+                                <select id="idioma-padrao" class="campo-selecao">
+                                    <option value="pt-BR">Português (Brasil)</option>
+                                    <option value="pt-PT">Português (Portugal)</option>
+                                    <option value="en">Inglês</option>
+                                    <option value="es">Espanhol</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grupo-preferencia">
+                            <div class="controle-preferencia">
+                                <label class="rotulo" for="numero-palavras">🔢 Número de Palavras no Ranking</label>
+                                <select id="numero-palavras" class="campo-selecao">
+                                    <option value="10">Top 10</option>
+                                    <option value="15" selected>Top 15</option>
+                                    <option value="20">Top 20</option>
+                                    <option value="25">Top 25</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="botao-salvar-preferencias" onclick="salvarPreferencias()">
+                            💾 Salvar Preferências
+                        </button>
+                    </div>
+
+                    <div class="secao-configuracoes">
+                        <h3 class="titulo-secao-configuracoes">🛑 Palavras Ignoradas</h3>
+                        <p style="margin-bottom: 15px; color: var(--cor-texto-claro);">
+                            Adicione palavras que devem ser ignoradas nas análises:
+                        </p>
+                        
+                        <div class="controle-palavras-ignoradas">
+                            <div class="campo-nova-palavra">
+                                <label class="rotulo" for="nova-palavra-ignorada">Nova Palavra para Ignorar</label>
+                                <input type="text" id="nova-palavra-ignorada" class="campo-entrada" placeholder="Digite a palavra">
+                            </div>
+                            <button class="botao-adicionar-palavra" onclick="adicionarPalavraIgnorada()">➕ Adicionar</button>
+                        </div>
+
+                        <div id="lista-palavras-ignoradas" class="lista-palavras-ignoradas">
+                            <!-- Lista será preenchida via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="zona-perigo">
+                <h3 class="titulo-zona-perigo">⚠️ Zona de Perigo</h3>
+                
+                <div class="grade-zona-perigo">
+                    <div class="item-zona-perigo">
+                        <h4>🗑️ Excluir Dados</h4>
+                        <p>Excluir todos os seus textos e análises, mantendo a conta.</p>
+                        <button class="botao-perigo" onclick="excluirDados()">
+                            🗑️ Excluir Todos os Dados
+                        </button>
+                    </div>
+
+                    <div class="item-zona-perigo">
+                        <h4>❌ Excluir Conta</h4>
+                        <p>Excluir permanentemente sua conta e todos os dados.</p>
+                        <button class="botao-perigo" onclick="excluirConta()">
+                            ❌ Excluir Conta Permanentemente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="texto-centralizado" style="margin-top: 20px;">
+            <a href="../dashboard/index.html" class="botao botao-secundario">🏠 Voltar ao Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar configurações salvas
+        const configuracoes = JSON.parse(localStorage.getItem('configuracoes')) || {
+            analiseAutomatica: true,
+            notificacoesEmail: false,
+            idiomaPadrao: 'pt-BR',
+            numeroPalavras: 15,
+            palavrasIgnoradas: ['muito', 'bastante', 'pouco']
+        };
+
+        function carregarConfiguracoes() {
+            // Carregar preferências
+            document.getElementById('analise-automatica').checked = configuracoes.analiseAutomatica;
+            document.getElementById('notificacoes-email').checked = configuracoes.notificacoesEmail;
+            document.getElementById('idioma-padrao').value = configuracoes.idiomaPadrao;
+            document.getElementById('numero-palavras').value = configuracoes.numeroPalavras;
+
+            // Carregar palavras ignoradas
+            atualizarListaPalavrasIgnoradas();
+
+            // Carregar dados do perfil
+            document.getElementById('nome-usuario').value = usuarioLogado.nome;
+            document.getElementById('email-usuario').value = usuarioLogado.email;
+            document.getElementById('bio-usuario').value = usuarioLogado.bio || '';
+        }
+
+        function atualizarPerfil() {
+            const nome = document.getElementById('nome-usuario').value;
+            const email = document.getElementById('email-usuario').value;
+            const bio = document.getElementById('bio-usuario').value;
+
+            if (!nome || !email) {
+                alert('Nome e email são obrigatórios');
+                return;
+            }
+
+            // Atualizar usuário logado
+            usuarioLogado.nome = nome;
+            usuarioLogado.email = email;
+            usuarioLogado.bio = bio;
+
+            // Atualizar no localStorage
+            localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+
+            // Atualizar em todos os usuários (se necessário)
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            const usuarioIndex = usuarios.findIndex(u => u.id === usuarioLogado.id);
+            if (usuarioIndex !== -1) {
+                usuarios[usuarioIndex] = usuarioLogado;
+                localStorage.setItem('usuarios', JSON.stringify(usuarios));
+            }
+
+            alert('Perfil atualizado com sucesso!');
+        }
+
+        function alterarSenha() {
+            const senhaAtual = document.getElementById('senha-atual').value;
+            const novaSenha = document.getElementById('nova-senha').value;
+            const confirmarSenha = document.getElementById('confirmar-senha').value;
+
+            if (!senhaAtual) {
+                alert('Digite sua senha atual');
+                return;
+            }
+
+            // Verificar senha atual
+            if (senhaAtual !== usuarioLogado.senha) {
+                alert('Senha atual incorreta');
+                return;
+            }
+
+            if (!novaSenha || novaSenha.length < 6) {
+                alert('A nova senha deve ter pelo menos 6 caracteres');
+                return;
+            }
+
+            if (novaSenha !== confirmarSenha) {
+                alert('As senhas não coincidem');
+                return;
+            }
+
+            // Atualizar senha
+            usuarioLogado.senha = novaSenha;
+
+            // Atualizar no localStorage
+            localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+
+            // Atualizar em todos os usuários
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            const usuarioIndex = usuarios.findIndex(u => u.id === usuarioLogado.id);
+            if (usuarioIndex !== -1) {
+                usuarios[usuarioIndex] = usuarioLogado;
+                localStorage.setItem('usuarios', JSON.stringify(usuarios));
+            }
+
+            // Limpar campos
+            document.getElementById('senha-atual').value = '';
+            document.getElementById('nova-senha').value = '';
+            document.getElementById('confirmar-senha').value = '';
+
+            alert('Senha alterada com sucesso!');
+        }
+
+        function salvarPreferencias() {
+            configuracoes.analiseAutomatica = document.getElementById('analise-automatica').checked;
+            configuracoes.notificacoesEmail = document.getElementById('notificacoes-email').checked;
+            configuracoes.idiomaPadrao = document.getElementById('idioma-padrao').value;
+            configuracoes.numeroPalavras = parseInt(document.getElementById('numero-palavras').value);
+
+            localStorage.setItem('configuracoes', JSON.stringify(configuracoes));
+            alert('Preferências salvas com sucesso!');
+        }
+
+        function adicionarPalavraIgnorada() {
+            const novaPalavra = document.getElementById('nova-palavra-ignorada').value.toLowerCase().trim();
+
+            if (!novaPalavra) {
+                alert('Digite uma palavra');
+                return;
+            }
+
+            if (configuracoes.palavrasIgnoradas.includes(novaPalavra)) {
+                alert('Esta palavra já está na lista de ignoradas');
+                return;
+            }
+
+            configuracoes.palavrasIgnoradas.push(novaPalavra);
+            localStorage.setItem('configuracoes', JSON.stringify(configuracoes));
+
+            // Limpar campo e atualizar lista
+            document.getElementById('nova-palavra-ignorada').value = '';
+            atualizarListaPalavrasIgnoradas();
+        }
+
+        function removerPalavraIgnorada(palavra) {
+            configuracoes.palavrasIgnoradas = configuracoes.palavrasIgnoradas.filter(p => p !== palavra);
+            localStorage.setItem('configuracoes', JSON.stringify(configuracoes));
+            atualizarListaPalavrasIgnoradas();
+        }
+
+        function atualizarListaPalavrasIgnoradas() {
+            const container = document.getElementById('lista-palavras-ignoradas');
+            
+            if (configuracoes.palavrasIgnoradas.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--cor-texto-claro);">Nenhuma palavra ignorada</p>';
+                return;
+            }
+
+            container.innerHTML = configuracoes.palavrasIgnoradas.map(palavra => `
+                <div class="item-palavra-ignorada">
+                    <span>${palavra}</span>
+                    <button class="botao-remover-palavra" onclick="removerPalavraIgnorada('${palavra}')">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        function excluirDados() {
+            if (confirm('⚠️ TEM CERTEZA?\n\nIsso excluirá TODOS os seus textos, análises e estatísticas.\nEssa ação NÃO pode ser desfeita.')) {
+                // Manter apenas usuário e configurações
+                localStorage.removeItem('textos');
+                localStorage.removeItem('metas');
+                localStorage.removeItem('ultimaAnalise');
+                
+                alert('Todos os dados foram excluídos. Sua conta foi mantida.');
+                window.location.href = '../dashboard/index.html';
+            }
+        }
+
+        function excluirConta() {
+            if (confirm('❌ EXCLUIR CONTA PERMANENTEMENTE?\n\nIsso removerá TODOS os seus dados incluindo a conta.\nEssa ação NÃO pode ser desfeita.')) {
+                // Remover usuário de todas as listas
+                const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+                const usuariosAtualizados = usuarios.filter(u => u.id !== usuarioLogado.id);
+                localStorage.setItem('usuarios', JSON.stringify(usuariosAtualizados));
+
+                // Remover dados do usuário
+                const textos = JSON.parse(localStorage.getItem('textos')) || [];
+                const textosAtualizados = textos.filter(t => t.usuarioId !== usuarioLogado.id);
+                localStorage.setItem('textos', JSON.stringify(textosAtualizados));
+
+                const metas = JSON.parse(localStorage.getItem('metas')) || [];
+                const metasAtualizadas = metas.filter(m => m.usuarioId !== usuarioLogado.id);
+                localStorage.setItem('metas', JSON.stringify(metasAtualizadas));
+
+                // Remover usuário logado
+                localStorage.removeItem('usuarioLogado');
+
+                alert('Conta excluída permanentemente.');
+                window.location.href = '../auth/login.html';
+            }
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar configurações quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarConfiguracoes);
+    </script>
+</body>
+</html>

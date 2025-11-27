@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Análise - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="nova-analise.css">
+</head>
+<body class="pagina-nova-analise">
+    <div class="container">
+        <div class="cabecalho-nova-analise">
+            <h1 class="titulo-principal">📝 Nova Análise de Texto</h1>
+            <p class="subtitulo">Analise o vocabulário do seu texto</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="nova-analise.html" class="botao botao-pequeno">📝 Nova Análise</a></li>
+                <li class="item-navegacao"><a href="../historico/meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-nova-analise">
+            <h2 class="titulo-card-nova-analise">Digite ou Cole seu Texto</h2>
+            
+            <div class="grupo-formulario">
+                <label class="rotulo" for="titulo-texto">Título do Texto (Opcional)</label>
+                <input type="text" id="titulo-texto" class="campo-entrada" placeholder="Ex: Meu Artigo, Redação, etc.">
+            </div>
+
+            <div class="grupo-formulario">
+                <label class="rotulo" for="conteudo-texto">Conteúdo do Texto</label>
+                <textarea id="conteudo-texto" class="campo-texto-analise" placeholder="Cole ou digite seu texto aqui..." oninput="atualizarContador()"></textarea>
+                <div class="contador-caracteres" id="contador-caracteres">0 caracteres</div>
+            </div>
+
+            <div class="grupo-formulario">
+                <label class="rotulo" for="tipo-analise">Tipo de Análise</label>
+                <select id="tipo-analise" class="campo-selecao">
+                    <option value="basica">Análise Básica (Palavras Mais Frequentes)</option>
+                    <option value="avancada">Análise Avançada (Com Estatísticas Detalhadas)</option>
+                </select>
+            </div>
+
+            <button class="botao-analisar" onclick="analisarTexto()">
+                🔍 Analisar Texto
+            </button>
+
+            <div class="texto-centralizado" style="margin-top: 15px;">
+                <a href="index.html" class="botao botao-secundario botao-pequeno">← Voltar ao Dashboard</a>
+            </div>
+        </div>
+
+        <!-- Área de resultados (inicialmente oculta) -->
+        <div id="resultados-rapidos" class="card-resultados-rapidos oculto">
+            <h2 class="titulo-card">📊 Resultados Preliminares</h2>
+            <div id="conteudo-resultados"></div>
+            <div class="texto-centralizado" style="margin-top: 20px;">
+                <button class="botao" onclick="salvarAnalise()">💾 Salvar Análise</button>
+                <a href="resultados.html" class="botao botao-sucesso">Ver Análise Completa</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        // Analisador de Texto
+        class AnalisadorTexto {
+            constructor() {
+                this.stopWords = [
+                    'o', 'a', 'e', 'de', 'do', 'da', 'em', 'um', 'uma', 
+                    'com', 'para', 'por', 'que', 'se', 'não', 'sim', 'os', 'as',
+                    'num', 'numa', 'dum', 'duma', 'pra', 'pro', 'pela', 'pelo',
+                    'isso', 'isto', 'aquele', 'aquela', 'esse', 'essa', 'este', 'esta',
+                    'outro', 'outra', 'mesmo', 'mesma', 'tal', 'tão', 'toda', 'todo',
+                    'muito', 'pouco', 'mais', 'menos', 'qual', 'quando', 'onde', 'como',
+                    'ser', 'estar', 'ter', 'haver', 'fazer', 'dizer', 'saber', 'querer',
+                    'mas', 'porém', 'contudo', 'entretanto', 'logo', 'portanto', 'assim',
+                    'então', 'agora', 'depois', 'antes', 'sempre', 'nunca', 'jamais',
+                    'aqui', 'ali', 'lá', 'cá', 'simplesmente', 'realmente', 'verdadeiramente'
+                ];
+            }
+
+            processar(texto, tipoAnalise = 'basica') {
+                console.log("Processando texto...");
+                
+                // Limpa e divide o texto em palavras
+                const palavras = this.limparTexto(texto);
+                console.log("Palavras após limpeza:", palavras.length);
+                
+                // Filtra palavras irrelevantes
+                const palavrasFiltradas = this.filtrarStopWords(palavras);
+                console.log("Palavras após filtro:", palavrasFiltradas.length);
+                
+                // Calcula frequência
+                const frequencia = this.contarFrequencia(palavrasFiltradas);
+                console.log("Palavras únicas:", Object.keys(frequencia).length);
+                
+                // Ordena e retorna resultado
+                const resultado = this.ordenarResultado(frequencia, palavras.length, tipoAnalise);
+                console.log("Resultado final:", resultado);
+                
+                return resultado;
+            }
+
+            limparTexto(texto) {
+                return texto
+                    .toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
+                    .replace(/[^\w\s]/g, ' ') // Substitui pontuação por espaços
+                    .split(/\s+/) // Divide por espaços
+                    .filter(palavra => palavra.length > 2); // Filtra palavras muito curtas
+            }
+
+            filtrarStopWords(palavras) {
+                return palavras.filter(palavra => 
+                    !this.stopWords.includes(palavra)
+                );
+            }
+
+            contarFrequencia(palavras) {
+                const frequencia = {};
+                
+                palavras.forEach(palavra => {
+                    if (palavra) { // Verifica se não é string vazia
+                        frequencia[palavra] = (frequencia[palavra] || 0) + 1;
+                    }
+                });
+                
+                return frequencia;
+            }
+
+            ordenarResultado(frequencia, totalPalavras, tipoAnalise) {
+                const palavrasArray = Object.entries(frequencia)
+                    .sort((a, b) => b[1] - a[1]) // Ordena por frequência (decrescente)
+                    .slice(0, 15) // Pega as 15 mais frequentes
+                    .map(([palavra, count]) => ({
+                        palavra,
+                        frequencia: count,
+                        porcentagem: ((count / totalPalavras) * 100).toFixed(1)
+                    }));
+
+                const resultado = {
+                    palavras: palavrasArray,
+                    totalPalavras: totalPalavras,
+                    palavrasUnicas: Object.keys(frequencia).length,
+                    diversidade: ((Object.keys(frequencia).length / totalPalavras) * 100).toFixed(1)
+                };
+
+                // Adiciona estatísticas avançadas se solicitado
+                if (tipoAnalise === 'avancada') {
+                    resultado.estatisticasAvancadas = this.calcularEstatisticasAvancadas(palavrasArray, totalPalavras);
+                }
+
+                return resultado;
+            }
+
+            calcularEstatisticasAvancadas(palavras, totalPalavras) {
+                return {
+                    densidadeLexical: ((palavras.reduce((sum, p) => sum + p.frequencia, 0) / totalPalavras) * 100).toFixed(1),
+                    palavrasTop10: palavras.slice(0, 10).reduce((sum, p) => sum + parseFloat(p.porcentagem), 0).toFixed(1),
+                    palavraMaisFrequente: palavras[0] ? palavras[0].palavra : 'N/A'
+                };
+            }
+        }
+
+        const analisador = new AnalisadorTexto();
+        let resultadoAtual = null;
+
+        function atualizarContador() {
+            const texto = document.getElementById('conteudo-texto').value;
+            const contador = document.getElementById('contador-caracteres');
+            contador.textContent = `${texto.length} caracteres, ${texto.split(/\s+/).filter(w => w.length > 0).length} palavras`;
+        }
+
+        function analisarTexto() {
+            const titulo = document.getElementById('titulo-texto').value || 'Texto sem título';
+            const texto = document.getElementById('conteudo-texto').value;
+            const tipoAnalise = document.getElementById('tipo-analise').value;
+
+            if (!texto.trim()) {
+                alert('Por favor, digite um texto para analisar');
+                return;
+            }
+
+            if (texto.split(/\s+/).length < 10) {
+                alert('O texto precisa ter pelo menos 10 palavras para análise');
+                return;
+            }
+
+            // Mostrar loading
+            const botao = document.querySelector('.botao-analisar');
+            const textoOriginal = botao.textContent;
+            botao.textContent = '⏳ Analisando...';
+            botao.disabled = true;
+
+            // Processar com delay para simular análise
+            setTimeout(() => {
+                resultadoAtual = analisador.processar(texto, tipoAnalise);
+                resultadoAtual.titulo = titulo;
+                resultadoAtual.textoOriginal = texto;
+                resultadoAtual.tipoAnalise = tipoAnalise;
+                
+                mostrarResultados(resultadoAtual);
+                
+                // Restaurar botão
+                botao.textContent = textoOriginal;
+                botao.disabled = false;
+            }, 1000);
+        }
+
+        function mostrarResultados(resultado) {
+            const container = document.getElementById('conteudo-resultados');
+            
+            let html = `
+                <div class="estatisticas-rapidas">
+                    <h3>📈 Estatísticas do Texto</h3>
+                    <p><strong>Total de palavras:</strong> ${resultado.totalPalavras}</p>
+                    <p><strong>Palavras únicas:</strong> ${resultado.palavrasUnicas}</p>
+                    <p><strong>Diversidade lexical:</strong> ${resultado.diversidade}%</p>
+                </div>
+
+                <h3 style="margin-top: 20px;">🔝 Palavras Mais Frequentes</h3>
+                <div class="lista-palavras">
+            `;
+
+            resultado.palavras.forEach((item, index) => {
+                html += `
+                    <div class="item-palavra">
+                        <span class="palavra">${index + 1}. ${item.palavra}</span>
+                        <span class="frequencia">${item.frequencia} (${item.porcentagem}%)</span>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+
+            if (resultado.tipoAnalise === 'avancada' && resultado.estatisticasAvancadas) {
+                html += `
+                    <div class="estatisticas-avancadas" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <h3>📊 Estatísticas Avançadas</h3>
+                        <p><strong>Densidade lexical:</strong> ${resultado.estatisticasAvancadas.densidadeLexical}%</p>
+                        <p><strong>Top 10 palavras:</strong> ${resultado.estatisticasAvancadas.palavrasTop10}% do texto</p>
+                        <p><strong>Palavra mais frequente:</strong> "${resultado.estatisticasAvancadas.palavraMaisFrequente}"</p>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+            
+            // Mostrar resultados
+            document.getElementById('resultados-rapidos').classList.remove('oculto');
+            
+            // Scroll para resultados
+            document.getElementById('resultados-rapidos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function salvarAnalise() {
+            if (!resultadoAtual) {
+                alert('Nenhuma análise para salvar');
+                return;
+            }
+
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            
+            const novaAnalise = {
+                id: Date.now().toString(),
+                usuarioId: usuarioLogado.id,
+                titulo: resultadoAtual.titulo,
+                texto: resultadoAtual.textoOriginal.substring(0, 1000), // Salva só um pedaço
+                data: new Date().toISOString(),
+                analise: resultadoAtual
+            };
+
+            textos.push(novaAnalise);
+            localStorage.setItem('textos', JSON.stringify(textos));
+
+            alert('Análise salva com sucesso!');
+            
+            // Redirecionar para resultados
+            localStorage.setItem('ultimaAnalise', JSON.stringify(novaAnalise));
+            window.location.href = 'resultados.html';
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Inicializar contador
+        document.addEventListener('DOMContentLoaded', atualizarContador);
+    </script>
+</body>
+</html>

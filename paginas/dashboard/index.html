@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="pagina-dashboard">
+    <div class="container">
+        <div class="cabecalho-dashboard">
+            <h1 class="titulo-dashboard">📊 Mapeador de Vocabulário</h1>
+            <p class="subtitulo-dashboard">Bem-vindo de volta, <span id="nome-usuario">Usuário</span>!</p>
+        </div>
+
+        <nav class="navegacao-dashboard">
+            <ul class="lista-navegacao-dashboard">
+                <li class="item-navegacao-dashboard"><a href="index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao-dashboard"><a href="nova-analise.html" class="botao botao-pequeno">📝 Nova Análise</a></li>
+                <li class="item-navegacao-dashboard"><a href="../historico/meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao-dashboard"><a href="../ferramentas/dicionario-pessoal.html" class="botao botao-pequeno">📖 Dicionário</a></li>
+                <li class="item-navegacao-dashboard"><a href="../ferramentas/configuracoes.html" class="botao botao-pequeno">⚙️ Configurações</a></li>
+                <li class="item-navegacao-dashboard"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="grade-dashboard">
+            <div class="item-grade-dashboard">
+                <h3 class="titulo-card-dashboard">📈 Estatísticas Gerais</h3>
+                <div class="estatisticas-rapidas-dashboard">
+                    <p><strong>Total de Textos:</strong> <span id="total-textos">0</span></p>
+                    <p><strong>Palavras Analisadas:</strong> <span id="total-palavras">0</span></p>
+                    <p><strong>Diversidade Média:</strong> <span id="diversidade-media">0%</span></p>
+                </div>
+            </div>
+
+
+            <div class="item-grade-dashboard">
+                <h3 class="titulo-card-dashboard">🚀 Ações Rápidas</h3>
+                <div class="acoes-rapidas-dashboard">
+                    <a href="nova-analise.html" class="botao botao-sucesso" style="width: 100%; margin-bottom: 10px;">
+                        ✏️ Nova Análise
+                    </a>
+                    <a href="../historico/meus-textos.html" class="botao" style="width: 100%; margin-bottom: 10px;">
+                        📚 Ver Meus Textos
+                    </a>
+                    <a href="../ferramentas/metas-escrita.html" class="botao" style="width: 100%;">
+                        🎯 Metas de Escrita
+                    </a>
+                </div>
+            </div>
+
+            <div class="item-grade-dashboard">
+                <h3 class="titulo-card-dashboard">📊 Últimas Análises</h3>
+                <div id="ultimas-analises">
+                    <p class="texto-centralizado">Nenhuma análise recente</p>
+                </div>
+            </div>
+
+            <div class="item-grade-dashboard">
+                <h3 class="titulo-card-dashboard">🏆 Palavras Frequentes</h3>
+                <div id="palavras-frequentes-global">
+                    <p class="texto-centralizado">Seus dados aparecerão aqui</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        // Atualizar nome do usuário
+        document.getElementById('nome-usuario').textContent = usuarioLogado.nome;
+
+        // Carregar dados do dashboard
+        function carregarDashboard() {
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            const textosUsuario = textos.filter(t => t.usuarioId === usuarioLogado.id);
+            
+            // Estatísticas gerais
+            document.getElementById('total-textos').textContent = textosUsuario.length;
+            
+            const totalPalavras = textosUsuario.reduce((total, texto) => total + (texto.analise?.totalPalavras || 0), 0);
+            document.getElementById('total-palavras').textContent = totalPalavras;
+            
+            const diversidadeMedia = textosUsuario.length > 0 
+                ? (textosUsuario.reduce((total, texto) => total + (texto.analise?.diversidade || 0), 0) / textosUsuario.length).toFixed(1)
+                : 0;
+            document.getElementById('diversidade-media').textContent = diversidadeMedia + '%';
+
+            // Últimas análises
+            const ultimasAnalises = textosUsuario.slice(-3).reverse();
+            const listaAnalises = document.getElementById('ultimas-analises');
+            
+            if (ultimasAnalises.length > 0) {
+                listaAnalises.innerHTML = ultimasAnalises.map(texto => `
+                    <div style="padding: 10px; border-bottom: 1px solid #eee;">
+                        <strong>${texto.titulo || 'Texto sem título'}</strong>
+                        <br><small>${new Date(texto.data).toLocaleDateString()}</small>
+                    </div>
+                `).join('');
+            }
+
+            // Palavras frequentes globais
+            carregarPalavrasFrequentesGlobais(textosUsuario);
+        }
+
+        function carregarPalavrasFrequentesGlobais(textosUsuario) {
+            const todasPalavras = {};
+            
+            textosUsuario.forEach(texto => {
+                if (texto.analise && texto.analise.palavras) {
+                    texto.analise.palavras.forEach(palavraObj => {
+                        todasPalavras[palavraObj.palavra] = (todasPalavras[palavraObj.palavra] || 0) + palavraObj.frequencia;
+                    });
+                }
+            });
+
+            const palavrasOrdenadas = Object.entries(todasPalavras)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            const container = document.getElementById('palavras-frequentes-global');
+            
+            if (palavrasOrdenadas.length > 0) {
+                container.innerHTML = palavrasOrdenadas.map(([palavra, freq]) => `
+                    <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee;">
+                        <span>${palavra}</span>
+                        <span style="color: #3498db;">${freq}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar dados quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarDashboard);
+    </script>
+</body>
+</html>

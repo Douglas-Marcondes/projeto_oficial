@@ -1,0 +1,116 @@
+/* Estilos específicos para Recuperar Senha */
+.pagina-recuperar-senha {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+}
+
+.conteudo-recuperar-senha {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.cabecalho-recuperar-senha {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.titulo-recuperar-senha {
+    color: white;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitulo-recuperar-senha {
+    color: rgba(255,255,255,0.8);
+    font-size: 1.1em;
+}
+
+.card-recuperar-senha {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.titulo-card-recuperar-senha {
+    color: var(--cor-texto);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.alerta-recuperar-senha {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border-left: 5px solid #e17055;
+}
+
+.grupo-formulario-recuperar-senha {
+    margin-bottom: 25px;
+}
+
+.rotulo-recuperar-senha {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.campo-recuperar-senha {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ffeaa7;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: rgba(255, 234, 167, 0.1);
+}
+
+.campo-recuperar-senha:focus {
+    border-color: #e17055;
+    box-shadow: 0 0 0 3px rgba(225, 112, 85, 0.1);
+    outline: none;
+    background: white;
+}
+
+.botao-recuperar-senha {
+    width: 100%;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-recuperar-senha:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+}
+
+.voltar-recuperar-senha {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.link-voltar-recuperar {
+    color: #ff9a9e;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.link-voltar-recuperar:hover {
+    color: #e17055;
+    text-decoration: underline;
+}

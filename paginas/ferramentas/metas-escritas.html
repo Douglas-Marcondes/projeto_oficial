@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metas de Escrita - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="metas-escrita.css">
+</head>
+<body class="pagina-metas-escrita">
+    <div class="container">
+        <div class="cabecalho-metas-escrita">
+            <h1 class="titulo-principal">🎯 Metas de Escrita</h1>
+            <p class="subtitulo">Defina objetivos para melhorar sua escrita</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="../dashboard/index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="../historico/estatisticas-progresso.html" class="botao botao-pequeno">📈 Progresso</a></li>
+                <li class="item-navegacao"><a href="dicionario-pessoal.html" class="botao botao-pequeno">📖 Dicionário</a></li>
+                <li class="item-navegacao"><a href="metas-escrita.html" class="botao botao-pequeno">🎯 Metas</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-metas-escrita">
+            <h2 class="titulo-card-metas-escrita">Suas Metas de Escrita</h2>
+            
+            <div class="grade-dashboard">
+                <div class="item-grade">
+                    <h3>📅 Metas Ativas</h3>
+                    <div id="metas-ativas">
+                        <!-- Metas serão preenchidas via JavaScript -->
+                    </div>
+
+                    <button class="botao-nova-meta" onclick="mostrarFormularioMeta()">
+                        ➕ Nova Meta
+                    </button>
+                </div>
+
+                <div class="item-grade">
+                    <h3>🏆 Conquistas</h3>
+                    <div id="conquistas-metas">
+                        <!-- Conquistas serão preenchidas via JavaScript -->
+                    </div>
+
+                    <h4 style="margin-top: 20px;">📊 Estatísticas das Metas</h4>
+                    <div class="estatisticas-metas" id="estatisticas-metas">
+                        <!-- Estatísticas serão preenchidas via JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulário para nova meta (inicialmente oculto) -->
+            <div id="formulario-nova-meta" class="formulario-nova-meta-container oculto">
+                <h3 class="titulo-card">🎯 Criar Nova Meta</h3>
+                
+                <div class="grupo-formulario">
+                    <label class="rotulo" for="tipo-meta">Tipo de Meta</label>
+                    <select id="tipo-meta" class="campo-selecao" onchange="mudarTipoMeta()">
+                        <option value="">Selecione o tipo...</option>
+                        <option value="diversidade">🎯 Aumentar Diversidade Lexical</option>
+                        <option value="reducao-palavra">📉 Reduzir Uso de Palavra Específica</option>
+                        <option value="total-textos">📚 Aumentar Número de Textos</option>
+                        <option value="palavras-unicas">🔤 Aumentar Palavras Únicas</option>
+                    </select>
+                </div>
+
+                <div id="campos-adicionais-meta">
+                    <!-- Campos adicionais aparecerão aqui baseados no tipo selecionado -->
+                </div>
+
+                <div class="grupo-formulario">
+                    <label class="rotulo" for="titulo-meta">Título da Meta</label>
+                    <input type="text" id="titulo-meta" class="campo-entrada" placeholder="Ex: Melhorar diversidade lexical">
+                </div>
+
+                <div class="grupo-formulario">
+                    <label class="rotulo" for="descricao-meta">Descrição (Opcional)</label>
+                    <textarea id="descricao-meta" class="campo-texto" placeholder="Descreva sua meta..." style="height: 80px;"></textarea>
+                </div>
+
+                <div class="grupo-formulario">
+                    <label class="rotulo" for="valor-meta">Valor Alvo</label>
+                    <input type="number" id="valor-meta" class="campo-entrada" placeholder="Ex: 70 (para 70%)">
+                </div>
+
+                <div class="grupo-formulario">
+                    <label class="rotulo" for="prazo-meta">Prazo</label>
+                    <input type="date" id="prazo-meta" class="campo-entrada">
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="botao botao-sucesso" onclick="criarMeta()">✅ Criar Meta</button>
+                    <button class="botao botao-secundario" onclick="ocultarFormularioMeta()">❌ Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="texto-centralizado">
+            <a href="../historico/estatisticas-progresso.html" class="botao">📈 Ver Progresso Detalhado</a>
+            <a href="../dashboard/nova-analise.html" class="botao botao-sucesso">📝 Escrever Novo Texto</a>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        let metas = [];
+
+        function carregarMetas() {
+            metas = JSON.parse(localStorage.getItem('metas')) || [];
+            const metasUsuario = metas.filter(m => m.usuarioId === usuarioLogado.id);
+            
+            exibirMetasAtivas(metasUsuario);
+            exibirConquistas();
+            exibirEstatisticasMetas(metasUsuario);
+        }
+
+        function exibirMetasAtivas(metasUsuario) {
+            const container = document.getElementById('metas-ativas');
+            const metasAtivas = metasUsuario.filter(meta => !meta.concluida && !meta.expirada);
+            
+            if (metasAtivas.length === 0) {
+                container.innerHTML = `
+                    <div class="texto-centralizado" style="padding: 40px;">
+                        <div style="font-size: 3em; margin-bottom: 15px;">🎯</div>
+                        <p>Nenhuma meta ativa</p>
+                        <p style="color: var(--cor-texto-claro); font-size: 0.9em;">
+                            Crie sua primeira meta para acompanhar seu progresso
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = metasAtivas.map(meta => {
+                const progresso = calcularProgressoMeta(meta);
+                const diasRestantes = calcularDiasRestantes(meta.prazo);
+                
+                return `
+                    <div class="meta-item">
+                        <div class="cabecalho-meta">
+                            <strong class="titulo-meta">${meta.titulo}</strong>
+                            <span class="porcentagem-meta">${progresso}%</span>
+                        </div>
+                        <div class="barra-progresso-meta">
+                            <div class="progresso-meta" style="width: ${progresso}%"></div>
+                        </div>
+                        <div class="info-meta">
+                            ${meta.descricao ? `<p>${meta.descricao}</p>` : ''}
+                            <p>Meta: ${meta.valorAlvo}${meta.tipo === 'diversidade' || meta.tipo === 'reducao-palavra' ? '%' : ''} | 
+                               Prazo: ${new Date(meta.prazo).toLocaleDateString()} (${diasRestantes} dias restantes)</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function calcularProgressoMeta(meta) {
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            const textosUsuario = textos.filter(t => t.usuarioId === usuarioLogado.id);
+            
+            switch (meta.tipo) {
+                case 'diversidade':
+                    const ultimaDiversidade = textosUsuario.length > 0 ? 
+                        parseFloat(textosUsuario[textosUsuario.length - 1].analise?.diversidade) || 0 : 0;
+                    return Math.min(Math.round((ultimaDiversidade / meta.valorAlvo) * 100), 100);
+                
+                case 'total-textos':
+                    return Math.min(Math.round((textosUsuario.length / meta.valorAlvo) * 100), 100);
+                
+                case 'palavras-unicas':
+                    const totalPalavrasUnicas = new Set();
+                    textosUsuario.forEach(texto => {
+                        if (texto.analise && texto.analise.palavras) {
+                            texto.analise.palavras.forEach(p => totalPalavrasUnicas.add(p.palavra));
+                        }
+                    });
+                    return Math.min(Math.round((totalPalavrasUnicas.size / meta.valorAlvo) * 100), 100);
+                
+                default:
+                    return 0;
+            }
+        }
+
+        function calcularDiasRestantes(prazo) {
+            const hoje = new Date();
+            const dataPrazo = new Date(prazo);
+            const diferenca = dataPrazo - hoje;
+            return Math.ceil(diferenca / (1000 * 60 * 60 * 24));
+        }
+
+        function exibirConquistas() {
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            const textosUsuario = textos.filter(t => t.usuarioId === usuarioLogado.id);
+            const container = document.getElementById('conquistas-metas');
+
+            const conquistas = [];
+
+            if (textosUsuario.length >= 1) {
+                conquistas.push({
+                    tipo: 'sucesso',
+                    titulo: '⭐ Primeira Meta Atingida!',
+                    descricao: 'Você realizou sua primeira análise'
+                });
+            }
+
+            if (textosUsuario.length >= 5) {
+                conquistas.push({
+                    tipo: 'info',
+                    titulo: '📚 Escrita Consistente',
+                    descricao: 'Você analisou 5 textos diferentes'
+                });
+            }
+
+            // Verificar diversidade
+            if (textosUsuario.length >= 2) {
+                const primeiraDiversidade = parseFloat(textosUsuario[0]?.analise?.diversidade) || 0;
+                const ultimaDiversidade = parseFloat(textosUsuario[textosUsuario.length - 1]?.analise?.diversidade) || 0;
+                
+                if (ultimaDiversidade > primeiraDiversidade + 10) {
+                    conquistas.push({
+                        tipo: 'sucesso',
+                        titulo: '📈 Evolução Impressionante!',
+                        descricao: `Sua diversidade aumentou ${(ultimaDiversidade - primeiraDiversidade).toFixed(1)}%`
+                    });
+                }
+            }
+
+            if (conquistas.length === 0) {
+                container.innerHTML = `
+                    <div class="conquista-item-meta conquista-progresso-meta">
+                        <strong>🎯 Em Progresso</strong><br>
+                        Continue escrevendo para desbloquear conquistas!
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = conquistas.map(conquista => `
+                <div class="conquista-item-meta conquista-${conquista.tipo}-meta">
+                    <strong>${conquista.titulo}</strong><br>
+                    ${conquista.descricao}
+                </div>
+            `).join('');
+        }
+
+        function exibirEstatisticasMetas(metasUsuario) {
+            const container = document.getElementById('estatisticas-metas');
+            const metasConcluidas = metasUsuario.filter(m => m.concluida).length;
+            const metasAtivas = metasUsuario.filter(m => !m.concluida && !m.expirada).length;
+            const taxaSucesso = metasUsuario.length > 0 ? Math.round((metasConcluidas / metasUsuario.length) * 100) : 0;
+
+            const estatisticas = [
+                { valor: metasConcluidas, rotulo: 'Concluídas' },
+                { valor: metasAtivas, rotulo: 'Em Andamento' },
+                { valor: taxaSucesso, rotulo: 'Taxa de Sucesso' }
+            ];
+
+            container.innerHTML = estatisticas.map(estat => `
+                <div class="item-estatistica-meta">
+                    <span class="valor-estatistica-meta">${estat.valor}${estat.rotulo === 'Taxa de Sucesso' ? '%' : ''}</span>
+                    <span class="rotulo-estatistica-meta">${estat.rotulo}</span>
+                </div>
+            `).join('');
+        }
+
+        function mostrarFormularioMeta() {
+            document.getElementById('formulario-nova-meta').classList.remove('oculto');
+        }
+
+        function ocultarFormularioMeta() {
+            document.getElementById('formulario-nova-meta').classList.add('oculto');
+            // Limpar formulário
+            document.getElementById('tipo-meta').value = '';
+            document.getElementById('titulo-meta').value = '';
+            document.getElementById('descricao-meta').value = '';
+            document.getElementById('valor-meta').value = '';
+            document.getElementById('prazo-meta').value = '';
+            document.getElementById('campos-adicionais-meta').innerHTML = '';
+        }
+
+        function mudarTipoMeta() {
+            const tipo = document.getElementById('tipo-meta').value;
+            const container = document.getElementById('campos-adicionais-meta');
+            
+            let html = '';
+            
+            switch (tipo) {
+                case 'reducao-palavra':
+                    html = `
+                        <div class="grupo-formulario">
+                            <label class="rotulo" for="palavra-alvo">Palavra para Reduzir</label>
+                            <input type="text" id="palavra-alvo" class="campo-entrada" placeholder="Ex: muito">
+                        </div>
+                    `;
+                    break;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function criarMeta() {
+            const tipo = document.getElementById('tipo-meta').value;
+            const titulo = document.getElementById('titulo-meta').value;
+            const descricao = document.getElementById('descricao-meta').value;
+            const valorAlvo = parseFloat(document.getElementById('valor-meta').value);
+            const prazo = document.getElementById('prazo-meta').value;
+            const palavraAlvo = document.getElementById('palavra-alvo')?.value;
+
+            // Validações
+            if (!tipo || !titulo || !valorAlvo || !prazo) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            if (new Date(prazo) <= new Date()) {
+                alert('O prazo deve ser uma data futura');
+                return;
+            }
+
+            const novaMeta = {
+                id: Date.now().toString(),
+                usuarioId: usuarioLogado.id,
+                tipo: tipo,
+                titulo: titulo,
+                descricao: descricao,
+                valorAlvo: valorAlvo,
+                prazo: prazo,
+                palavraAlvo: palavraAlvo,
+                dataCriacao: new Date().toISOString(),
+                concluida: false,
+                expirada: false
+            };
+
+            metas.push(novaMeta);
+            localStorage.setItem('metas', JSON.stringify(metas));
+
+            alert('Meta criada com sucesso!');
+            ocultarFormularioMeta();
+            carregarMetas(); // Recarregar a lista
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar metas quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarMetas);
+    </script>
+</body>
+</html>

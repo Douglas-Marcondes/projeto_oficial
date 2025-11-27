@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/style-comum.css">
+    <link rel="stylesheet" href="cadastro.css">
+</head>
+<body class="pagina-cadastro">
+    <div class="conteudo-cadastro">
+        <div class="cabecalho-cadastro">
+            <h1 class="titulo-cadastro">📊 Mapeador de Vocabulário</h1>
+            <p class="subtitulo-cadastro">Crie sua conta e comece a analisar</p>
+        </div>
+
+        <div class="card-cadastro">
+            <h2 class="titulo-card-cadastro">Criar Conta</h2>
+            
+            <div class="grupo-formulario-cadastro">
+                <label class="rotulo-cadastro" for="nome">Nome Completo</label>
+                <input type="text" id="nome" class="campo-cadastro" placeholder="Seu nome">
+            </div>
+
+            <div class="grupo-formulario-cadastro">
+                <label class="rotulo-cadastro" for="email">Email</label>
+                <input type="email" id="email" class="campo-cadastro" placeholder="seu@email.com">
+            </div>
+
+            <div class="grupo-formulario-cadastro">
+                <label class="rotulo-cadastro" for="senha">Senha</label>
+                <input type="password" id="senha" class="campo-cadastro" placeholder="Mínimo 6 caracteres">
+            </div>
+
+            <div class="grupo-formulario-cadastro">
+                <label class="rotulo-cadastro" for="confirmar-senha">Confirmar Senha</label>
+                <input type="password" id="confirmar-senha" class="campo-cadastro" placeholder="Digite novamente">
+            </div>
+
+            <button class="botao-cadastro" onclick="fazerCadastro()">
+                Criar Conta
+            </button>
+
+            <div class="voltar-cadastro">
+                <a href="login.html" class="link-voltar">Voltar ao Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function fazerCadastro() {
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const confirmarSenha = document.getElementById('confirmar-senha').value;
+
+            // Validações
+            if (!nome || !email || !senha || !confirmarSenha) {
+                alert('Por favor, preencha todos os campos');
+                return;
+            }
+
+            if (senha.length < 6) {
+                alert('A senha deve ter pelo menos 6 caracteres');
+                return;
+            }
+
+            if (senha !== confirmarSenha) {
+                alert('As senhas não coincidem');
+                return;
+            }
+
+            // Carregar usuários existentes
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+            // Verificar se email já existe
+            if (usuarios.find(u => u.email === email)) {
+                alert('Este email já está cadastrado');
+                return;
+            }
+
+            // Criar novo usuário
+            const novoUsuario = {
+                id: Date.now().toString(),
+                nome: nome,
+                email: email,
+                senha: senha,
+                dataCadastro: new Date().toISOString()
+            };
+
+            // Salvar usuário
+            usuarios.push(novoUsuario);
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+            // Login automático
+            localStorage.setItem('usuarioLogado', JSON.stringify(novoUsuario));
+            
+            alert('Conta criada com sucesso!');
+            window.location.href = '../dashboard/index.html';
+        }
+
+        // Enter para cadastrar
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                fazerCadastro();
+            }
+        });
+    </script>
+</body>
+</html>

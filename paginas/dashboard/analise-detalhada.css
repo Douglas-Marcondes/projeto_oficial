@@ -1,0 +1,160 @@
+/* Estilos específicos para Análise Detalhada */
+.pagina-analise-detalhada {
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+    min-height: 100vh;
+}
+
+.cabecalho-analise-detalhada {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.card-analise-detalhada {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.titulo-card-analise-detalhada {
+    color: var(--cor-texto);
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 1.8em;
+    border-bottom: 3px solid #74b9ff;
+    padding-bottom: 15px;
+}
+
+/* Gráficos e Visualizações */
+.grafico-container {
+    background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%);
+    height: 300px;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.grafico-barras {
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    height: 100%;
+    padding: 20px 0;
+}
+
+.barra-grafico {
+    background: linear-gradient(to top, #74b9ff, #0984e3);
+    width: 40px;
+    border-radius: 5px 5px 0 0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.barra-grafico:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
+}
+
+.barra-grafico::after {
+    content: attr(data-value);
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--cor-texto);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    white-space: nowrap;
+}
+
+/* Métricas Avançadas */
+.lista-metricas-detalhada {
+    background: rgba(116, 185, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.item-metrica-detalhada {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #74b9ff;
+    transition: all 0.3s ease;
+}
+
+.item-metrica-detalhada:hover {
+    transform: translateX(5px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Sugestões de Melhoria */
+.sugestoes-container {
+    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin: 25px 0;
+}
+
+.sugestao-item {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 4px solid rgba(255,255,255,0.5);
+}
+
+.palavras-observar-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.tag-palavra {
+    background: #ffeaa7;
+    color: #2d3436;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.botoes-analise-detalhada {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.botao-salvar-analise {
+    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-salvar-analise:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
+}

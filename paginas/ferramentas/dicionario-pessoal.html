@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dicionário Pessoal - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="dicionario-pessoal.css">
+</head>
+<body class="pagina-dicionario-pessoal">
+    <div class="container">
+        <div class="cabecalho-dicionario-pessoal">
+            <h1 class="titulo-principal">📖 Dicionário Pessoal</h1>
+            <p class="subtitulo">Seu vocabulário mais usado em todos os textos</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="../dashboard/index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="../historico/meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao"><a href="dicionario-pessoal.html" class="botao botao-pequeno">📖 Dicionário</a></li>
+                <li class="item-navegacao"><a href="metas-escrita.html" class="botao botao-pequeno">🎯 Metas</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-dicionario-pessoal">
+            <div class="cabecalho-dicionario">
+                <h2 class="titulo-card-dicionario">Seu Vocabulário Completo</h2>
+                <div class="busca-dicionario">
+                    <input type="text" id="buscar-palavras" class="campo-busca-dicionario" placeholder="Buscar palavra..." oninput="filtrarPalavras()">
+                </div>
+            </div>
+
+            <div class="estatisticas-dicionario">
+                <div class="grade-estatisticas-dicionario" id="estatisticas-gerais">
+                    <!-- Estatísticas serão preenchidas via JavaScript -->
+                </div>
+            </div>
+
+            <h3 style="margin: 30px 0 15px 0;">🔝 Top 50 Palavras do Seu Vocabulário</h3>
+            
+            <div class="lista-dicionario-pessoal" id="lista-dicionario-pessoal">
+                <p class="texto-centralizado">Carregando seu dicionário pessoal...</p>
+            </div>
+
+            <div class="texto-centralizado" style="margin-top: 30px;">
+                <a href="../dashboard/nova-analise.html" class="botao botao-sucesso">📝 Adicionar Novo Texto</a>
+                <button class="botao" onclick="exportarDicionario()">📤 Exportar Dicionário</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        let todasPalavras = [];
+        let palavrasFiltradas = [];
+
+        function carregarDicionarioPessoal() {
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            const textosUsuario = textos.filter(t => t.usuarioId === usuarioLogado.id);
+            
+            if (textosUsuario.length === 0) {
+                exibirMensagemSemDados();
+                return;
+            }
+
+            // Compilar todas as palavras de todos os textos
+            compilarPalavrasGlobais(textosUsuario);
+            exibirEstatisticasGerais(textosUsuario);
+            exibirDicionarioPessoal();
+        }
+
+        function compilarPalavrasGlobais(textosUsuario) {
+            const frequenciaGlobal = {};
+            let totalOcorrencias = 0;
+
+            textosUsuario.forEach(texto => {
+                if (texto.analise && texto.analise.palavras) {
+                    texto.analise.palavras.forEach(palavraObj => {
+                        if (!frequenciaGlobal[palavraObj.palavra]) {
+                            frequenciaGlobal[palavraObj.palavra] = 0;
+                        }
+                        frequenciaGlobal[palavraObj.palavra] += palavraObj.frequencia;
+                        totalOcorrencias += palavraObj.frequencia;
+                    });
+                }
+            });
+
+            // Converter para array e ordenar
+            todasPalavras = Object.entries(frequenciaGlobal)
+                .map(([palavra, frequencia]) => ({
+                    palavra,
+                    frequencia,
+                    porcentagem: ((frequencia / totalOcorrencias) * 100).toFixed(2)
+                }))
+                .sort((a, b) => b.frequencia - a.frequencia);
+
+            palavrasFiltradas = [...todasPalavras];
+        }
+
+        function exibirEstatisticasGerais(textosUsuario) {
+            const container = document.getElementById('estatisticas-gerais');
+            
+            const totalPalavrasUnicas = todasPalavras.length;
+            const palavraMaisUsada = todasPalavras[0] ? todasPalavras[0].palavra : 'N/A';
+            const frequenciaMaisUsada = todasPalavras[0] ? todasPalavras[0].frequencia : 0;
+            
+            // Encontrar texto com maior diversidade
+            let textoMaisVariado = 'N/A';
+            let maiorDiversidade = 0;
+            
+            textosUsuario.forEach(texto => {
+                const diversidade = parseFloat(texto.analise?.diversidade) || 0;
+                if (diversidade > maiorDiversidade) {
+                    maiorDiversidade = diversidade;
+                    textoMaisVariado = texto.titulo;
+                }
+            });
+
+            const estatisticas = [
+                {
+                    valor: totalPalavrasUnicas,
+                    rotulo: 'Total de Palavras Únicas'
+                },
+                {
+                    valor: palavraMaisUsada,
+                    rotulo: 'Palavra Mais Usada'
+                },
+                {
+                    valor: textosUsuario.length,
+                    rotulo: 'Textos Analisados'
+                },
+                {
+                    valor: Math.round(todasPalavras.reduce((sum, p) => sum + p.frequencia, 0) / textosUsuario.length),
+                    rotulo: 'Média por Texto'
+                }
+            ];
+
+            container.innerHTML = estatisticas.map(estat => `
+                <div class="item-estatistica-dicionario">
+                    <span class="valor-estatistica-dicionario">${estat.valor}</span>
+                    <span class="rotulo-estatistica-dicionario">${estat.rotulo}</span>
+                </div>
+            `).join('');
+        }
+
+        function exibirDicionarioPessoal() {
+            const container = document.getElementById('lista-dicionario-pessoal');
+            const top50 = palavrasFiltradas.slice(0, 50);
+
+            if (top50.length === 0) {
+                container.innerHTML = '<p class="texto-centralizado">Nenhuma palavra encontrada</p>';
+                return;
+            }
+
+            container.innerHTML = top50.map((palavra, index) => `
+                <div class="item-dicionario" data-rank="${index + 1}">
+                    <span class="palavra-dicionario">${palavra.palavra}</span>
+                    <span class="frequencia-dicionario">${palavra.frequencia} ocorrências</span>
+                    <span class="porcentagem-dicionario">${palavra.porcentagem}%</span>
+                </div>
+            `).join('');
+        }
+
+        function filtrarPalavras() {
+            const termo = document.getElementById('buscar-palavras').value.toLowerCase();
+            
+            if (!termo) {
+                palavrasFiltradas = [...todasPalavras];
+            } else {
+                palavrasFiltradas = todasPalavras.filter(p => 
+                    p.palavra.toLowerCase().includes(termo)
+                );
+            }
+            
+            exibirDicionarioPessoal();
+        }
+
+        function exportarDicionario() {
+            if (todasPalavras.length === 0) {
+                alert('Nenhum dado para exportar');
+                return;
+            }
+
+            const dados = {
+                usuario: usuarioLogado.nome,
+                dataExportacao: new Date().toISOString(),
+                totalPalavras: todasPalavras.length,
+                palavras: todasPalavras.slice(0, 100) // Top 100 palavras
+            };
+
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `dicionario-pessoal-${usuarioLogado.nome}-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert('Dicionário exportado com sucesso!');
+        }
+
+        function exibirMensagemSemDados() {
+            document.querySelector('.card-dicionario-pessoal').innerHTML = `
+                <div class="texto-centralizado">
+                    <div style="font-size: 4em; margin-bottom: 20px;">📖</div>
+                    <h2>Dicionário Vazio</h2>
+                    <p>Faça algumas análises de texto para construir seu dicionário pessoal.</p>
+                    <a href="../dashboard/nova-analise.html" class="botao botao-sucesso" style="margin-top: 20px;">
+                        📝 Começar a Escrever
+                    </a>
+                </div>
+            `;
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar dicionário quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarDicionarioPessoal);
+    </script>
+</body>
+</html>

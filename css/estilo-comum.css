@@ -1,0 +1,69 @@
+/* Reset e Variáveis Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cor-primaria: #3498db;
+    --cor-secundaria: #2980b9;
+    --cor-sucesso: #27ae60;
+    --cor-perigo: #e74c3c;
+    --cor-aviso: #f39c12;
+    --cor-texto: #2c3e50;
+    --cor-texto-claro: #7f8c8d;
+    --cor-fundo: #f8f9fa;
+    --cor-borda: #ddd;
+    --sombra: 0 2px 10px rgba(0,0,0,0.1);
+    --borda-radius: 10px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+}
+
+/* Classes de Utilidade (compartilhadas) */
+.oculto {
+    display: none !important;
+}
+
+.visivel {
+    display: block !important;
+}
+
+.texto-centralizado {
+    text-align: center;
+}
+
+.texto-direita {
+    text-align: right;
+}
+
+.margem-inferior-pequena {
+    margin-bottom: 10px;
+}
+
+.margem-inferior-media {
+    margin-bottom: 20px;
+}
+
+.margem-inferior-grande {
+    margin-bottom: 30px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}

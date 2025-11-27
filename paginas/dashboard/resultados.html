@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="resultados.css">
+</head>
+<body class="pagina-resultados">
+    <div class="container">
+        <div class="cabecalho-resultados">
+            <h1 class="titulo-principal">📊 Resultados da Análise</h1>
+            <p class="subtitulo">Palavras mais frequentes no seu texto</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="nova-analise.html" class="botao botao-pequeno">📝 Nova Análise</a></li>
+                <li class="item-navegacao"><a href="../historico/meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-resultados">
+            <h2 class="titulo-card" id="titulo-analise">Análise do Texto</h2>
+            
+            <div class="estatisticas-rapidas-resultados">
+                <div class="grade-estatisticas">
+                    <div class="item-estatistica">
+                        <span class="valor-estatistica" id="total-palavras">0</span>
+                        <span class="rotulo-estatistica">Total de Palavras</span>
+                    </div>
+                    <div class="item-estatistica">
+                        <span class="valor-estatistica" id="palavras-unicas">0</span>
+                        <span class="rotulo-estatistica">Palavras Únicas</span>
+                    </div>
+                    <div class="item-estatistica">
+                        <span class="valor-estatistica" id="diversidade">0%</span>
+                        <span class="rotulo-estatistica">Diversidade</span>
+                    </div>
+                    <div class="item-estatistica">
+                        <span class="valor-estatistica" id="data-analise">-</span>
+                        <span class="rotulo-estatistica">Data</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="margem-inferior-media" style="margin-top: 30px;">🔝 Top 15 Palavras Mais Frequentes</h3>
+            
+            <div class="ranking-palavras">
+                <div class="lista-palavras-resultados" id="lista-palavras-frequentes">
+                    <p class="texto-centralizado">Carregando resultados...</p>
+                </div>
+            </div>
+
+            <div class="texto-centralizado" style="margin-top: 30px;">
+                <button class="botao botao-sucesso" onclick="salvarAnalisePermanente()">💾 Salvar Análise</button>
+                <a href="analise-detalhada.html" class="botao">📈 Análise Detalhada</a>
+                <a href="nova-analise.html" class="botao">📝 Nova Análise</a>
+                <a href="../historico/meus-textos.html" class="botao botao-secundario">📚 Meus Textos</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        let analiseAtual = null;
+
+        function carregarResultados() {
+            // Buscar última análise ou da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const analiseId = urlParams.get('id');
+            
+            if (analiseId) {
+                // Carregar análise específica
+                const textos = JSON.parse(localStorage.getItem('textos')) || [];
+                analiseAtual = textos.find(t => t.id === analiseId && t.usuarioId === usuarioLogado.id);
+            } else {
+                // Carregar última análise
+                analiseAtual = JSON.parse(localStorage.getItem('ultimaAnalise'));
+            }
+
+            if (!analiseAtual || !analiseAtual.analise) {
+                document.getElementById('lista-palavras-frequentes').innerHTML = 
+                    '<p class="texto-centralizado">Nenhuma análise encontrada. <a href="nova-analise.html">Faça uma nova análise</a></p>';
+                return;
+            }
+
+            exibirResultados(analiseAtual);
+        }
+
+        function exibirResultados(analise) {
+            const { titulo, data, analise: resultado } = analise;
+
+            // Atualizar título
+            document.getElementById('titulo-analise').textContent = titulo;
+            document.getElementById('data-analise').textContent = new Date(data).toLocaleDateString();
+
+            // Atualizar estatísticas
+            document.getElementById('total-palavras').textContent = resultado.totalPalavras;
+            document.getElementById('palavras-unicas').textContent = resultado.palavrasUnicas;
+            document.getElementById('diversidade').textContent = resultado.diversidade + '%';
+
+            // Atualizar lista de palavras
+            const listaContainer = document.getElementById('lista-palavras-frequentes');
+            
+            if (resultado.palavras && resultado.palavras.length > 0) {
+                listaContainer.innerHTML = resultado.palavras.map((item, index) => `
+                    <div class="item-palavra-resultados">
+                        <span class="palavra-resultados">${item.palavra}</span>
+                        <div>
+                            <span class="frequencia-resultados">${item.frequencia}</span>
+                            <span class="porcentagem-resultados">${item.porcentagem}%</span>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                listaContainer.innerHTML = '<p class="texto-centralizado">Nenhuma palavra frequente encontrada</p>';
+            }
+        }
+
+        function salvarAnalisePermanente() {
+            if (!analiseAtual) {
+                alert('Nenhuma análise para salvar');
+                return;
+            }
+
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            
+            // Verificar se já existe
+            const existe = textos.find(t => t.id === analiseAtual.id);
+            
+            if (!existe) {
+                textos.push(analiseAtual);
+                localStorage.setItem('textos', JSON.stringify(textos));
+                alert('✅ Análise salva com sucesso!');
+            } else {
+                alert('ℹ️ Esta análise já está salva');
+            }
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar resultados quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarResultados);
+    </script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Texto - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="detalhe-texto.css">
+</head>
+<body class="pagina-detalhe-texto">
+    <div class="container">
+        <div class="cabecalho-detalhe-texto">
+            <h1 class="titulo-principal">📄 Detalhes do Texto</h1>
+            <p class="subtitulo">Visualização completa da análise</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="../dashboard/index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao"><a href="comparar-textos.html" class="botao botao-pequeno">⚖️ Comparar</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-detalhe-texto">
+            <div class="cabecalho-detalhe">
+                <div class="info-texto-detalhe">
+                    <h2 id="titulo-texto-detalhe">Carregando...</h2>
+                    <p class="meta-info-texto"><strong>Data de criação:</strong> <span id="data-texto">-</span></p>
+                </div>
+                <div class="acoes-detalhe-texto">
+                    <button class="botao-reanalisar" onclick="reanalisarTexto()">🔄 Reanalisar</button>
+                    <button class="botao-excluir-texto" onclick="excluirTexto()">🗑️ Excluir</button>
+                </div>
+            </div>
+
+            <div class="grade-dashboard" style="margin-top: 20px;">
+                <div class="item-grade">
+                    <h3>📝 Texto Original</h3>
+                    <div class="conteudo-texto-detalhe">
+                        <div class="area-texto-original" id="texto-original">
+                            <p>Carregando texto...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-grade">
+                    <h3>📊 Estatísticas</h3>
+                    <div class="estatisticas-detalhe">
+                        <div class="lista-metricas-detalhe">
+                            <div class="item-metrica-detalhe">
+                                <span class="valor-metrica" id="total-detalhe">0</span>
+                                <span class="rotulo-metrica">Total de Palavras</span>
+                            </div>
+                            <div class="item-metrica-detalhe">
+                                <span class="valor-metrica" id="unicas-detalhe">0</span>
+                                <span class="rotulo-metrica">Palavras Únicas</span>
+                            </div>
+                            <div class="item-metrica-detalhe">
+                                <span class="valor-metrica" id="diversidade-detalhe">0%</span>
+                                <span class="rotulo-metrica">Diversidade Lexical</span>
+                            </div>
+                            <div class="item-metrica-detalhe">
+                                <span class="valor-metrica" id="top-palavra">-</span>
+                                <span class="rotulo-metrica">Palavra Mais Frequente</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 20px;">🔝 Top 10 Palavras</h4>
+                    <div class="lista-top-palavras-detalhe" id="lista-top-palavras">
+                        <!-- Lista de palavras será inserida aqui -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="texto-centralizado" style="margin-top: 30px;">
+                <a href="meus-textos.html" class="botao botao-secundario">← Voltar para Meus Textos</a>
+                <a href="../dashboard/analise-detalhada.html" class="botao">📈 Ver Análise Detalhada</a>
+                <a href="comparar-textos.html" class="botao botao-sucesso">⚖️ Comparar com Outro Texto</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        let textoAtual = null;
+
+        function carregarDetalheTexto() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const textoId = urlParams.get('id');
+            
+            if (!textoId) {
+                alert('Texto não especificado');
+                window.location.href = 'meus-textos.html';
+                return;
+            }
+
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            textoAtual = textos.find(t => t.id === textoId && t.usuarioId === usuarioLogado.id);
+            
+            if (!textoAtual) {
+                alert('Texto não encontrado');
+                window.location.href = 'meus-textos.html';
+                return;
+            }
+
+            exibirDetalheTexto(textoAtual);
+        }
+
+        function exibirDetalheTexto(texto) {
+            // Informações básicas
+            document.getElementById('titulo-texto-detalhe').textContent = texto.titulo;
+            document.getElementById('data-texto').textContent = new Date(texto.data).toLocaleDateString();
+            
+            // Texto original
+            document.getElementById('texto-original').textContent = texto.texto + (texto.texto.length === 1000 ? '...' : '');
+
+            // Estatísticas
+            if (texto.analise) {
+                const analise = texto.analise;
+                
+                document.getElementById('total-detalhe').textContent = analise.totalPalavras;
+                document.getElementById('unicas-detalhe').textContent = analise.palavrasUnicas;
+                document.getElementById('diversidade-detalhe').textContent = analise.diversidade + '%';
+                document.getElementById('top-palavra').textContent = analise.palavras[0] ? analise.palavras[0].palavra : '-';
+
+                // Top palavras
+                const topPalavrasContainer = document.getElementById('lista-top-palavras');
+                const top10 = analise.palavras.slice(0, 10);
+                
+                topPalavrasContainer.innerHTML = top10.map(palavra => `
+                    <div class="item-top-palavra">
+                        <span class="palavra-destaque">${palavra.palavra}</span>
+                        <span class="frequencia-destaque">${palavra.frequencia} (${palavra.porcentagem}%)</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function reanalisarTexto() {
+            if (textoAtual && confirm('Deseja reanalisar este texto?')) {
+                localStorage.setItem('textoParaReanalise', JSON.stringify(textoAtual));
+                window.location.href = '../dashboard/nova-analise.html?reanalise=true';
+            }
+        }
+
+        function excluirTexto() {
+            if (textoAtual && confirm('Tem certeza que deseja excluir este texto? Esta ação não pode ser desfeita.')) {
+                const textos = JSON.parse(localStorage.getItem('textos')) || [];
+                const textosAtualizados = textos.filter(t => t.id !== textoAtual.id);
+                localStorage.setItem('textos', JSON.stringify(textosAtualizados));
+                
+                alert('Texto excluído com sucesso!');
+                window.location.href = 'meus-textos.html';
+            }
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar detalhes quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarDetalheTexto);
+    </script>
+</body>
+</html>

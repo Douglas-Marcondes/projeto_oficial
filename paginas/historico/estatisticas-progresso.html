@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estatísticas de Progresso - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="estatisticas-progresso.css">
+</head>
+<body class="pagina-estatisticas-progresso">
+    <div class="container">
+        <div class="cabecalho-estatisticas-progresso">
+            <h1 class="titulo-principal">📈 Estatísticas de Progresso</h1>
+            <p class="subtitulo">Acompanhe sua evolução na escrita</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="../dashboard/index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao"><a href="estatisticas-progresso.html" class="botao botao-pequeno">📈 Progresso</a></li>
+                <li class="item-navegacao"><a href="../ferramentas/dicionario-pessoal.html" class="botao botao-pequeno">📖 Dicionário</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-estatisticas-progresso">
+            <h2 class="titulo-card-estatisticas-progresso">📊 Evolução da Sua Escrita</h2>
+            
+            <div class="grade-dashboard">
+                <div class="item-grade">
+                    <h3>📈 Diversidade Lexical ao Longo do Tempo</h3>
+                    <div class="grafico-evolucao-container">
+                        <div class="linha-evolucao" id="grafico-evolucao">
+                            <!-- Gráfico será gerado via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-grade">
+                    <h3>🎯 Métricas de Progresso</h3>
+                    <div class="metricas-progresso-container">
+                        <div class="lista-metricas-progresso" id="metricas-progresso">
+                            <!-- Métricas serão preenchidas via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grade-dashboard" style="margin-top: 20px;">
+                <div class="item-grade">
+                    <h3>📝 Seus Padrões de Escrita</h3>
+                    <div class="padroes-escrita-container">
+                        <div id="padroes-escrita">
+                            <p><strong>Palavras que você está usando mais:</strong></p>
+                            <div class="lista-palavras-evolucao" id="palavras-aumento"></div>
+                            
+                            <p style="margin-top: 15px;"><strong>Palavras que você está usando menos:</strong></p>
+                            <div class="lista-palavras-evolucao" id="palavras-reducao"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-grade">
+                    <h3>🏆 Conquistas</h3>
+                    <div class="conquistas-container" id="conquistas">
+                        <!-- Conquistas serão preenchidas via JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="texto-centralizado" style="margin-top: 30px;">
+                <a href="../dashboard/nova-analise.html" class="botao botao-sucesso">📝 Continuar Escrevendo</a>
+                <a href="../ferramentas/metas-escrita.html" class="botao">🎯 Definir Metas</a>
+                <a href="meus-textos.html" class="botao botao-secundario">📚 Ver Todos os Textos</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        function carregarEstatisticasProgresso() {
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            const textosUsuario = textos.filter(t => t.usuarioId === usuarioLogado.id);
+            
+            if (textosUsuario.length === 0) {
+                exibirMensagemSemDados();
+                return;
+            }
+
+            exibirGraficoEvolucao(textosUsuario);
+            exibirMetricasProgresso(textosUsuario);
+            exibirPadroesEscrita(textosUsuario);
+            exibirConquistas(textosUsuario);
+        }
+
+        function exibirGraficoEvolucao(textos) {
+            const graficoContainer = document.getElementById('grafico-evolucao');
+            const textosOrdenados = textos.sort((a, b) => new Date(a.data) - new Date(b.data));
+            
+            // Pegar os últimos 6 textos ou todos se tiver menos
+            const textosParaGrafico = textosOrdenados.slice(-6);
+            const valoresDiversidade = textosParaGrafico.map(t => parseFloat(t.analise?.diversidade) || 0);
+            
+            if (valoresDiversidade.length === 0) return;
+
+            const maxDiversidade = Math.max(...valoresDiversidade);
+            const containerWidth = 500; // Largura aproximada do container
+            const containerHeight = 200;
+            const espacamento = containerWidth / (valoresDiversidade.length - 1);
+
+            let html = '';
+            let pontosAnteriores = [];
+
+            textosParaGrafico.forEach((texto, index) => {
+                const diversidade = parseFloat(texto.analise?.diversidade) || 0;
+                const x = index * espacamento;
+                const y = containerHeight - (diversidade / maxDiversidade) * containerHeight;
+                
+                // Ponto
+                html += `<div class="ponto-evolucao" style="left: ${x}px; top: ${y}px;" title="${new Date(texto.data).toLocaleDateString()}: ${diversidade}%"></div>`;
+                
+                // Linha conectando pontos
+                if (index > 0) {
+                    const xAnterior = (index - 1) * espacamento;
+                    const yAnterior = containerHeight - (valoresDiversidade[index - 1] / maxDiversidade) * containerHeight;
+                    
+                    const distancia = Math.sqrt(Math.pow(x - xAnterior, 2) + Math.pow(y - yAnterior, 2));
+                    const angulo = Math.atan2(y - yAnterior, x - xAnterior) * 180 / Math.PI;
+                    
+                    html += `<div class="linha-conexao" style="left: ${xAnterior}px; top: ${yAnterior}px; width: ${distancia}px; transform: rotate(${angulo}deg);"></div>`;
+                }
+            });
+
+            graficoContainer.innerHTML = html;
+        }
+
+        function exibirMetricasProgresso(textos) {
+            const container = document.getElementById('metricas-progresso');
+            
+            const totalTextos = textos.length;
+            const mediaPalavras = textos.reduce((sum, t) => sum + (t.analise?.totalPalavras || 0), 0) / totalTextos;
+            
+            // Calcular evolução da diversidade
+            const textosOrdenados = textos.sort((a, b) => new Date(a.data) - new Date(b.data));
+            const primeiraDiversidade = parseFloat(textosOrdenados[0]?.analise?.diversidade) || 0;
+            const ultimaDiversidade = parseFloat(textosOrdenados[textosOrdenados.length - 1]?.analise?.diversidade) || 0;
+            const evolucaoDiversidade = ultimaDiversidade - primeiraDiversidade;
+            
+            // Período analisado
+            const primeiraData = new Date(textosOrdenados[0].data);
+            const ultimaData = new Date(textosOrdenados[textosOrdenados.length - 1].data);
+            const diferencaDias = Math.ceil((ultimaData - primeiraData) / (1000 * 60 * 60 * 24));
+
+            const metricas = [
+                { label: 'Média de Palavras por Texto', valor: Math.round(mediaPalavras) },
+                { label: 'Evolução da Diversidade', valor: `${evolucaoDiversidade >= 0 ? '+' : ''}${evolucaoDiversidade.toFixed(1)}%` },
+                { label: 'Textos Analisados', valor: totalTextos },
+                { label: 'Período Analisado', valor: `${diferencaDias} dias` }
+            ];
+
+            container.innerHTML = metricas.map(metrica => `
+                <div class="item-metrica-progresso">
+                    <span class="valor-metrica-progresso">${metrica.valor}</span>
+                    <span class="rotulo-metrica-progresso">${metrica.label}</span>
+                </div>
+            `).join('');
+        }
+
+        function exibirPadroesEscrita(textos) {
+            // Análise simplificada de padrões
+            const todasPalavras = {};
+            
+            textos.forEach(texto => {
+                if (texto.analise && texto.analise.palavras) {
+                    texto.analise.palavras.forEach(palavraObj => {
+                        if (!todasPalavras[palavraObj.palavra]) {
+                            todasPalavras[palavraObj.palavra] = [];
+                        }
+                        todasPalavras[palavraObj.palavra].push({
+                            frequencia: palavraObj.frequencia,
+                            data: texto.data
+                        });
+                    });
+                }
+            });
+
+            // Exemplo simplificado - em um sistema real, faria análise temporal mais complexa
+            const palavrasAumento = Object.keys(todasPalavras).slice(0, 3);
+            const palavrasReducao = Object.keys(todasPalavras).slice(3, 6);
+
+            document.getElementById('palavras-aumento').innerHTML = palavrasAumento.map(p => 
+                `<span class="tag-evolucao tag-aumento">${p}</span>`
+            ).join('');
+
+            document.getElementById('palavras-reducao').innerHTML = palavrasReducao.map(p => 
+                `<span class="tag-evolucao tag-reducao">${p}</span>`
+            ).join('');
+        }
+
+        function exibirConquistas(textos) {
+            const container = document.getElementById('conquistas');
+            const conquistas = [];
+
+            // Conquista: Primeiros textos
+            if (textos.length >= 1) {
+                conquistas.push({
+                    tipo: 'sucesso',
+                    titulo: '🎉 Primeira Análise!',
+                    descricao: 'Você realizou sua primeira análise de texto'
+                });
+            }
+
+            // Conquista: 5 textos
+            if (textos.length >= 5) {
+                conquistas.push({
+                    tipo: 'info',
+                    titulo: '📚 Escrita Consistente',
+                    descricao: 'Você analisou 5 textos diferentes'
+                });
+            }
+
+            // Conquista: Diversidade melhorada
+            const textosOrdenados = textos.sort((a, b) => new Date(a.data) - new Date(b.data));
+            if (textosOrdenados.length >= 2) {
+                const primeiraDiversidade = parseFloat(textosOrdenados[0]?.analise?.diversidade) || 0;
+                const ultimaDiversidade = parseFloat(textosOrdenados[textosOrdenados.length - 1]?.analise?.diversidade) || 0;
+                
+                if (ultimaDiversidade > primeiraDiversidade + 5) {
+                    conquistas.push({
+                        tipo: 'sucesso',
+                        titulo: '📈 Diversidade Melhorada!',
+                        descricao: `Sua diversidade lexical aumentou ${(ultimaDiversidade - primeiraDiversidade).toFixed(1)}%`
+                    });
+                }
+            }
+
+            if (conquistas.length === 0) {
+                container.innerHTML = '<p>Continue escrevendo para desbloquear conquistas!</p>';
+                return;
+            }
+
+            container.innerHTML = conquistas.map(conquista => `
+                <div class="conquista-item conquista-${conquista.tipo}">
+                    <strong>${conquista.titulo}</strong><br>
+                    ${conquista.descricao}
+                </div>
+            `).join('');
+        }
+
+        function exibirMensagemSemDados() {
+            document.querySelector('.card-estatisticas-progresso').innerHTML = `
+                <div class="texto-centralizado">
+                    <div style="font-size: 4em; margin-bottom: 20px;">📊</div>
+                    <h2>Nenhum Dado de Progresso</h2>
+                    <p>Faça algumas análises de texto para ver suas estatísticas de progresso.</p>
+                    <a href="../dashboard/nova-analise.html" class="botao botao-sucesso" style="margin-top: 20px;">
+                        📝 Fazer Primeira Análise
+                    </a>
+                </div>
+            `;
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar estatísticas quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarEstatisticasProgresso);
+    </script>
+</body>
+</html>

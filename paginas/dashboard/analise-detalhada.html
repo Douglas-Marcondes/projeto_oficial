@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Detalhada - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/style-comum.css">
+    <link rel="stylesheet" href="analise-detalhada.css">
+</head>
+<body class="pagina-analise-detalhada">
+    <div class="container">
+        <div class="cabecalho-analise-detalhada">
+            <h1 class="titulo-principal">📈 Análise Detalhada</h1>
+            <p class="subtitulo">Estatísticas avançadas do seu texto</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="nova-analise.html" class="botao botao-pequeno">📝 Nova Análise</a></li>
+                <li class="item-navegacao"><a href="resultados.html" class="botao botao-pequeno">📊 Resultados</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-analise-detalhada">
+            <h2 class="titulo-card-analise-detalhada" id="titulo-analise-detalhada">Análise Completa do Texto</h2>
+            
+            <div class="grade-dashboard">
+                <div class="item-grade">
+                    <h3>📊 Distribuição de Frequência</h3>
+                    <div class="grafico-container">
+                        <div class="grafico-barras" id="grafico-barras">
+                            <!-- Gráfico será gerado via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-grade">
+                    <h3>📋 Métricas Avançadas</h3>
+                    <div class="lista-metricas-detalhada" id="lista-metricas-avancadas">
+                        <!-- Métricas serão preenchidas via JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="grade-dashboard" style="margin-top: 20px;">
+                <div class="item-grade">
+                    <h3>💡 Sugestões de Melhoria</h3>
+                    <div id="sugestoes-melhoria">
+                        <div class="sugestoes-container">
+                            <div class="sugestao-item">
+                                <strong>🎯 Variedade Lexical:</strong> Tente usar sinônimos para palavras muito repetidas
+                            </div>
+                            <div class="sugestao-item">
+                                <strong>📝 Estrutura de Texto:</strong> Considere dividir frases muito longas
+                            </div>
+                            <div class="sugestao-item">
+                                <strong>✨ Vocabulário:</strong> Explore palavras menos comuns para enriquecer o texto
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-grade">
+                    <h3>🎯 Palavras para Observar</h3>
+                    <div id="palavras-observar">
+                        <p>Estas palavras aparecem com muita frequência:</p>
+                        <div class="palavras-observar-lista" id="lista-palavras-repetidas">
+                            <!-- Palavras serão preenchidas via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="texto-centralizado" style="margin-top: 30px;">
+                <button class="botao-salvar-analise" onclick="salvarAnalise()">💾 Salvar Análise</button>
+                <a href="resultados.html" class="botao">📊 Voltar aos Resultados</a>
+                <a href="nova-analise.html" class="botao botao-secundario">📝 Nova Análise</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        let analiseAtual = null;
+
+        function carregarAnaliseDetalhada() {
+            // Buscar última análise
+            analiseAtual = JSON.parse(localStorage.getItem('ultimaAnalise'));
+            
+            if (!analiseAtual || !analiseAtual.analise) {
+                alert('Nenhuma análise encontrada. Faça uma análise primeiro.');
+                window.location.href = 'nova-analise.html';
+                return;
+            }
+
+            exibirAnaliseDetalhada(analiseAtual);
+        }
+
+        function exibirAnaliseDetalhada(analise) {
+            const { titulo, analise: resultado } = analise;
+
+            // Atualizar título
+            document.getElementById('titulo-analise-detalhada').textContent = `Análise Detalhada: ${titulo}`;
+
+            // Gerar gráfico de barras
+            gerarGraficoBarras(resultado.palavras);
+
+            // Exibir métricas avançadas
+            exibirMetricasAvancadas(resultado);
+
+            // Exibir palavras para observar
+            exibirPalavrasObservar(resultado.palavras);
+        }
+
+        function gerarGraficoBarras(palavras) {
+            const graficoContainer = document.getElementById('grafico-barras');
+            const top10 = palavras.slice(0, 10);
+            const maxFrequencia = Math.max(...top10.map(p => p.frequencia));
+
+            graficoContainer.innerHTML = top10.map(palavra => {
+                const altura = (palavra.frequencia / maxFrequencia) * 200;
+                return `
+                    <div class="barra-grafico" 
+                         style="height: ${altura}px;" 
+                         data-value="${palavra.frequencia}"
+                         title="${palavra.palavra}: ${palavra.frequencia} vezes">
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function exibirMetricasAvancadas(resultado) {
+            const container = document.getElementById('lista-metricas-avancadas');
+            
+            const metricas = [
+                { label: 'Densidade Lexical', valor: calcularDensidadeLexical(resultado) + '%' },
+                { label: 'Palavras por Frase', valor: calcularPalavrasPorFrase(resultado) },
+                { label: 'Índice de Repetição', valor: calcularIndiceRepeticao(resultado) + '%' },
+                { label: 'Complexidade Vocabular', valor: calcularComplexidadeVocabular(resultado) }
+            ];
+
+            container.innerHTML = metricas.map(metrica => `
+                <div class="item-metrica-detalhada">
+                    <span>${metrica.label}</span>
+                    <span>${metrica.valor}</span>
+                </div>
+            `).join('');
+        }
+
+        function calcularDensidadeLexical(resultado) {
+            return ((resultado.palavrasUnicas / resultado.totalPalavras) * 100).toFixed(1);
+        }
+
+        function calcularPalavrasPorFrase(resultado) {
+            // Estimativa simples: 15 palavras por frase em média
+            return Math.round(resultado.totalPalavras / 15);
+        }
+
+        function calcularIndiceRepeticao(resultado) {
+            const top5Frequencia = resultado.palavras.slice(0, 5).reduce((sum, p) => sum + p.frequencia, 0);
+            return ((top5Frequencia / resultado.totalPalavras) * 100).toFixed(1);
+        }
+
+        function calcularComplexidadeVocabular(resultado) {
+            const diversidade = parseFloat(resultado.diversidade);
+            if (diversidade < 30) return 'Baixa';
+            if (diversidade < 50) return 'Média';
+            return 'Alta';
+        }
+
+        function exibirPalavrasObservar(palavras) {
+            const container = document.getElementById('lista-palavras-repetidas');
+            const palavrasAltaFrequencia = palavras.filter(p => parseFloat(p.porcentagem) > 5);
+            
+            if (palavrasAltaFrequencia.length > 0) {
+                container.innerHTML = palavrasAltaFrequencia.map(p => `
+                    <span class="tag-palavra">${p.palavra} (${p.porcentagem}%)</span>
+                `).join('');
+            } else {
+                container.innerHTML = '<p style="color: var(--cor-sucesso);">✅ Nenhuma palavra com frequência excessiva</p>';
+            }
+        }
+
+        function salvarAnalise() {
+            if (!analiseAtual) {
+                alert('Nenhuma análise para salvar');
+                return;
+            }
+
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            const existe = textos.find(t => t.id === analiseAtual.id);
+            
+            if (!existe) {
+                textos.push(analiseAtual);
+                localStorage.setItem('textos', JSON.stringify(textos));
+                alert('✅ Análise detalhada salva com sucesso!');
+            } else {
+                alert('ℹ️ Esta análise já está salva');
+            }
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar análise quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarAnaliseDetalhada);
+    </script>
+</body>
+</html>

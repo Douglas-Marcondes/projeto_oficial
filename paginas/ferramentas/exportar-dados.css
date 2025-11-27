@@ -1,0 +1,207 @@
+/* Estilos específicos para Exportar Dados */
+.pagina-exportar-dados {
+    background: linear-gradient(135deg, #fd79a8 0%, #a29bfe 100%);
+    min-height: 100vh;
+}
+
+.cabecalho-exportar-dados {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.card-exportar-dados {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.titulo-card-exportar-dados {
+    color: var(--cor-texto);
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 1.8em;
+    border-bottom: 3px solid #fd79a8;
+    padding-bottom: 15px;
+}
+
+.alerta-exportar {
+    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border-left: 5px solid #fd79a8;
+}
+
+/* Seleção de Dados */
+.selecao-dados-exportar {
+    background: rgba(253, 121, 168, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.grade-selecao-dados {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.opcoes-dados-container,
+.formatos-exportacao-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.titulo-secao-exportar {
+    color: var(--cor-texto);
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    border-bottom: 2px solid #fd79a8;
+    padding-bottom: 8px;
+}
+
+.grupo-opcao-dado {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.grupo-opcao-dado:hover {
+    background: rgba(253, 121, 168, 0.05);
+}
+
+.rotulo-opcao-dado {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    color: var(--cor-texto);
+    cursor: pointer;
+}
+
+.descricao-opcao-dado {
+    font-size: 0.85em;
+    color: var(--cor-texto-claro);
+    margin-left: 25px;
+    margin-top: 5px;
+}
+
+.grupo-formato-exportar {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.grupo-formato-exportar:hover {
+    background: rgba(162, 155, 254, 0.05);
+}
+
+.rotulo-formato-exportar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    color: var(--cor-texto);
+    cursor: pointer;
+}
+
+.descricao-formato-exportar {
+    font-size: 0.85em;
+    color: var(--cor-texto-claro);
+    margin-left: 25px;
+    margin-top: 5px;
+}
+
+.controle-periodo-exportar {
+    margin-top: 20px;
+}
+
+.botao-preparar-exportacao {
+    background: linear-gradient(135deg, #fd79a8 0%, #a29bfe 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 30px auto;
+}
+
+.botao-preparar-exportacao:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(253, 121, 168, 0.3);
+}
+
+/* Área de Download */
+.area-download-exportar {
+    background: rgba(162, 155, 254, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 25px;
+}
+
+.resumo-exportacao {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.grade-resumo-exportacao {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.item-resumo-exportacao {
+    text-align: center;
+    padding: 15px;
+}
+
+.rotulo-resumo {
+    color: var(--cor-texto-claro);
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.valor-resumo {
+    font-weight: bold;
+    color: var(--cor-texto);
+    font-size: 1.1em;
+}
+
+.botao-download-exportar {
+    background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.botao-download-exportar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 184, 148, 0.3);
+}

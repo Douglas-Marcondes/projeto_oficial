@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Textos - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="meus-textos.css">
+</head>
+<body class="pagina-meus-textos">
+    <div class="container">
+        <div class="cabecalho-meus-textos">
+            <h1 class="titulo-principal">📚 Meus Textos</h1>
+            <p class="subtitulo">Histórico completo das suas análises</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="../dashboard/index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="../dashboard/nova-analise.html" class="botao botao-pequeno">📝 Nova Análise</a></li>
+                <li class="item-navegacao"><a href="meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao"><a href="estatisticas-progresso.html" class="botao botao-pequeno">📈 Progresso</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-meus-textos">
+            <div class="cabecalho-tabela">
+                <h2 class="titulo-card-meus-textos">Todos os Textos Analisados</h2>
+                <div class="busca-meus-textos">
+                    <input type="text" id="buscar-textos" class="campo-busca-textos" placeholder="Buscar textos..." oninput="filtrarTextos()">
+                    <button class="botao botao-pequeno" onclick="filtrarTextos()">🔍 Buscar</button>
+                </div>
+            </div>
+
+            <div class="tabela-container">
+                <table class="tabela-meus-textos">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Título</th>
+                            <th>Total Palavras</th>
+                            <th>Palavras Únicas</th>
+                            <th>Diversidade</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-textos">
+                        <tr>
+                            <td colspan="6" class="texto-centralizado">Carregando textos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="texto-centralizado" style="margin-top: 20px;">
+                <div id="paginacao" class="paginacao-meus-textos">
+                    <button class="botao-paginacao" onclick="mudarPagina(-1)" id="btn-anterior">Anterior</button>
+                    <span id="info-paginacao">Página 1 de 1</span>
+                    <button class="botao-paginacao" onclick="mudarPagina(1)" id="btn-proximo">Próxima</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="texto-centralizado">
+            <a href="../dashboard/nova-analise.html" class="botao botao-sucesso">📝 Fazer Nova Análise</a>
+            <a href="estatisticas-progresso.html" class="botao">📈 Ver Estatísticas de Progresso</a>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        let textosFiltrados = [];
+        let paginaAtual = 1;
+        const textosPorPagina = 10;
+
+        function carregarTextos() {
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            textosFiltrados = textos.filter(t => t.usuarioId === usuarioLogado.id);
+            
+            // Ordenar por data (mais recente primeiro)
+            textosFiltrados.sort((a, b) => new Date(b.data) - new Date(a.data));
+            
+            filtrarTextos();
+        }
+
+        function filtrarTextos() {
+            const termoBusca = document.getElementById('buscar-textos').value.toLowerCase();
+            
+            let textosFiltradosBusca = textosFiltrados;
+            
+            if (termoBusca) {
+                textosFiltradosBusca = textosFiltrados.filter(texto => 
+                    texto.titulo.toLowerCase().includes(termoBusca) ||
+                    texto.texto.toLowerCase().includes(termoBusca)
+                );
+            }
+            
+            exibirTextos(textosFiltradosBusca);
+            atualizarPaginacao(textosFiltradosBusca.length);
+        }
+
+        function exibirTextos(textos) {
+            const inicio = (paginaAtual - 1) * textosPorPagina;
+            const fim = inicio + textosPorPagina;
+            const textosPagina = textos.slice(inicio, fim);
+            
+            const tbody = document.getElementById('tabela-textos');
+            
+            if (textosPagina.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="sem-textos">
+                            <div class="icone">📝</div>
+                            <p>Nenhum texto encontrado</p>
+                            <a href="../dashboard/nova-analise.html" class="botao botao-pequeno" style="margin-top: 10px;">
+                                Fazer Primeira Análise
+                            </a>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = textosPagina.map(texto => `
+                <tr>
+                    <td class="coluna-data">${new Date(texto.data).toLocaleDateString()}</td>
+                    <td class="coluna-titulo">${texto.titulo}</td>
+                    <td class="coluna-numeros">${texto.analise?.totalPalavras || 0}</td>
+                    <td class="coluna-numeros">${texto.analise?.palavrasUnicas || 0}</td>
+                    <td class="coluna-numeros">${texto.analise?.diversidade || 0}%</td>
+                    <td class="coluna-acoes">
+                        <div class="botoes-acao">
+                            <button class="botao-visualizar" onclick="visualizarTexto('${texto.id}')">👁️ Ver</button>
+                            <button class="botao-excluir" onclick="excluirTexto('${texto.id}')">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function atualizarPaginacao(totalTextos) {
+            const totalPaginas = Math.ceil(totalTextos / textosPorPagina);
+            const infoPaginacao = document.getElementById('info-paginacao');
+            const btnAnterior = document.getElementById('btn-anterior');
+            const btnProximo = document.getElementById('btn-proximo');
+            
+            infoPaginacao.textContent = `Página ${paginaAtual} de ${totalPaginas}`;
+            btnAnterior.disabled = paginaAtual === 1;
+            btnProximo.disabled = paginaAtual === totalPaginas || totalPaginas === 0;
+        }
+
+        function mudarPagina(direcao) {
+            const totalPaginas = Math.ceil(textosFiltrados.length / textosPorPagina);
+            const novaPagina = paginaAtual + direcao;
+            
+            if (novaPagina >= 1 && novaPagina <= totalPaginas) {
+                paginaAtual = novaPagina;
+                filtrarTextos();
+            }
+        }
+
+        function visualizarTexto(id) {
+            window.location.href = `detalhe-texto.html?id=${id}`;
+        }
+
+        function excluirTexto(id) {
+            if (confirm('Tem certeza que deseja excluir este texto? Esta ação não pode ser desfeita.')) {
+                const textos = JSON.parse(localStorage.getItem('textos')) || [];
+                const textosAtualizados = textos.filter(t => t.id !== id);
+                localStorage.setItem('textos', JSON.stringify(textosAtualizados));
+                
+                // Recarregar a lista
+                carregarTextos();
+                alert('Texto excluído com sucesso!');
+            }
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar textos quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarTextos);
+    </script>
+</body>
+</html>

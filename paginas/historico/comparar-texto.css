@@ -1,0 +1,187 @@
+/* Estilos específicos para Comparar Textos */
+.pagina-comparar-textos {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    min-height: 100vh;
+}
+
+.cabecalho-comparar-textos {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.card-comparar-textos {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.titulo-card-comparar-textos {
+    color: var(--cor-texto);
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 1.8em;
+    border-bottom: 3px solid #fab1a0;
+    padding-bottom: 15px;
+}
+
+/* Seleção de Textos */
+.selecao-textos-comparacao {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.texto-selecao-container {
+    background: rgba(250, 177, 160, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px dashed #fab1a0;
+}
+
+.titulo-selecao-texto {
+    color: var(--cor-texto);
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.campo-selecao-texto {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #fab1a0;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.campo-selecao-texto:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(250, 177, 160, 0.1);
+}
+
+.info-texto-selecionado {
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.botao-comparar-container {
+    text-align: center;
+    margin: 25px 0;
+}
+
+.botao-comparar-textos {
+    background: linear-gradient(135deg, #fab1a0 0%, #e17055 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-comparar-textos:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(225, 112, 85, 0.3);
+}
+
+/* Resultados da Comparação */
+.resultados-comparacao-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-top: 25px;
+}
+
+.tabela-comparacao {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tabela-comparacao th {
+    background: linear-gradient(135deg, #fab1a0 0%, #e17055 100%);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.tabela-comparacao td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #e1e8ed;
+}
+
+.tabela-comparacao tr:nth-child(even) {
+    background: rgba(250, 177, 160, 0.05);
+}
+
+.diferenca-positiva {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.diferenca-negativa {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Palavras em Comum e Exclusivas */
+.palavras-comuns-container,
+.palavras-exclusivas-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.lista-palavras-comuns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.tag-palavra-comum {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+.grade-palavras-exclusivas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.lista-palavras-exclusivas {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    background: rgba(250, 177, 160, 0.05);
+    border-radius: 8px;
+}

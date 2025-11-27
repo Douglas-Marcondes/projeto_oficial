@@ -1,0 +1,286 @@
+/* Estilos específicos para Configurações */
+.pagina-configuracoes {
+    background: linear-gradient(135deg, #636e72 0%, #2d3436 100%);
+    min-height: 100vh;
+}
+
+.cabecalho-configuracoes {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.card-configuracoes {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.titulo-card-configuracoes {
+    color: var(--cor-texto);
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 1.8em;
+    border-bottom: 3px solid #636e72;
+    padding-bottom: 15px;
+}
+
+/* Seções de Configurações */
+.secao-configuracoes {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-left: 5px solid #636e72;
+}
+
+.titulo-secao-configuracoes {
+    color: var(--cor-texto);
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Perfil do Usuário */
+.formulario-perfil {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.grupo-formulario-perfil {
+    margin-bottom: 20px;
+}
+
+.rotulo-perfil {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.campo-perfil {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.campo-perfil:focus {
+    border-color: #636e72;
+    box-shadow: 0 0 0 3px rgba(99, 110, 114, 0.1);
+    outline: none;
+}
+
+.campo-bio {
+    grid-column: 1 / -1;
+    min-height: 100px;
+    resize: vertical;
+}
+
+.botao-salvar-perfil {
+    background: linear-gradient(135deg, #636e72 0%, #2d3436 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    grid-column: 1 / -1;
+    justify-self: start;
+}
+
+.botao-salvar-perfil:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45, 52, 54, 0.3);
+}
+
+/* Segurança */
+.formulario-seguranca {
+    max-width: 400px;
+}
+
+.botao-alterar-senha {
+    background: #74b9ff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-alterar-senha:hover {
+    background: #0984e3;
+    transform: translateY(-2px);
+}
+
+/* Preferências */
+.grupo-preferencia {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+}
+
+.grupo-preferencia:hover {
+    background: rgba(99, 110, 114, 0.05);
+}
+
+.rotulo-preferencia {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    color: var(--cor-texto);
+    cursor: pointer;
+}
+
+.controle-preferencia {
+    margin-top: 10px;
+}
+
+.botao-salvar-preferencias {
+    background: linear-gradient(135deg, #636e72 0%, #2d3436 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.botao-salvar-preferencias:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(45, 52, 54, 0.3);
+}
+
+/* Palavras Ignoradas */
+.controle-palavras-ignoradas {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: end;
+}
+
+.campo-nova-palavra {
+    flex: 1;
+}
+
+.botao-adicionar-palavra {
+    background: #00b894;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-adicionar-palavra:hover {
+    background: #00a085;
+    transform: translateY(-2px);
+}
+
+.lista-palavras-ignoradas {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.item-palavra-ignorada {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    background: rgba(99, 110, 114, 0.05);
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+.item-palavra-ignorada:hover {
+    background: rgba(99, 110, 114, 0.1);
+}
+
+.botao-remover-palavra {
+    background: #e17055;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: all 0.3s ease;
+}
+
+.botao-remover-palavra:hover {
+    background: #d63031;
+    transform: scale(1.05);
+}
+
+/* Zona de Perigo */
+.zona-perigo {
+    background: linear-gradient(135deg, #e17055 0%, #d63031 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 30px;
+}
+
+.titulo-zona-perigo {
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.grade-zona-perigo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.item-zona-perigo {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.botao-perigo {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.botao-perigo:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}

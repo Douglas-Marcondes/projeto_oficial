@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="recuperar-senha.css">
+</head>
+<body class="pagina-recuperar-senha">
+    <div class="conteudo-recuperar-senha">
+        <div class="cabecalho-recuperar-senha">
+            <h1 class="titulo-recuperar-senha">📊 Mapeador de Vocabulário</h1>
+            <p class="subtitulo-recuperar-senha">Recupere o acesso à sua conta</p>
+        </div>
+
+        <div class="card-recuperar-senha">
+            <h2 class="titulo-card-recuperar-senha">Recuperar Senha</h2>
+            
+            <div class="alerta-recuperar-senha">
+                <strong>📧 Email de recuperação:</strong> Digite seu email para receber um link de recuperação.
+            </div>
+
+            <div class="grupo-formulario-recuperar-senha">
+                <label class="rotulo-recuperar-senha" for="email">Email</label>
+                <input type="email" id="email" class="campo-recuperar-senha" placeholder="seu@email.com">
+            </div>
+
+            <button class="botao-recuperar-senha" onclick="recuperarSenha()">
+                📨 Enviar Link de Recuperação
+            </button>
+
+            <div class="voltar-recuperar-senha">
+                <a href="login.html" class="link-voltar-recuperar">← Voltar ao Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function recuperarSenha() {
+            const email = document.getElementById('email').value;
+
+            if (!email) {
+                alert('Por favor, digite seu email');
+                return;
+            }
+
+            // Verificar se o email existe
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            const usuario = usuarios.find(u => u.email === email);
+
+            if (!usuario) {
+                alert('Email não encontrado. Verifique se digitou corretamente.');
+                return;
+            }
+
+            // Simular envio de email (em produção, isso seria uma API real)
+            const botao = document.querySelector('.botao-recuperar-senha');
+            const textoOriginal = botao.textContent;
+            
+            botao.textContent = '⏳ Enviando...';
+            botao.disabled = true;
+
+            setTimeout(() => {
+                // Em produção, aqui enviaria um email real
+                // Por enquanto, vamos simular o processo
+                
+                // Gerar token de recuperação (simulado)
+                const tokenRecuperacao = {
+                    email: email,
+                    token: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+                    expiracao: new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 horas
+                };
+
+                // Salvar token (em produção, isso seria no backend)
+                localStorage.setItem('tokenRecuperacao', JSON.stringify(tokenRecuperacao));
+
+                botao.textContent = textoOriginal;
+                botao.disabled = false;
+
+                // Mostrar mensagem de sucesso
+                alert(`📧 Email enviado com sucesso!\n\nEnviamos um link de recuperação para: ${email}\n\n(Em um sistema real, o usuário receberia um email com um link para redefinir a senha)`);
+                
+                // Redirecionar de volta para login
+                window.location.href = 'login.html';
+                
+            }, 2000);
+        }
+
+        // Enter para enviar
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                recuperarSenha();
+            }
+        });
+    </script>
+</body>
+</html>

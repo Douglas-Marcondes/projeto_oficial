@@ -1,0 +1,178 @@
+/* Estilos específicos para Dicionário Pessoal */
+.pagina-dicionario-pessoal {
+    background: linear-gradient(135deg, #81ecec 0%, #00cec9 100%);
+    min-height: 100vh;
+}
+
+.cabecalho-dicionario-pessoal {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.card-dicionario-pessoal {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.cabecalho-dicionario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.titulo-card-dicionario {
+    color: var(--cor-texto);
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.busca-dicionario {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.campo-busca-dicionario {
+    padding: 10px 15px;
+    border: 2px solid #00cec9;
+    border-radius: 25px;
+    font-size: 14px;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+.campo-busca-dicionario:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 206, 201, 0.1);
+}
+
+/* Estatísticas do Dicionário */
+.estatisticas-dicionario {
+    background: linear-gradient(135deg, #00cec9 0%, #00a8a8 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.grade-estatisticas-dicionario {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.item-estatistica-dicionario {
+    text-align: center;
+    padding: 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.item-estatistica-dicionario:hover {
+    transform: translateY(-3px);
+}
+
+.valor-estatistica-dicionario {
+    font-size: 2em;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.rotulo-estatistica-dicionario {
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+/* Lista do Dicionário */
+.lista-dicionario-pessoal {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.item-dicionario {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    border-left: 5px solid #00cec9;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.item-dicionario:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 206, 201, 0.3);
+}
+
+.palavra-dicionario {
+    font-weight: bold;
+    color: var(--cor-texto);
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.frequencia-dicionario {
+    color: #00cec9;
+    font-weight: 500;
+    font-size: 1.1em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.porcentagem-dicionario {
+    color: var(--cor-texto-claro);
+    font-size: 0.9em;
+    background: rgba(0, 206, 201, 0.1);
+    padding: 3px 8px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+/* Ranking visual */
+.item-dicionario::before {
+    content: attr(data-rank);
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: #00cec9;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.8em;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.item-dicionario[data-rank="1"]::before { background: #ffd700; }
+.item-dicionario[data-rank="2"]::before { background: #c0c0c0; }
+.item-dicionario[data-rank="3"]::before { background: #cd7f32; }
+
+.botoes-dicionario {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,104 @@
+/* Estilos específicos para a página de Cadastro */
+.pagina-cadastro {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.conteudo-cadastro {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+}
+
+.cabecalho-cadastro {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.titulo-cadastro {
+    color: white;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitulo-cadastro {
+    color: rgba(255,255,255,0.8);
+    font-size: 1.1em;
+}
+
+.card-cadastro {
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.titulo-card-cadastro {
+    color: var(--cor-texto);
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.grupo-formulario-cadastro {
+    margin-bottom: 20px;
+}
+
+.rotulo-cadastro {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.campo-cadastro {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.campo-cadastro:focus {
+    border-color: #f5576c;
+    box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
+    outline: none;
+}
+
+.botao-cadastro {
+    width: 100%;
+    background: #f5576c;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.botao-cadastro:hover {
+    background: #e84a5f;
+    transform: translateY(-1px);
+}
+
+.voltar-cadastro {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.link-voltar {
+    color: #f5576c;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link-voltar:hover {
+    text-decoration: underline;
+}

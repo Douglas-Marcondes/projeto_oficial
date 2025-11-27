@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparar Textos - Mapeador de Vocabulário</title>
+    <link rel="stylesheet" href="../../css/estilo-comum.css">
+    <link rel="stylesheet" href="comparar-textos.css">
+</head>
+<body class="pagina-comparar-textos">
+    <div class="container">
+        <div class="cabecalho-comparar-textos">
+            <h1 class="titulo-principal">⚖️ Comparar Textos</h1>
+            <p class="subtitulo">Analise diferenças entre dois textos</p>
+        </div>
+
+        <nav class="navegacao">
+            <ul class="lista-navegacao">
+                <li class="item-navegacao"><a href="../dashboard/index.html" class="botao botao-pequeno">🏠 Dashboard</a></li>
+                <li class="item-navegacao"><a href="meus-textos.html" class="botao botao-pequeno">📚 Meus Textos</a></li>
+                <li class="item-navegacao"><a href="estatisticas-progresso.html" class="botao botao-pequeno">📈 Progresso</a></li>
+                <li class="item-navegacao"><a href="#" onclick="sair()" class="botao botao-perigo botao-pequeno">🚪 Sair</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-comparar-textos">
+            <h2 class="titulo-card-comparar-textos">Selecionar Textos para Comparar</h2>
+            
+            <div class="selecao-textos-comparacao">
+                <div class="texto-selecao-container">
+                    <h3>📄 Texto 1</h3>
+                    <div class="grupo-formulario">
+                        <label class="rotulo">Selecionar Texto</label>
+                        <select id="texto1" class="campo-selecao-texto" onchange="atualizarInfoTexto(1)">
+                            <option value="">Selecione um texto...</option>
+                        </select>
+                    </div>
+                    <div id="info-texto1" class="oculto">
+                        <p><strong>Data:</strong> <span id="data-texto1">-</span></p>
+                        <p><strong>Palavras:</strong> <span id="total-texto1">0</span></p>
+                        <p><strong>Diversidade:</strong> <span id="diversidade-texto1">0%</span></p>
+                    </div>
+                </div>
+
+                <div class="texto-selecao-container">
+                    <h3>📄 Texto 2</h3>
+                    <div class="grupo-formulario">
+                        <label class="rotulo">Selecionar Texto</label>
+                        <select id="texto2" class="campo-selecao-texto" onchange="atualizarInfoTexto(2)">
+                            <option value="">Selecione um texto...</option>
+                        </select>
+                    </div>
+                    <div id="info-texto2" class="oculto">
+                        <p><strong>Data:</strong> <span id="data-texto2">-</span></p>
+                        <p><strong>Palavras:</strong> <span id="total-texto2">0</span></p>
+                        <p><strong>Diversidade:</strong> <span id="diversidade-texto2">0%</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="texto-centralizado">
+                <button class="botao-comparar-textos" onclick="compararTextos()">
+                    ⚖️ Comparar Textos
+                </button>
+            </div>
+        </div>
+
+        <!-- Resultados da Comparação -->
+        <div id="resultados-comparacao" class="resultados-comparacao-container oculto">
+            <h2 class="titulo-card">📊 Resultados da Comparação</h2>
+            
+            <div class="grade-dashboard">
+                <div class="item-grade">
+                    <h3>📈 Comparação de Métricas</h3>
+                    <table class="tabela-comparacao">
+                        <thead>
+                            <tr>
+                                <th>Métrica</th>
+                                <th id="nome-texto1">Texto 1</th>
+                                <th id="nome-texto2">Texto 2</th>
+                                <th>Diferença</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-comparacao">
+                            <!-- Dados serão inseridos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="item-grade">
+                    <h3>🎯 Palavras em Comum</h3>
+                    <div class="palavras-comuns-container">
+                        <div id="palavras-comuns">
+                            <!-- Lista de palavras comuns -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grade-dashboard" style="margin-top: 20px;">
+                <div class="item-grade">
+                    <h3>🔝 Top Palavras Exclusivas</h3>
+                    <div id="palavras-exclusivas-texto1">
+                        <h4 id="titulo-exclusivas1">Texto 1</h4>
+                        <div class="lista-palavras" id="lista-exclusivas1"></div>
+                    </div>
+                </div>
+
+                <div class="item-grade">
+                    <h3>🔝 Top Palavras Exclusivas</h3>
+                    <div id="palavras-exclusivas-texto2">
+                        <h4 id="titulo-exclusivas2">Texto 2</h4>
+                        <div class="lista-palavras" id="lista-exclusivas2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="texto-centralizado">
+            <a href="meus-textos.html" class="botao botao-secundario">📚 Gerenciar Textos</a>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se está logado
+        const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+        if (!usuarioLogado) {
+            window.location.href = '../auth/login.html';
+        }
+
+        let textosDisponiveis = [];
+        let texto1 = null;
+        let texto2 = null;
+
+        function carregarTextosParaComparacao() {
+            const textos = JSON.parse(localStorage.getItem('textos')) || [];
+            textosDisponiveis = textos.filter(t => t.usuarioId === usuarioLogado.id);
+            
+            const select1 = document.getElementById('texto1');
+            const select2 = document.getElementById('texto2');
+            
+            // Limpar selects
+            select1.innerHTML = '<option value="">Selecione um texto...</option>';
+            select2.innerHTML = '<option value="">Selecione um texto...</option>';
+            
+            // Popular selects
+            textosDisponiveis.forEach(texto => {
+                const option = `<option value="${texto.id}">${texto.titulo} (${new Date(texto.data).toLocaleDateString()})</option>`;
+                select1.innerHTML += option;
+                select2.innerHTML += option;
+            });
+        }
+
+        function atualizarInfoTexto(numeroTexto) {
+            const select = document.getElementById(`texto${numeroTexto}`);
+            const infoContainer = document.getElementById(`info-texto${numeroTexto}`);
+            const textoId = select.value;
+            
+            if (!textoId) {
+                infoContainer.classList.add('oculto');
+                if (numeroTexto === 1) texto1 = null;
+                if (numeroTexto === 2) texto2 = null;
+                return;
+            }
+            
+            const texto = textosDisponiveis.find(t => t.id === textoId);
+            if (!texto) return;
+            
+            if (numeroTexto === 1) texto1 = texto;
+            if (numeroTexto === 2) texto2 = texto;
+            
+            document.getElementById(`data-texto${numeroTexto}`).textContent = new Date(texto.data).toLocaleDateString();
+            document.getElementById(`total-texto${numeroTexto}`).textContent = texto.analise?.totalPalavras || 0;
+            document.getElementById(`diversidade-texto${numeroTexto}`).textContent = (texto.analise?.diversidade || 0) + '%';
+            
+            infoContainer.classList.remove('oculto');
+        }
+
+        function compararTextos() {
+            if (!texto1 || !texto2) {
+                alert('Selecione dois textos para comparar');
+                return;
+            }
+
+            if (texto1.id === texto2.id) {
+                alert('Selecione textos diferentes para comparação');
+                return;
+            }
+
+            exibirResultadosComparacao();
+        }
+
+        function exibirResultadosComparacao() {
+            // Atualizar nomes
+            document.getElementById('nome-texto1').textContent = texto1.titulo;
+            document.getElementById('nome-texto2').textContent = texto2.titulo;
+            document.getElementById('titulo-exclusivas1').textContent = texto1.titulo;
+            document.getElementById('titulo-exclusivas2').textContent = texto2.titulo;
+
+            // Comparar métricas
+            compararMetricas();
+
+            // Encontrar palavras comuns e exclusivas
+            encontrarPalavrasComunsEExclusivas();
+
+            // Mostrar resultados
+            document.getElementById('resultados-comparacao').classList.remove('oculto');
+            document.getElementById('resultados-comparacao').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function compararMetricas() {
+            const analise1 = texto1.analise;
+            const analise2 = texto2.analise;
+            
+            const metricas = [
+                {
+                    nome: 'Total de Palavras',
+                    valor1: analise1?.totalPalavras || 0,
+                    valor2: analise2?.totalPalavras || 0
+                },
+                {
+                    nome: 'Palavras Únicas',
+                    valor1: analise1?.palavrasUnicas || 0,
+                    valor2: analise2?.palavrasUnicas || 0
+                },
+                {
+                    nome: 'Diversidade Lexical',
+                    valor1: parseFloat(analise1?.diversidade) || 0,
+                    valor2: parseFloat(analise2?.diversidade) || 0
+                },
+                {
+                    nome: 'Palavra Mais Frequente',
+                    valor1: analise1?.palavras[0]?.palavra || 'N/A',
+                    valor2: analise2?.palavras[0]?.palavra || 'N/A'
+                }
+            ];
+
+            const tbody = document.getElementById('tabela-comparacao');
+            tbody.innerHTML = metricas.map(metrica => {
+                let diferenca = '';
+                
+                if (typeof metrica.valor1 === 'number' && typeof metrica.valor2 === 'number') {
+                    const diff = metrica.valor2 - metrica.valor1;
+                    diferenca = `${diff >= 0 ? '+' : ''}${diff.toFixed(1)}`;
+                }
+                
+                return `
+                    <tr>
+                        <td>${metrica.nome}</td>
+                        <td>${metrica.valor1}</td>
+                        <td>${metrica.valor2}</td>
+                        <td>${diferenca}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function encontrarPalavrasComunsEExclusivas() {
+            const palavras1 = texto1.analise?.palavras || [];
+            const palavras2 = texto2.analise?.palavras || [];
+            
+            // Palavras comuns (presentes em ambos os textos)
+            const palavrasComuns = palavras1.filter(p1 => 
+                palavras2.some(p2 => p2.palavra === p1.palavra)
+            ).slice(0, 10);
+            
+            // Palavras exclusivas do texto 1
+            const palavrasExclusivas1 = palavras1.filter(p1 => 
+                !palavras2.some(p2 => p2.palavra === p1.palavra)
+            ).slice(0, 5);
+            
+            // Palavras exclusivas do texto 2
+            const palavrasExclusivas2 = palavras2.filter(p2 => 
+                !palavras1.some(p1 => p1.palavra === p2.palavra)
+            ).slice(0, 5);
+            
+            // Exibir palavras comuns
+            const containerComuns = document.getElementById('palavras-comuns');
+            if (palavrasComuns.length > 0) {
+                containerComuns.innerHTML = palavrasComuns.map(p => 
+                    `<span class="tag-palavra-comum">${p.palavra}</span>`
+                ).join('');
+            } else {
+                containerComuns.innerHTML = '<p>Nenhuma palavra em comum encontrada</p>';
+            }
+            
+            // Exibir palavras exclusivas
+            document.getElementById('lista-exclusivas1').innerHTML = palavrasExclusivas1.map(p => `
+                <div class="item-palavra">
+                    <span>${p.palavra}</span>
+                    <span>${p.frequencia}</span>
+                </div>
+            `).join('');
+            
+            document.getElementById('lista-exclusivas2').innerHTML = palavrasExclusivas2.map(p => `
+                <div class="item-palavra">
+                    <span>${p.palavra}</span>
+                    <span>${p.frequencia}</span>
+                </div>
+            `).join('');
+        }
+
+        function sair() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = '../auth/login.html';
+        }
+
+        // Carregar textos quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarTextosParaComparacao);
+    </script>
+</body>
+</html>
