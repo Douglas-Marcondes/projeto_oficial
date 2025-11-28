@@ -38,43 +38,76 @@
         </div>
     </div>
 
-    <script>
-        // Sistema de usuários local (simulado)
-        const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-        let usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
-        // Verificar se já está logado
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb4Rlzw-z9GSUFCS6TQ35SIyKETEgqg7g",
+            authDomain: "cadastro-tb-61070.firebaseapp.com",
+            databaseURL: "https://cadastro-tb-61070-default-rtdb.firebaseio.com",
+            projectId: "cadastro-tb-61070",
+            storageBucket: "cadastro-tb-61070.appspot.com",
+            messagingSenderId: "80187170645",
+            appId: "1:80187170645:web:552d5cb4ab1972766019dc"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Se já estiver logado, pula para o dashboard
+        const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
         if (usuarioLogado) {
-            window.location.href = '../dashboard/index.html';
+            window.location.href = "../dashboard/index.html";
         }
 
-        function fazerLogin() {
-            const email = document.getElementById('email').value;
-            const senha = document.getElementById('senha').value;
+        async function fazerLogin() {
+            const email = document.getElementById("email").value.trim();
+            const senha = document.getElementById("senha").value;
 
             if (!email || !senha) {
-                alert('Por favor, preencha todos os campos');
+                alert("Por favor, preencha todos os campos");
                 return;
             }
 
-            // Buscar usuário
-            const usuario = usuarios.find(u => u.email === email && u.senha === senha);
-            
-            if (usuario) {
+            try {
+                // Pega todos os usuários
+                const snapshot = await db.ref("usuarios").once("value");
+                const usuarios = snapshot.val();
+
+                if (!usuarios) {
+                    alert("Nenhum usuário encontrado.");
+                    return;
+                }
+
+                // Procura o usuário pelo email e senha
+                const listaUsuarios = Object.values(usuarios);
+                const usuario = listaUsuarios.find(u => u.email === email && u.senha === senha);
+
+                if (!usuario) {
+                    alert("Email ou senha incorretos");
+                    return;
+                }
+
                 // Login bem-sucedido
-                localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-                window.location.href = '../dashboard/index.html';
-            } else {
-                alert('Email ou senha incorretos');
+                localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+                window.location.href = "../dashboard/index.html";
+
+            } catch (erro) {
+                console.error("Erro ao fazer login:", erro);
+                alert("Erro ao fazer login. Verifique sua conexão.");
             }
         }
 
         // Enter para login
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
+        document.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
                 fazerLogin();
             }
         });
     </script>
+
 </body>
 </html>

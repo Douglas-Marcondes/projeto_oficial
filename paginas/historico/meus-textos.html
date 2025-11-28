@@ -68,12 +68,12 @@
         </div>
     </div>
 
-    <!-- 🔥 Firebase SDK (obrigatório para HTML puro) -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+    <!-- Firebase SDK Compatível com seu código de salvar -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
     <script>
-        // Configuração do Firebase
+        // Inicializar Firebase compat
         const firebaseConfig = {
             apiKey: "AIzaSyBb4Rlzw-z9GSUFCS6TQ35SIyKETEgqg7g",
             authDomain: "cadastro-tb-61070.firebaseapp.com",
@@ -84,14 +84,13 @@
             appId: "1:80187170645:web:552d5cb4ab1972766019dc"
         };
 
-        // Inicializa Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-    </script>
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
 
-    <!-- 🔥 Seu JavaScript original -->
-    <script>
-        // Verificar se está logado
+        const db = firebase.database();
+
+        // Usuário logado
         const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
         if (!usuarioLogado) {
             window.location.href = '../auth/login.html';
@@ -101,112 +100,150 @@
         let paginaAtual = 1;
         const textosPorPagina = 10;
 
+        // 🔥 CARREGAR TEXTOS
         function carregarTextos() {
-            const textos = JSON.parse(localStorage.getItem('textos')) || [];
-            textosFiltrados = textos.filter(t => t.usuarioId === usuarioLogado.id);
-            
-            textosFiltrados.sort((a, b) => new Date(b.data) - new Date(a.data));
-            
-            filtrarTextos();
+            const refAnalises = db.ref('analises');
+
+            refAnalises.once('value')
+                .then(snapshot => {
+                    const dados = snapshot.val() || {};
+                    const textos = [];
+
+                    // percorre cada usuário
+                    Object.entries(dados).forEach(([userId, analisesUser]) => {
+                        Object.entries(analisesUser).forEach(([idAnalise, t]) => {
+                            if (t.usuarioId === usuarioLogado.id) {
+                                textos.push({ ...t, idAnalise });
+                            }
+                        });
+                    });
+
+                    textosFiltrados = textos.sort((a, b) => new Date(b.data) - new Date(a.data));
+                    filtrarTextos();
+                })
+                .catch(err => console.error("Erro ao carregar análises:", err));
         }
 
+        // 🔎 FILTRAR
         function filtrarTextos() {
-            const termoBusca = document.getElementById('buscar-textos').value.toLowerCase();
-            
-            let textosFiltradosBusca = textosFiltrados;
-            
-            if (termoBusca) {
-                textosFiltradosBusca = textosFiltrados.filter(texto => 
-                    texto.titulo.toLowerCase().includes(termoBusca) ||
-                    texto.texto.toLowerCase().includes(termoBusca)
+            const termo = document.getElementById("buscar-textos").value.toLowerCase();
+            let resultado = textosFiltrados;
+
+            if (termo.trim() !== "") {
+                resultado = textosFiltrados.filter(t =>
+                    t.titulo.toLowerCase().includes(termo) ||
+                    t.textoOriginal.toLowerCase().includes(termo)
                 );
             }
-            
-            exibirTextos(textosFiltradosBusca);
-            atualizarPaginacao(textosFiltradosBusca.length);
+
+            exibirTextos(resultado);
+            atualizarPaginacao(resultado.length);
         }
 
+        // 📄 EXIBIR NA TABELA
         function exibirTextos(textos) {
             const inicio = (paginaAtual - 1) * textosPorPagina;
             const fim = inicio + textosPorPagina;
-            const textosPagina = textos.slice(inicio, fim);
-            
-            const tbody = document.getElementById('tabela-textos');
-            
-            if (textosPagina.length === 0) {
+            const pagina = textos.slice(inicio, fim);
+
+            const tbody = document.getElementById("tabela-textos");
+
+            if (pagina.length === 0) {
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="6" class="sem-textos">
                             <div class="icone">📝</div>
                             <p>Nenhum texto encontrado</p>
-                            <a href="../dashboard/nova-analise.html" class="botao botao-pequeno" style="margin-top: 10px;">
-                                Fazer Primeira Análise
-                            </a>
+                            <a href="../dashboard/nova-analise.html" class="botao botao-pequeno">Fazer Primeira Análise</a>
                         </td>
                     </tr>
                 `;
                 return;
             }
-            
-            tbody.innerHTML = textosPagina.map(texto => `
+
+            tbody.innerHTML = pagina.map(t => `
                 <tr>
-                    <td class="coluna-data">${new Date(texto.data).toLocaleDateString()}</td>
-                    <td class="coluna-titulo">${texto.titulo}</td>
-                    <td class="coluna-numeros">${texto.analise?.totalPalavras || 0}</td>
-                    <td class="coluna-numeros">${texto.analise?.palavrasUnicas || 0}</td>
-                    <td class="coluna-numeros">${texto.analise?.diversidade || 0}%</td>
-                    <td class="coluna-acoes">
-                        <div class="botoes-acao">
-                            <button class="botao-visualizar" onclick="visualizarTexto('${texto.id}')">👁️ Ver</button>
-                            <button class="botao-excluir" onclick="excluirTexto('${texto.id}')">🗑️</button>
-                        </div>
+                    <td>${new Date(t.data).toLocaleDateString()}</td>
+                    <td>${t.titulo}</td>
+                    <td>${t.resultado?.total ?? 0}</td>
+                    <td>${t.resultado?.unicas ?? 0}</td>
+                    <td>${t.resultado?.diversidade ?? 0}%</td>
+                    <td>
+                        <button class="botao-visualizar" onclick="visualizarTexto('${t.idAnalise}')">👁️ Ver</button>
+                        <button class="botao-editar" onclick="editarTexto('${t.idAnalise}')">✏️ Editar</button>
+                        <button class="botao-excluir" onclick="excluirTexto('${t.idAnalise}')">🗑️</button>
                     </td>
                 </tr>
-            `).join('');
+            `).join("");
         }
 
-        function atualizarPaginacao(totalTextos) {
-            const totalPaginas = Math.ceil(totalTextos / textosPorPagina);
-            const infoPaginacao = document.getElementById('info-paginacao');
-            const btnAnterior = document.getElementById('btn-anterior');
-            const btnProximo = document.getElementById('btn-proximo');
-            
-            infoPaginacao.textContent = `Página ${paginaAtual} de ${totalPaginas}`;
-            btnAnterior.disabled = paginaAtual === 1;
-            btnProximo.disabled = paginaAtual === totalPaginas || totalPaginas === 0;
+        // 📌 PAGINAÇÃO
+        function atualizarPaginacao(total) {
+            const totalPag = Math.ceil(total / textosPorPagina);
+            document.getElementById("info-paginacao").innerText = `Página ${paginaAtual} de ${totalPag}`;
+
+            document.getElementById("btn-anterior").disabled = paginaAtual === 1;
+            document.getElementById("btn-proximo").disabled = paginaAtual === totalPag || totalPag === 0;
         }
 
-        function mudarPagina(direcao) {
-            const totalPaginas = Math.ceil(textosFiltrados.length / textosPorPagina);
-            const novaPagina = paginaAtual + direcao;
-            
-            if (novaPagina >= 1 && novaPagina <= totalPaginas) {
-                paginaAtual = novaPagina;
+        function mudarPagina(dir) {
+            const totalPag = Math.ceil(textosFiltrados.length / textosPorPagina);
+            const nova = paginaAtual + dir;
+
+            if (nova >= 1 && nova <= totalPag) {
+                paginaAtual = nova;
                 filtrarTextos();
             }
         }
 
+        // 👁️ VISUALIZAR
         function visualizarTexto(id) {
             window.location.href = `detalhe-texto.html?id=${id}`;
         }
 
+        // ❌ EXCLUIR
         function excluirTexto(id) {
-            if (confirm('Tem certeza que deseja excluir este texto? Esta ação não pode ser desfeita.')) {
-                const textos = JSON.parse(localStorage.getItem('textos')) || [];
-                const textosAtualizados = textos.filter(t => t.id !== id);
-                localStorage.setItem('textos', JSON.stringify(textosAtualizados));
-                
+            if (!confirm("Tem certeza que deseja excluir este texto?")) return;
+
+            db.ref(`analises/${usuarioLogado.id}/${id}`).remove()
+                .then(() => {
+                    alert("Texto excluído com sucesso!");
+                    carregarTextos();
+                })
+                .catch(err => {
+                    alert("Erro ao excluir texto.");
+                    console.error(err);
+                });
+        }
+
+        // ✏️ EDITAR
+        function editarTexto(id) {
+            const novoTitulo = prompt("Digite o novo título:");
+            if (novoTitulo === null) return;
+
+            const novoTexto = prompt("Digite o novo texto:");
+            if (novoTexto === null) return;
+
+            db.ref(`analises/${usuarioLogado.id}/${id}`).update({
+                titulo: novoTitulo,
+                textoOriginal: novoTexto,
+                dataEdicao: new Date().toISOString()
+            }).then(() => {
+                alert("Texto atualizado com sucesso!");
                 carregarTextos();
-                alert('Texto excluído com sucesso!');
-            }
+            }).catch(err => {
+                alert("Erro ao atualizar texto.");
+                console.error(err);
+            });
         }
 
+        // 🚪 SAIR
         function sair() {
-            localStorage.removeItem('usuarioLogado');
-            window.location.href = '../auth/login.html';
+            localStorage.removeItem("usuarioLogado");
+            window.location.href = "../auth/login.html";
         }
 
-        document.addEventListener('DOMContentLoaded', carregarTextos);
+        document.addEventListener("DOMContentLoaded", carregarTextos);
     </script>
 </body>
 </html>

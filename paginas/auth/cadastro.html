@@ -47,10 +47,33 @@
         </div>
     </div>
 
+    <!-- Firebase (versão compat — ideal para HTML) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
     <script>
-        function fazerCadastro() {
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBb4Rlzw-z9GSUFCS6TQ35SIyKETEgqg7g",
+            authDomain: "cadastro-tb-61070.firebaseapp.com",
+            databaseURL: "https://cadastro-tb-61070-default-rtdb.firebaseio.com",
+            projectId: "cadastro-tb-61070",
+            storageBucket: "cadastro-tb-61070.appspot.com",
+            messagingSenderId: "80187170645",
+            appId: "1:80187170645:web:552d5cb4ab1972766019dc"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Inicializar Realtime Database
+        const db = firebase.database();
+    </script>
+
+    <script>
+        async function fazerCadastro() {
+            const nome = document.getElementById('nome').value.trim();
+            const email = document.getElementById('email').value.trim();
             const senha = document.getElementById('senha').value;
             const confirmarSenha = document.getElementById('confirmar-senha').value;
 
@@ -70,33 +93,42 @@
                 return;
             }
 
-            // Carregar usuários existentes
-            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            try {
+                // Verifica se email já existe
+                const usuariosSnapshot = await db.ref("usuarios").once("value");
+                const usuarios = usuariosSnapshot.val() || {};
 
-            // Verificar se email já existe
-            if (usuarios.find(u => u.email === email)) {
-                alert('Este email já está cadastrado');
-                return;
+                const emailExiste = Object.values(usuarios).some(u => u.email === email);
+
+                if (emailExiste) {
+                    alert("Este email já está cadastrado");
+                    return;
+                }
+
+                // Criar novo usuário com ID único
+                const novoId = Date.now().toString();
+
+                const novoUsuario = {
+                    id: novoId,
+                    nome: nome,
+                    email: email,
+                    senha: senha,
+                    dataCadastro: new Date().toISOString()
+                };
+
+                // Salvar no Firebase
+                await db.ref("usuarios/" + novoId).set(novoUsuario);
+
+                // Salvar login local
+                localStorage.setItem("usuarioLogado", JSON.stringify(novoUsuario));
+
+                alert("Conta criada com sucesso!");
+                window.location.href = "../dashboard/index.html";
+
+            } catch (erro) {
+                console.error("Erro ao cadastrar:", erro);
+                alert("Erro ao cadastrar. Verifique sua conexão.");
             }
-
-            // Criar novo usuário
-            const novoUsuario = {
-                id: Date.now().toString(),
-                nome: nome,
-                email: email,
-                senha: senha,
-                dataCadastro: new Date().toISOString()
-            };
-
-            // Salvar usuário
-            usuarios.push(novoUsuario);
-            localStorage.setItem('usuarios', JSON.stringify(usuarios));
-
-            // Login automático
-            localStorage.setItem('usuarioLogado', JSON.stringify(novoUsuario));
-            
-            alert('Conta criada com sucesso!');
-            window.location.href = '../dashboard/index.html';
         }
 
         // Enter para cadastrar
@@ -106,5 +138,6 @@
             }
         });
     </script>
+
 </body>
 </html>
