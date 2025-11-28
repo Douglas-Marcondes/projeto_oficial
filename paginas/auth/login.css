@@ -1,59 +1,57 @@
-/* ------------------------------ */
-/*  ESTILO PADRÃO DA PÁGINA       */
-/* ------------------------------ */
+/* ==============================
+   ESTILO PARA A PÁGINA DE LOGIN
+   ============================== */
 
-body.pagina-login {
-    background: linear-gradient(135deg, #4e73df, #224abe);
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
+/* Container principal da página */
+.pagina-login {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/* Container principal */
-.conteudo-login {
-    width: 100%;
-    max-width: 500px;
+    min-height: 100vh;
+    background-color: #f5f5f5;
     padding: 20px;
 }
 
-/* Cabeçalho */
+/* Conteúdo centralizado */
+.conteudo-login {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Cabeçalho da página */
 .cabecalho-login {
     text-align: center;
-    color: white;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .titulo-login {
-    font-size: 1.9rem;
+    font-size: 2rem;
+    color: #222;
     margin-bottom: 5px;
 }
 
 .subtitulo-login {
     font-size: 1rem;
-    opacity: 0.9;
+    color: #555;
 }
 
-/* Card */
+/* Card de login */
 .card-login {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    background-color: #fff;
+    padding: 25px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* Título do card */
 .titulo-card-login {
-    margin: 0 0 20px;
+    font-size: 1.5rem;
+    color: #222;
+    margin-bottom: 20px;
     text-align: center;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #333;
 }
 
-/* Formulário */
+/* Grupo de formulário */
 .grupo-formulario-login {
     display: flex;
     flex-direction: column;
@@ -62,90 +60,78 @@ body.pagina-login {
 
 .rotulo-login {
     margin-bottom: 5px;
-    font-weight: bold;
+    font-weight: 600;
     color: #333;
 }
 
 .campo-login {
-    padding: 12px;
-    border: 1px solid #cbd1d8;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    transition: 0.2s;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
 }
 
 .campo-login:focus {
+    border-color: #007bff;
     outline: none;
-    border-color: #4e73df;
-    box-shadow: 0 0 5px rgba(78, 115, 223, 0.5);
 }
 
-/* Botão */
+/* Botão de login */
 .botao-login {
     width: 100%;
     padding: 12px;
-    margin-top: 10px;
-    background-color: #4e73df;
-    color: white;
-    border: none;
-    border-radius: 8px;
     font-size: 1rem;
+    font-weight: 600;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 .botao-login:hover {
-    background-color: #2e59d9;
+    background-color: #0056b3;
 }
 
-/* Links extras */
+/* Links de criar conta e recuperar senha */
 .links-login {
-    margin-top: 15px;
     display: flex;
     justify-content: space-between;
+    margin-top: 15px;
+    font-size: 0.9rem;
 }
 
 .link-login {
-    color: #4e73df;
-    font-weight: bold;
+    color: #007bff;
     text-decoration: none;
-    transition: 0.2s;
 }
 
 .link-login:hover {
     text-decoration: underline;
 }
 
-/* ------------------------------ */
-/*  RESPONSIVIDADE                */
-/* ------------------------------ */
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+@media (max-width: 480px) {
+    .card-login {
+        padding: 20px 15px;
+    }
 
-@media (max-width: 600px) {
     .titulo-login {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+    }
+
+    .titulo-card-login {
+        font-size: 1.25rem;
     }
 
     .links-login {
         flex-direction: column;
         gap: 10px;
-        text-align: center;
-    }
-
-    .card-login {
-        padding: 20px;
-    }
-}
-
-@media (max-width: 400px) {
-    .titulo-login {
-        font-size: 1.4rem;
-    }
-
-    .subtitulo-login {
-        font-size: 0.9rem;
-    }
-
-    .card-login {
-        padding: 18px;
+        align-items: center;
     }
 }

@@ -1,75 +1,147 @@
-/* ------------------------------
-   DASHBOARD - CSS ESPECÍFICO
-   (Complementa o estilo-comum.css)
---------------------------------*/
+/* ==============================
+   ESTILO PARA DASHBOARD
+   ============================== */
+
+/* Container principal */
+.pagina-dashboard .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
 
 /* Cabeçalho */
 .cabecalho-dashboard {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .titulo-dashboard {
     font-size: 2rem;
-    color: var(--cor-primaria);
-    font-weight: 700;
+    color: #222;
+    margin-bottom: 5px;
 }
 
 .subtitulo-dashboard {
-    margin-top: 5px;
-    font-size: 1.1rem;
-    color: var(--cor-secundaria);
+    font-size: 1rem;
+    color: #555;
 }
 
 /* Navegação */
 .navegacao-dashboard {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
-/* Cards do Dashboard */
+.lista-navegacao-dashboard {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 0;
+}
+
+.item-navegacao-dashboard .botao {
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #fff;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+}
+
+.item-navegacao-dashboard .botao:hover {
+    background-color: #0056b3;
+}
+
+.botao-perigo {
+    background-color: #dc3545;
+}
+
+.botao-perigo:hover {
+    background-color: #a71d2a;
+}
+
+.botao-sucesso {
+    background-color: #173953;
+}
+
+.botao-sucesso:hover {
+    background-color: #122c63;
+}
+
+.botao-pequeno {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+}
+
+/* Grade de cards */
+.grade-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Card individual */
 .item-grade-dashboard {
-    min-height: 160px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* Título do card */
 .titulo-card-dashboard {
-    font-size: 1.2rem;
-    margin-bottom: 12px;
-    color: var(--cor-primaria);
+    font-size: 1.25rem;
+    margin-bottom: 15px;
 }
 
+/* Estatísticas rápidas */
 .estatisticas-rapidas-dashboard p {
-    margin-bottom: 6px;
-    font-size: 0.95rem;
+    margin: 6px 0;
 }
 
 /* Ações rápidas */
-.acoes-rapidas-dashboard {
-    display: flex;
-    flex-direction: column;
+.acoes-rapidas-dashboard .botao {
+    display: block;
+    text-align: center;
 }
 
-/* Últimas análises */
-#ultimas-analises div {
-    background: #f8f9fc;
-    padding: 10px;
-    border-radius: var(--radius);
-    margin-bottom: 8px;
+/* Últimas análises e palavras frequentes */
+#ultimas-analises, #palavras-frequentes-global {
+    max-height: 250px;
+    overflow-y: auto;
 }
 
-/* Palavras frequentes globais */
-#palavras-frequentes-global div {
-    background: #f8f9fc;
-    padding: 10px;
-    border-radius: var(--radius);
-    margin-bottom: 6px;
+.texto-centralizado {
+    text-align: center;
+    color: #555;
 }
 
-/* RESPONSIVIDADE */
-@media (max-width: 500px) {
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+@media (max-width: 768px) {
     .titulo-dashboard {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
-    .subtitulo-dashboard {
-        font-size: 1rem;
+
+    .titulo-card-dashboard {
+        font-size: 1.1rem;
+    }
+
+    .grade-dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .acoes-rapidas-dashboard .botao {
+        width: 100%;
     }
 }

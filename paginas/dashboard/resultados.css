@@ -1,147 +1,175 @@
-/* resultados.css - Estilo padronizado para página de resultados */
+/* ==============================
+   ESTILO PARA RESULTADOS
+   ============================== */
 
-body.pagina-resultados {
-  background: #f5f7fa;
-  padding: 20px;
+/* Container principal */
+.pagina-resultados .container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-}
-
+/* Cabeçalho */
 .cabecalho-resultados {
-  text-align: center;
-  margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.cabecalho-resultados .titulo-principal {
-  font-size: 2.3rem;
-  color: #333;
+.cabecalho-resultados h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    color: #222;
 }
 
 .cabecalho-resultados .subtitulo {
-  font-size: 1.1rem;
-  color: #555;
+    font-size: 1rem;
+    color: #555;
 }
 
 /* Navegação */
-.navegacao {
-  margin: 20px 0;
+.navegacao .lista-navegacao {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
-.lista-navegacao {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
+
+.navegacao .botao {
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.navegacao .botao:hover {
+    opacity: 0.85;
 }
 
 /* Card principal */
 .card-resultados {
-  background: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.titulo-card {
-  font-size: 1.7rem;
-  color: #222;
-  margin-bottom: 10px;
+/* Título do card */
+.card-resultados .titulo-card {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
 }
 
 /* Estatísticas rápidas */
 .estatisticas-rapidas-resultados {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .grade-estatisticas {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
 }
 
 .item-estatistica {
-  background: #ffffff;
-  padding: 15px;
-  text-align: center;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
 }
 
 .valor-estatistica {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #333;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 5px;
 }
 
 .rotulo-estatistica {
-  font-size: 0.95rem;
-  color: #666;
+    font-size: 0.85rem;
+    color: #555;
 }
 
-/* Lista de palavras */
+/* Ranking palavras */
 .ranking-palavras {
-  margin-top: 20px;
-}
-
-.lista-palavras-resultados {
-  background: #f9fafb;
-  border-radius: 10px;
-  padding: 20px;
-  border: 1px solid #e5e7eb;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
 }
 
 .item-palavra-resultados {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
 }
 
-.item-palavra-resultados:last-child {
-  border-bottom: none;
+.item-palavra-resultados .palavra-resultados {
+    font-weight: 600;
+    color: #333;
 }
 
-.palavra-resultados {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #333;
+.item-palavra-resultados .frequencia-resultados {
+    color: #3498db;
+    margin-right: 5px;
 }
 
-.frequencia-resultados {
-  font-weight: 700;
-  margin-right: 10px;
-}
-
-.porcentagem-resultados {
-  color: #666;
+.item-palavra-resultados .porcentagem-resultados {
+    color: #2ecc71;
 }
 
 /* Botões finais */
-.texto-centralizado a, 
-.texto-centralizado button {
-  margin: 5px;
+.texto-centralizado {
+    text-align: center;
 }
 
-/* Responsividade */
-@media (max-width: 600px) {
-  .titulo-principal {
-    font-size: 1.8rem;
-  }
+.texto-centralizado .botao {
+    margin: 5px;
+    min-width: 120px;
+}
 
-  .titulo-card {
-    font-size: 1.4rem;
-  }
+/* Classes auxiliares */
+.texto-centralizado p {
+    margin: 0;
+}
 
-  .item-palavra-resultados {
-    flex-direction: column;
-    gap: 5px;
-    text-align: center;
-  }
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+@media (max-width: 768px) {
+    .cabecalho-resultados h1 {
+        font-size: 1.5rem;
+    }
+
+    .grade-estatisticas {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .item-estatistica {
+        padding: 8px;
+    }
+
+    .item-palavra-resultados {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagina-resultados .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .cabecalho-resultados h1 {
+        font-size: 1.3rem;
+    }
+
+    .navegacao .botao {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
 }

@@ -1,210 +1,203 @@
-/* ===========================================
-    DICIONÁRIO PESSOAL - ESTILO PADRÃO
-=========================================== */
+/* ==============================
+   ESTILO PARA DICIONÁRIO PESSOAL
+   ============================== */
 
-.pagina-dicionario-pessoal {
-    background: var(--cor-fundo);
-    min-height: 100vh;
-    padding: 30px 20px;
-    display: flex;
-    justify-content: center;
+.pagina-dicionario-pessoal .container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-.container {
-    max-width: 1100px;
-    width: 100%;
-}
-
-/* ---------- Cabeçalho ---------- */
-
+/* Cabeçalho */
 .cabecalho-dicionario-pessoal {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
-.titulo-principal {
+.cabecalho-dicionario-pessoal h1 {
     font-size: 2rem;
-    font-weight: 700;
-    color: var(--cor-primaria);
+    color: #222;
+    margin-bottom: 5px;
 }
 
-.subtitulo {
+.cabecalho-dicionario-pessoal .subtitulo {
     font-size: 1rem;
-    color: var(--cor-texto-claro);
+    color: #555;
 }
 
-/* ---------- Navegação ---------- */
-
-.navegacao {
-    margin-bottom: 25px;
-}
-
-.lista-navegacao {
+/* Navegação */
+.navegacao .lista-navegacao {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
-.item-navegacao .botao-pequeno {
-    padding: 7px 13px;
-    font-size: .9rem;
-}
-
-/* ---------- Card principal ---------- */
-
+/* Card principal */
 .card-dicionario-pessoal {
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,.08);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* ---------- Cabeçalho do card ---------- */
-
+/* Cabeçalho do card e barra de busca */
 .cabecalho-dicionario {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 15px;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 .titulo-card-dicionario {
     font-size: 1.5rem;
-    color: var(--cor-primaria);
+    margin-bottom: 10px;
 }
 
-/* Busca */
+.busca-dicionario {
+    flex: 1;
+    max-width: 300px;
+}
 
 .campo-busca-dicionario {
-    width: 260px;
-    max-width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: .95rem;
-    transition: .2s ease;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
-.campo-busca-dicionario:focus {
-    border-color: var(--cor-primaria);
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, .2);
-    outline: none;
+/* Estatísticas gerais */
+.estatisticas-dicionario {
+    margin-top: 20px;
 }
-
-/* ---------- Estatísticas ---------- */
 
 .grade-estatisticas-dicionario {
-    margin-top: 25px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
 }
 
 .item-estatistica-dicionario {
-    background: #f7f9fc;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 20px;
+    flex: 1 1 45%;
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
     text-align: center;
 }
 
 .valor-estatistica-dicionario {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--cor-primaria);
     display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3498db;
 }
 
 .rotulo-estatistica-dicionario {
-    color: var(--cor-texto-claro);
-    font-size: .9rem;
+    display: block;
+    font-size: 0.9rem;
+    color: #555;
 }
 
-/* ---------- Lista de palavras ---------- */
-
+/* Lista de palavras */
 .lista-dicionario-pessoal {
-    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
 }
 
 .item-dicionario {
-    background: #fff;
-    border: 1px solid #eee;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    display: grid;
-    grid-template-columns: 1fr auto auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
     align-items: center;
-    gap: 10px;
-    transition: .2s ease;
-}
-
-.item-dicionario:hover {
-    background: #f8faff;
-    border-color: var(--cor-primaria);
 }
 
 .palavra-dicionario {
     font-weight: 600;
-    font-size: 1.05rem;
+    color: #333;
+    flex: 1;
 }
 
-.frequencia-dicionario {
-    color: var(--cor-texto-claro);
-}
-
+.frequencia-dicionario,
 .porcentagem-dicionario {
-    color: var(--cor-primaria);
-    font-weight: 600;
+    width: 80px;
+    text-align: right;
+    color: #3498db;
+    font-weight: 500;
 }
 
-/* ---------- Botões inferiores ---------- */
-
-.texto-centralizado {
-    text-align: center;
-}
-
-.botao {
+/* Botões inferiores */
+.texto-centralizado .botao {
     margin: 5px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-/* ---------- Responsividade ---------- */
+.botao-sucesso {
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    transition: 0.3s;
+}
 
-@media (max-width: 900px) {
+.botao-sucesso:hover {
+    background-color: #27ae60;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
     .grade-estatisticas-dicionario {
-        grid-template-columns: repeat(2, 1fr);
+        flex-direction: column;
     }
 
-    .item-dicionario {
-        grid-template-columns: 1fr auto;
-    }
-
-    .porcentagem-dicionario {
-        display: none; /* Limpa visual em telas menores */
-    }
-}
-
-@media (max-width: 600px) {
-    .titulo-principal {
-        font-size: 1.7rem;
+    .item-estatistica-dicionario {
+        flex: 1 1 100%;
     }
 
     .cabecalho-dicionario {
         flex-direction: column;
         align-items: flex-start;
+        gap: 10px;
     }
 
     .campo-busca-dicionario {
-        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .cabecalho-dicionario-pessoal h1 {
+        font-size: 1.5rem;
     }
 
-    .grade-estatisticas-dicionario {
-        grid-template-columns: 1fr;
+    .titulo-card-dicionario {
+        font-size: 1.2rem;
     }
 
-    .item-dicionario {
-        grid-template-columns: 1fr;
-        text-align: center;
+    .valor-estatistica-dicionario {
+        font-size: 1.2rem;
+    }
+
+    .rotulo-estatistica-dicionario {
+        font-size: 0.8rem;
+    }
+
+    .frequencia-dicionario,
+    .porcentagem-dicionario {
+        width: 60px;
+        font-size: 0.8rem;
+    }
+
+    .palavra-dicionario {
+        font-size: 0.9rem;
     }
 }

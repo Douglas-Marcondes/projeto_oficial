@@ -1,245 +1,163 @@
-/* ===========================================
-      COMPARAR TEXTOS - ESTILO PADRÃO
-=========================================== */
+/* ==============================
+   ESTILO PARA COMPARAR TEXTOS
+   ============================== */
 
-.pagina-comparar-textos {
-    background: var(--cor-fundo);
-    min-height: 100vh;
-    padding: 30px 20px;
-    display: flex;
-    justify-content: center;
+.pagina-comparar-textos .container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-.container {
-    max-width: 1100px;
-    width: 100%;
-}
-
-/* ---------- Cabeçalho ---------- */
-
+/* Cabeçalho */
 .cabecalho-comparar-textos {
     text-align: center;
-    margin-bottom: 30px;
-}
-
-.titulo-principal {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--cor-primaria);
-}
-
-.subtitulo {
-    color: var(--cor-texto-claro);
-    margin-top: -5px;
-}
-
-/* ---------- Navegação ---------- */
-
-.lista-navegacao {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.botao-pequeno {
-    padding: 7px 14px;
-}
-
-/* ---------- Card principal ---------- */
-
-.card-comparar-textos {
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,.08);
-    margin-bottom: 30px;
-}
-
-.titulo-card-comparar-textos {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--cor-primaria);
     margin-bottom: 20px;
 }
 
-/* ---------- Seleção de textos ---------- */
+.cabecalho-comparar-textos h1 {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 5px;
+}
 
+.cabecalho-comparar-textos .subtitulo {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Navegação */
+.navegacao .lista-navegacao {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Card principal */
+.card-comparar-textos {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* Seção de seleção de textos */
 .selecao-textos-comparacao {
     display: flex;
-    gap: 25px;
     flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
 }
 
 .texto-selecao-container {
-    background: #f7f9fc;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 20px;
-    flex: 1;
-    min-width: 280px;
-}
-
-.texto-selecao-container h3 {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    color: var(--cor-primaria);
-}
-
-/* Inputs */
-.campo-selecao-texto {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
+    flex: 1 1 45%;
+    background-color: #f8f8f8;
+    padding: 15px;
     border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-/* Informações do texto */
-#info-texto1, 
-#info-texto2 {
-    background: #fff;
-    border-radius: 8px;
-    padding: 12px;
-    border: 1px solid #e4e4e4;
-    margin-top: 10px;
-}
-
-#info-texto1 p,
-#info-texto2 p {
-    margin: 4px 0;
-}
-
-/* Oculto */
 .oculto {
     display: none;
 }
 
-/* Botão comparar */
+/* Botão Comparar */
 .botao-comparar-textos {
-    background: var(--cor-primaria);
+    background-color: #3498db;
     color: #fff;
-    padding: 14px 20px;
     border: none;
-    border-radius: 10px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: .2s ease;
+    transition: 0.3s;
 }
 
 .botao-comparar-textos:hover {
-    background: var(--cor-primaria-hover);
+    background-color: #2980b9;
 }
 
-/* ---------- Resultados ---------- */
-
-.resultados-comparacao-container {
-    background: #fff;
-    padding: 28px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,.08);
-    margin-bottom: 25px;
-}
-
-.titulo-card {
-    font-size: 1.5rem;
-    color: var(--cor-primaria);
-    margin-bottom: 20px;
-}
-
-/* ---------- Grade ---------- */
-
+/* Grade de resultados */
 .grade-dashboard {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
 }
 
 .item-grade {
-    background: #f7f9fc;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 20px;
+    flex: 1 1 45%;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-/* ---------- Tabela de métricas ---------- */
-
+/* Tabela de comparação */
 .tabela-comparacao {
     width: 100%;
     border-collapse: collapse;
 }
 
+.tabela-comparacao th, .tabela-comparacao td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
 .tabela-comparacao th {
-    background: var(--cor-primaria);
+    background-color: #3498db;
     color: #fff;
-    padding: 10px;
-    text-align: left;
-    border-radius: 5px 5px 0 0;
 }
 
-.tabela-comparacao td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.tabela-comparacao tr:nth-child(even) {
-    background: #f3f6fb;
-}
-
-/* ---------- Palavras em comum ---------- */
-
-.tag-palavra-comum {
-    display: inline-block;
-    background: var(--cor-primaria-clara);
-    color: var(--cor-primaria);
-    padding: 6px 10px;
-    border-radius: 6px;
-    margin: 4px;
-    font-size: .9rem;
-    border: 1px solid var(--cor-primaria);
-}
-
-/* Container */
+/* Palavras comuns */
 .palavras-comuns-container {
-    padding: 10px;
-    min-height: 50px;
-}
-
-/* ---------- Palavras exclusivas ---------- */
-
-.lista-palavras {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 8px;
 }
 
+.tag-palavra-comum {
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+/* Palavras exclusivas */
+.lista-palavras {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
 .item-palavra {
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 8px 12px;
-    border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    font-size: .95rem;
+    padding: 6px 10px;
+    background-color: #fff;
+    border-radius: 6px;
+    border: 1px solid #ddd;
 }
 
-/* ---------- Responsividade ---------- */
+/* Responsividade */
+@media (max-width: 768px) {
+    .selecionar-textos-comparacao, .grade-dashboard {
+        flex-direction: column;
+    }
 
-@media (max-width: 900px) {
-    .grade-dashboard {
-        grid-template-columns: 1fr;
+    .item-grade {
+        flex: 1 1 100%;
     }
 }
 
-@media (max-width: 600px) {
-    .titulo-principal {
-        font-size: 1.7rem;
-    }
-
-    .tag-palavra-comum {
-        font-size: .85rem;
-    }
-
-    .item-palavra {
-        font-size: .9rem;
+@media (max-width: 480px) {
+    .cabecalho-comparar-textos h1 {
+        font-size: 1.5rem;
     }
 }

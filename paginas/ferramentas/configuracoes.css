@@ -1,251 +1,200 @@
-/* ===========================================
-    CONFIGURAÇÕES - ESTILO PADRÃO DO SISTEMA
-    Segue o mesmo visual de dashboard / histórico
-=========================================== */
+/* ==============================
+   ESTILO PARA CONFIGURAÇÕES
+   ============================== */
 
-.pagina-configuracoes {
-    background: var(--cor-fundo);
-    min-height: 100vh;
-    padding: 30px 20px;
-    display: flex;
-    justify-content: center;
+/* Container principal */
+.pagina-configuracoes .container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-.container {
-    max-width: 1100px;
-    width: 100%;
-}
-
-/* ---------- Cabeçalho ---------- */
-
+/* Cabeçalho */
 .cabecalho-configuracoes {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
-.cabecalho-configuracoes .titulo-principal {
+.cabecalho-configuracoes h1 {
     font-size: 2rem;
-    font-weight: 700;
     margin-bottom: 5px;
-    color: var(--cor-primaria);
+    color: #222;
 }
 
 .cabecalho-configuracoes .subtitulo {
-    color: var(--cor-texto-claro);
     font-size: 1rem;
+    color: #555;
 }
 
-/* ---------- Navegação ---------- */
-
-.navegacao {
-    margin-bottom: 25px;
-}
-
-.lista-navegacao {
+/* Navegação */
+.navegacao .lista-navegacao {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
-.item-navegacao .botao-pequeno {
-    padding: 8px 14px;
-    font-size: .9rem;
+.navegacao .botao {
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
 }
 
-/* ---------- Card principal ---------- */
+.navegacao .botao:hover {
+    opacity: 0.85;
+}
 
+/* Card de configurações */
 .card-configuracoes {
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,.08);
-}
-
-.titulo-card-configuracoes {
-    font-size: 1.5rem;
-    margin-bottom: 25px;
-    color: var(--cor-primaria);
-}
-
-/* ---------- Estrutura das seções ---------- */
-
-.grade-dashboard {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
-}
-
-.secao-configuracoes {
-    background: #fafafa;
-    border-radius: 10px;
+    background-color: #fff;
     padding: 20px;
-    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Título do card */
+.card-configuracoes .titulo-card-configuracoes {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* Seções internas */
+.secao-configuracoes {
+    margin-bottom: 25px;
 }
 
 .titulo-secao-configuracoes {
     font-size: 1.2rem;
     margin-bottom: 15px;
-    color: var(--cor-primaria);
+    color: #333;
 }
 
-/* ---------- Formulários padrão ---------- */
-
-.grupo-formulario-perfil,
-.grupo-formulario,
-.campo-nova-palavra,
-.controle-preferencia {
-    margin-bottom: 15px;
+/* Formulário de perfil */
+.formulario-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.rotulo, .rotulo-perfil, .rotulo-preferencia {
-    display: block;
-    font-size: .95rem;
-    font-weight: 600;
-    color: var(--cor-texto);
+.grupo-formulario-perfil {
+    display: flex;
+    flex-direction: column;
+}
+
+.rotulo-perfil {
     margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #555;
 }
 
-.campo-perfil,
-.campo-entrada,
-.campo-selecao {
+.campo-perfil {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9rem;
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    background: #fff;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: 0.2s ease;
-}
-
-.campo-perfil:focus,
-.campo-entrada:focus,
-.campo-selecao:focus {
-    border-color: var(--cor-primaria);
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, .2);
-    outline: none;
 }
 
 .campo-bio {
-    height: 120px;
+    min-height: 80px;
     resize: vertical;
 }
 
-/* ---------- Botões ---------- */
-
-.botao-salvar-perfil,
-.botao-alterar-senha,
-.botao-salvar-preferencias,
-.botao-adicionar-palavra {
-    background: var(--cor-primaria);
-    color: #fff;
-    padding: 12px 15px;
-    width: fit-content;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: .95rem;
-    transition: .2s;
-}
-
-.botao-salvar-perfil:hover,
-.botao-alterar-senha:hover,
-.botao-salvar-preferencias:hover,
-.botao-adicionar-palavra:hover {
-    background: var(--cor-primaria-hover);
-}
-
-/* ---------- Lista de palavras ignoradas ---------- */
-
-.lista-palavras-ignoradas {
-    margin-top: 15px;
-    border-top: 1px solid #ddd;
-    padding-top: 10px;
-}
-
-.item-palavra-ignorada {
-    background: #fff;
-    padding: 10px 12px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.botao-remover-palavra {
-    background: var(--cor-perigo);
+/* Botão salvar perfil */
+.botao-salvar-perfil {
+    background-color: #3498db;
     color: #fff;
     border: none;
-    padding: 6px 10px;
+    padding: 10px;
     border-radius: 6px;
+    font-weight: bold;
     cursor: pointer;
-    transition: .2s;
+    transition: 0.3s;
 }
 
-.botao-remover-palavra:hover {
-    background: var(--cor-perigo-hover);
+.botao-salvar-perfil:hover {
+    background-color: #2980b9;
 }
 
-/* ---------- Zona de Perigo ---------- */
-
+/* Zona de perigo */
 .zona-perigo {
-    background: #fff5f5;
-    border: 2px solid #ffc9c9;
-    padding: 20px;
-    margin-top: 30px;
-    border-radius: 12px;
+    background-color: #ffe6e6;
+    padding: 15px;
+    border-radius: 8px;
 }
 
 .titulo-zona-perigo {
-    font-size: 1.3rem;
-    color: #b30000;
-    margin-bottom: 15px;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #c0392b;
 }
 
-.grade-zona-perigo {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+.item-zona-perigo h4 {
+    font-size: 1rem;
+    color: #c0392b;
+    margin-bottom: 5px;
 }
 
-.item-zona-perigo {
-    background: #fff;
-    border: 1px solid #ffd5d5;
-    padding: 15px;
-    border-radius: 10px;
+.item-zona-perigo p {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
 }
 
-.botao-perigo {
-    background: var(--cor-perigo);
-    border: none;
+.item-zona-perigo .botao-perigo {
+    background-color: #e74c3c;
     color: #fff;
-    padding: 10px 14px;
-    border-radius: 8px;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: bold;
     cursor: pointer;
-    margin-top: 10px;
-    font-size: .95rem;
+    transition: 0.3s;
 }
 
-.botao-perigo:hover {
-    background: var(--cor-perigo-hover);
+.item-zona-perigo .botao-perigo:hover {
+    background-color: #c0392b;
 }
 
-/* ---------- Responsividade ---------- */
-
-@media (max-width: 900px) {
-    .grade-dashboard,
-    .grade-zona-perigo {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 600px) {
-    .titulo-principal {
-        font-size: 1.7rem;
-    }
-
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+@media (max-width: 768px) {
     .card-configuracoes {
         padding: 15px;
+    }
+
+    .cabecalho-configuracoes h1 {
+        font-size: 1.5rem;
+    }
+
+    .titulo-secao-configuracoes,
+    .titulo-zona-perigo {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagina-configuracoes .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .rotulo-perfil {
+        font-size: 0.85rem;
+    }
+
+    .campo-perfil {
+        font-size: 0.85rem;
+    }
+
+    .botao-salvar-perfil,
+    .item-zona-perigo .botao-perigo {
+        font-size: 0.85rem;
+        padding: 7px;
     }
 }
