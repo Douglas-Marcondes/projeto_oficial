@@ -32,7 +32,6 @@
                     <h3>📈 Diversidade Lexical ao Longo do Tempo</h3>
                     <div class="grafico-evolucao-container">
                         <div class="linha-evolucao" id="grafico-evolucao">
-                            <!-- Gráfico será gerado via JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -41,7 +40,6 @@
                     <h3>🎯 Métricas de Progresso</h3>
                     <div class="metricas-progresso-container">
                         <div class="lista-metricas-progresso" id="metricas-progresso">
-                            <!-- Métricas serão preenchidas via JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -64,7 +62,7 @@
                 <div class="item-grade">
                     <h3>🏆 Conquistas</h3>
                     <div class="conquistas-container" id="conquistas">
-                        <!-- Conquistas serão preenchidas via JavaScript -->
+        
                     </div>
                 </div>
             </div>
@@ -78,7 +76,7 @@
     </div>
 
     <script>
-        // Verificar se está logado
+        // verifica se o usuario está logado
         const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
         if (!usuarioLogado) {
             window.location.href = '../auth/login.html';
@@ -146,13 +144,13 @@
             const totalTextos = textos.length;
             const mediaPalavras = textos.reduce((sum, t) => sum + (t.analise?.totalPalavras || 0), 0) / totalTextos;
             
-            // Calcular evolução da diversidade
+            // calcular evolução da diversidade
             const textosOrdenados = textos.sort((a, b) => new Date(a.data) - new Date(b.data));
             const primeiraDiversidade = parseFloat(textosOrdenados[0]?.analise?.diversidade) || 0;
             const ultimaDiversidade = parseFloat(textosOrdenados[textosOrdenados.length - 1]?.analise?.diversidade) || 0;
             const evolucaoDiversidade = ultimaDiversidade - primeiraDiversidade;
             
-            // Período analisado
+            // período analisado
             const primeiraData = new Date(textosOrdenados[0].data);
             const ultimaData = new Date(textosOrdenados[textosOrdenados.length - 1].data);
             const diferencaDias = Math.ceil((ultimaData - primeiraData) / (1000 * 60 * 60 * 24));
@@ -173,7 +171,7 @@
         }
 
         function exibirPadroesEscrita(textos) {
-            // Análise simplificada de padrões
+            // análise simplificada de padrões
             const todasPalavras = {};
             
             textos.forEach(texto => {
@@ -189,8 +187,7 @@
                     });
                 }
             });
-
-            // Exemplo simplificado - em um sistema real, faria análise temporal mais complexa
+            
             const palavrasAumento = Object.keys(todasPalavras).slice(0, 3);
             const palavrasReducao = Object.keys(todasPalavras).slice(3, 6);
 
