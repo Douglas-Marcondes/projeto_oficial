@@ -1,0 +1,17 @@
+Mapeador de Vocabulário Recorrente
+Escolha da Arquitetura
+Optei pelo Firebase Realtime Database como solução de back-end por ser mais adequado para a natureza em tempo real do projeto. Como preciso mostrar atualizações instantâneas das análises de vocabulário, o Realtime Database oferece melhor performance para este tipo de aplicação.
+
+Justificativa das Tecnologias
+Firebase Realtime Database - Escolhi este banco porque a estrutura de dados em JSON se alinha perfeitamente com o JavaScript do front-end. Para um sistema de análise de vocabulário onde os resultados precisam ser atualizados em tempo real, o Realtime Database oferece melhor desempenho que o Firestore.
+
+JavaScript Vanilla no Front-end - Decidi usar JavaScript puro porque o SDK do Firebase Realtime Database é leve e eficiente. Posso ouvir mudanças nos dados em tempo real sem necessidade de bibliotecas complexas.
+
+Estrutura de Dados
+Projetei a estrutura em JSON para o Realtime Database, organizando os dados por usuário. Cada usuário tem seu nó próprio com textos, análises e configurações. Essa hierarquia simples me permite implementar segurança robusta através das regras do database.
+
+Vantagens da Escolha
+O Realtime Database me oferece atualizações em tempo real sem custo adicional, o que é ideal para um projeto escolar. Posso implementar features como análise colaborativa ou monitoramento em tempo real sem complexidade adicional. A sincronização offline também é um diferencial importante.
+
+Conclusão
+Minha escolha pelo Realtime Database foi baseada na natureza do projeto - um sistema de análise que se beneficia de atualizações instantâneas. Para o escopo educacional, oferece o melhor equilíbrio entre funcionalidade e simplicidade de implementação.
