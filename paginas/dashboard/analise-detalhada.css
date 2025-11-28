@@ -1,290 +1,222 @@
-/* ------------------------------------------------ */
-/*  ESTILO PADRÃO DA PÁGINA - BASEADO NO SEU TEMA   */
-/* ------------------------------------------------ */
-
-body.pagina-analise-detalhada {
-    background: #f4f6fc;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-}
+/* ==============================
+   ESTILO PARA A PÁGINA DE ANÁLISE DETALHADA
+   ============================== */
 
 /* Container principal */
-.container {
-    width: 100%;
-    max-width: 1100px;
+.pagina-analise-detalhada .container {
+    width: 90%;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px 0;
 }
 
-/* ------------------------------------------------ */
-/*  CABEÇALHO                                       */
-/* ------------------------------------------------ */
-
+/* Cabeçalho */
 .cabecalho-analise-detalhada {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .titulo-principal {
     font-size: 2rem;
-    color: #2e59d9;
+    color: #222;
     margin-bottom: 5px;
 }
 
 .subtitulo {
-    color: #555;
     font-size: 1rem;
+    color: #555;
 }
 
-/* ------------------------------------------------ */
-/*  NAVEGAÇÃO                                       */
-/* ------------------------------------------------ */
-
+/* Navegação */
 .navegacao {
-    background: white;
-    padding: 12px 20px;
-    border-radius: 10px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .lista-navegacao {
     list-style: none;
     display: flex;
-    gap: 12px;
     flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
     padding: 0;
-    margin: 0;
 }
 
-.item-navegacao a {
+.item-navegacao .botao {
+    padding: 10px 15px;
+    border-radius: 5px;
     text-decoration: none;
+    font-weight: 600;
+    color: #fff;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
 }
 
-/* Botões reaproveitados */
-.botao {
-    background: #4e73df;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: bold;
-    display: inline-block;
-    transition: 0.25s;
-}
-
-.botao:hover {
-    background: #2e59d9;
-}
-
-.botao-secundario {
-    background: #858796;
-}
-
-.botao-secundario:hover {
-    background: #6e707a;
+.item-navegacao .botao:hover {
+    background-color: #0056b3;
 }
 
 .botao-perigo {
-    background: #e63946;
+    background-color: #dc3545;
 }
 
 .botao-perigo:hover {
-    background: #b82330;
+    background-color: #a71d2a;
+}
+
+.botao-secundario {
+    background-color: #6c757d;
+}
+
+.botao-secundario:hover {
+    background-color: #495057;
 }
 
 .botao-pequeno {
-    padding: 8px 14px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    padding: 8px 12px;
 }
 
-/* ------------------------------------------------ */
-/*  CARD PRINCIPAL                                  */
-/* ------------------------------------------------ */
-
+/* Card de análise */
 .card-analise-detalhada {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background-color: #fff;
+    padding: 25px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* Título do card */
 .titulo-card-analise-detalhada {
-    margin-top: 0;
-    text-align: center;
-    color: #333;
+    font-size: 1.5rem;
+    color: #222;
     margin-bottom: 20px;
+    text-align: center;
 }
 
-/* ------------------------------------------------ */
-/*  GRID                                            */
-/* ------------------------------------------------ */
-
+/* Grade de dashboard */
 .grade-dashboard {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
+/* Itens da grade */
 .item-grade {
-    background: #fafafa;
-    padding: 18px;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .item-grade h3 {
-    margin-top: 0;
-    margin-bottom: 12px;
     font-size: 1.1rem;
-    color: #2e59d9;
+    margin-bottom: 10px;
 }
 
-/* ------------------------------------------------ */
-/*  GRÁFICO DE BARRAS                                */
-/* ------------------------------------------------ */
-
+/* Gráfico */
 .grafico-container {
     width: 100%;
-    height: 240px;
+    height: 220px;
     display: flex;
     align-items: flex-end;
-    justify-content: center;
-}
-
-.grafico-barras {
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
-    height: 100%;
+    gap: 5px;
 }
 
 .barra-grafico {
-    width: 25px;
-    background: #4e73df;
-    border-radius: 6px 6px 0 0;
-    transition: 0.3s;
-    position: relative;
+    flex: 1;
+    background-color: #007bff;
+    border-radius: 3px 3px 0 0;
+    transition: background-color 0.3s ease;
 }
 
 .barra-grafico:hover {
-    background: #2e59d9;
-    transform: scale(1.05);
+    background-color: #0056b3;
 }
 
-/* ------------------------------------------------ */
-/*  MÉTRICAS                                        */
-/* ------------------------------------------------ */
-
+/* Lista de métricas */
 .lista-metricas-detalhada {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .item-metrica-detalhada {
-    background: #eef1ff;
-    padding: 12px;
-    border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    font-size: 0.95rem;
+    padding: 6px 10px;
+    background-color: #e9f5ff;
+    border-radius: 5px;
 }
 
-/* ------------------------------------------------ */
-/*  SUGESTÕES DE MELHORIA                            */
-/* ------------------------------------------------ */
-
+/* Sugestões de melhoria */
 .sugestoes-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .sugestao-item {
-    background: #fff9de;
-    border-left: 4px solid #f1c40f;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 8px;
+    background-color: #f0f8ff;
+    border-radius: 5px;
+    font-size: 0.95rem;
 }
 
-/* ------------------------------------------------ */
-/*  PALAVRAS PARA OBSERVAR                           */
-/* ------------------------------------------------ */
-
+/* Palavras para observar */
 .palavras-observar-lista {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
+    margin-top: 5px;
 }
 
 .tag-palavra {
-    background: #e8ecff;
-    padding: 6px 10px;
-    border-radius: 8px;
+    background-color: #ffeeba;
+    padding: 4px 8px;
+    border-radius: 4px;
     font-size: 0.9rem;
-    color: #2e59d9;
 }
 
-/* ------------------------------------------------ */
-/*  BOTÕES FINAIS                                    */
-/* ------------------------------------------------ */
-
+/* Botões finais e centralização */
 .texto-centralizado {
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.botao-salvar-analise {
-    background: #28a745;
-    color: white;
-    padding: 12px 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-right: 10px;
-    font-size: 0.95rem;
-    transition: 0.25s;
+.texto-centralizado .botao {
+    min-width: 150px;
 }
 
-.botao-salvar-analise:hover {
-    background: #1e7e34;
-}
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+@media (max-width: 768px) {
+    .titulo-principal {
+        font-size: 1.5rem;
+    }
 
-/* ------------------------------------------------ */
-/*  RESPONSIVIDADE                                   */
-/* ------------------------------------------------ */
+    .titulo-card-analise-detalhada {
+        font-size: 1.25rem;
+    }
 
-@media (max-width: 900px) {
     .grade-dashboard {
         grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 600px) {
-    .titulo-principal {
-        font-size: 1.6rem;
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
     }
 
-    .grade-dashboard {
-        gap: 15px;
+    .texto-centralizado {
+        flex-direction: column;
+        gap: 10px;
     }
 
-    .grafico-container {
-        height: 180px;
-    }
-}
-
-@media (max-width: 400px) {
-    .botao,
-    .botao-secundario,
-    .botao-perigo {
-        padding: 8px 12px;
-        font-size: 0.8rem;
-    }
-
-    .botao-salvar-analise {
-        width: 100%;
-        margin-bottom: 10px;
+    .item-grade {
+        padding: 12px;
     }
 }

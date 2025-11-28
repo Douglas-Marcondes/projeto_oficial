@@ -1,216 +1,136 @@
-/* Estilos gerais e padronização da página Nova Análise */
+/* ==============================
+   ESTILO PARA NOVA ANÁLISE
+   ============================== */
 
-body.pagina-nova-analise {
-    background: #f4f7fc;
-    font-family: "Inter", sans-serif;
-    margin: 0;
-    padding: 0;
+/* Container principal */
+.pagina-nova-analise .container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Título principal */
+.pagina-nova-analise h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+/* Card de análise */
+.card-nova-analise {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card-nova-analise label {
+    font-weight: 600;
     color: #333;
 }
 
-.container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Cabeçalho */
-.cabecalho-nova-analise {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.titulo-principal {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: #2c3e50;
-}
-
-.subtitulo {
-    font-size: 1.1rem;
-    color: #555;
-}
-
-/* Navegação */
-.navegacao {
-    margin-bottom: 25px;
-}
-
-.lista-navegacao {
-    display: flex;
-    gap: 10px;
-    list-style: none;
-    padding: 0;
-    justify-content: center;
-}
-
-.item-navegacao a {
-    text-decoration: none;
-}
-
-/* Botões padrão */
-.botao {
-    display: inline-block;
-    background: #4a6cf7;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-.botao:hover {
-    background: #3454d1;
-}
-
-.botao-pequeno {
-    padding: 6px 12px;
-    font-size: 0.85rem;
-}
-
-.botao-secundario {
-    background: #bdc3c7;
-}
-
-.botao-secundario:hover {
-    background: #a5acb0;
-}
-
-.botao-perigo {
-    background: #e63946;
-}
-
-.botao-perigo:hover {
-    background: #c92f3a;
-}
-
-.botao-sucesso {
-    background: #2ecc71;
-}
-
-.botao-sucesso:hover {
-    background: #28b862;
-}
-
-/* Card principal */
-.card-nova-analise {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.titulo-card-nova-analise {
-    font-size: 1.4rem;
-    margin-bottom: 20px;
-    color: #2c3e50;
-    font-weight: 600;
-}
-
-/* Formulários */
-.grupo-formulario {
-    margin-bottom: 18px;
-}
-
-.rotulo {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: #444;
-}
-
-.campo-entrada,
-.campo-texto-analise,
-.campo-selecao {
+.card-nova-analise input[type="text"],
+.card-nova-analise textarea,
+.card-nova-analise select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #d0d7e6;
-    border-radius: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
     font-size: 1rem;
-    outline: none;
-    transition: 0.2s;
-    background: #fafafa;
-}
-
-.campo-entrada:focus,
-.campo-texto-analise:focus,
-.campo-selecao:focus {
-    border-color: #4a6cf7;
-    background: white;
-}
-
-.campo-texto-analise {
-    height: 180px;
+    box-sizing: border-box;
     resize: vertical;
 }
 
-.contador-caracteres {
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 5px;
+.card-nova-analise textarea {
+    min-height: 120px;
 }
 
-.botao-analisar {
-    width: 100%;
-    background: #4a6cf7;
-    color: #fff;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
+/* Contador de caracteres */
+#contador-caracteres {
+    font-size: 0.85rem;
+    color: #555;
+    text-align: right;
+}
+
+/* Botões */
+.card-nova-analise button,
+#resultados-rapidos button {
+    padding: 12px 20px;
     border: none;
-    transition: 0.2s;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.botao-analisar:hover {
-    background: #3454d1;
+.card-nova-analise button:hover,
+#resultados-rapidos button:hover {
+    background-color: #0056b3;
 }
 
 /* Resultados */
-.card-resultados-rapidos {
-    margin-top: 25px;
-    background: #ffffff;
+#resultados-rapidos {
+    margin-top: 20px;
+    background-color: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
 }
 
+#resultados-rapidos h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+#conteudo-resultados p {
+    margin: 5px 0;
+}
+
+/* Classes auxiliares */
 .oculto {
     display: none;
 }
 
-.titulo-card {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    color: #2c3e50;
-    font-weight: 600;
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+@media (max-width: 768px) {
+    .pagina-nova-analise h1 {
+        font-size: 1.5rem;
+    }
+
+    .card-nova-analise {
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .card-nova-analise input[type="text"],
+    .card-nova-analise textarea,
+    .card-nova-analise select {
+        font-size: 0.95rem;
+        padding: 8px;
+    }
+
+    .card-nova-analise button,
+    #resultados-rapidos button {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
 }
 
-.lista-palavras {
-    margin-top: 10px;
-}
+@media (max-width: 480px) {
+    .pagina-nova-analise .container {
+        width: 95%;
+        padding: 10px;
+    }
 
-.item-palavra {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px;
-    background: #f8f9fc;
-    border-radius: 6px;
-    margin-bottom: 6px;
-    font-size: 0.95rem;
-}
-
-.item-palavra .palavra {
-    font-weight: 600;
-}
-
-.item-palavra .frequencia {
-    color: #444;
-}
-
-.texto-centralizado {
-    text-align: center;
+    .card-nova-analise textarea {
+        min-height: 100px;
+    }
 }

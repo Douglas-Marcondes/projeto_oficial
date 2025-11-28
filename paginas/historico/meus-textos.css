@@ -1,92 +1,99 @@
-/* ================================
-   ESTILO — MEUS TEXTOS
-   Segue o mesmo padrão visual de todas as páginas
-=================================*/
+/* ============================
+   meus-textos.css
+============================ */
 
-.pagina-meus-textos .cabecalho-meus-textos {
+/* Geral da página */
+.pagina-meus-textos {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Cabeçalho */
+.cabecalho-meus-textos {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
-.pagina-meus-textos .titulo-principal {
-    font-size: 2.2rem;
+.cabecalho-meus-textos .titulo-principal {
+    font-size: 2.5em;
     margin-bottom: 5px;
-    font-weight: 700;
 }
 
-.pagina-meus-textos .subtitulo {
-    font-size: 1rem;
+.cabecalho-meus-textos .subtitulo {
+    font-size: 1.1em;
     color: #555;
 }
 
-/* ================================
-   NAV BAR
-=================================*/
+/* Navegação */
 .navegacao {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .lista-navegacao {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
     justify-content: center;
+    padding: 0;
+    list-style: none;
 }
 
-/* ================================
-   CARD PRINCIPAL
-=================================*/
+.lista-navegacao .botao {
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9em;
+    transition: all 0.2s;
+}
 
+.lista-navegacao .botao:hover {
+    transform: translateY(-2px);
+}
+
+/* Card principal */
 .card-meus-textos {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
     margin-bottom: 30px;
 }
 
-/* ================================
-   CABEÇALHO DO CARD
-=================================*/
-
+/* Cabeçalho da tabela */
 .cabecalho-tabela {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
 }
 
 .titulo-card-meus-textos {
-    font-size: 1.4rem;
-    font-weight: 700;
+    font-size: 1.5em;
+    margin-bottom: 10px;
 }
 
 .busca-meus-textos {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
 }
 
 .campo-busca-textos {
-    padding: 10px 14px;
+    padding: 7px 10px;
+    border-radius: 6px;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    width: 220px;
-    transition: 0.2s;
+    width: 200px;
 }
 
-.campo-busca-textos:focus {
-    border-color: #5a8dee;
-    outline: none;
-    box-shadow: 0 0 4px rgba(90,141,238,0.4);
-}
-
-/* ================================
-   TABELA
-=================================*/
-
+/* Tabela */
 .tabela-container {
     overflow-x: auto;
 }
@@ -94,150 +101,129 @@
 .tabela-meus-textos {
     width: 100%;
     border-collapse: collapse;
+    min-width: 600px;
+}
+
+.tabela-meus-textos th,
+.tabela-meus-textos td {
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
 }
 
 .tabela-meus-textos th {
-    background: #f4f4f4;
-    padding: 12px;
-    text-align: left;
-    font-weight: 600;
-}
-
-.tabela-meus-textos td {
-    padding: 10px;
-    border-bottom: 1px solid #e6e6e6;
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 500;
 }
 
 .tabela-meus-textos tr:nth-child(even) {
-    background: #fafafa;
+    background-color: #f2f2f2;
 }
 
-.coluna-numeros {
-    text-align: center;
+.tabela-meus-textos tr:hover {
+    background-color: #e0f0ff;
 }
 
-.coluna-acoes {
-    text-align: center;
-}
-
-.sem-textos {
-    text-align: center;
-    padding: 30px;
-    color: #555;
-}
-
-.sem-textos .icone {
-    font-size: 2.5rem;
-    margin-bottom: 8px;
-}
-
-/* ================================
-   BOTÕES DE AÇÕES NA TABELA
-=================================*/
-
-.botoes-acao {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.botao-visualizar,
-.botao-excluir {
-    padding: 7px 12px;
-    cursor: pointer;
-    border-radius: 8px;
-    font-size: 0.9rem;
+/* Botões da tabela */
+.tabela-meus-textos .botao-visualizar,
+.tabela-meus-textos .botao-editar,
+.tabela-meus-textos .botao-excluir {
+    padding: 5px 10px;
+    border-radius: 5px;
     border: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin: 2px;
     transition: 0.2s;
 }
 
 .botao-visualizar {
-    background: #5a8dee;
+    background-color: #17a2b8;
     color: #fff;
 }
 
 .botao-visualizar:hover {
-    background: #3f71d1;
+    background-color: #138496;
+}
+
+.botao-editar {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.botao-editar:hover {
+    background-color: #e0a800;
 }
 
 .botao-excluir {
-    background: #e84747;
-    color: white;
+    background-color: #dc3545;
+    color: #fff;
 }
 
 .botao-excluir:hover {
-    background: #c93b3b;
+    background-color: #c82333;
 }
 
-/* ================================
-   PAGINAÇÃO
-=================================*/
+/* Mensagem sem textos */
+.sem-textos {
+    text-align: center;
+    padding: 20px;
+}
 
+.sem-textos .icone {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+/* Paginação */
 .paginacao-meus-textos {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .botao-paginacao {
-    padding: 8px 18px;
-    border-radius: 8px;
-    border: 1px solid #bbb;
-    background: #f3f3f3;
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: #fff;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.botao-paginacao:hover:not(:disabled) {
-    background: #ddd;
-}
-
 .botao-paginacao:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    background-color: #ccc;
+    border-color: #aaa;
+    cursor: default;
 }
 
-/* ================================
-   BOTÕES INFERIORES
-=================================*/
-
-.texto-centralizado {
-    text-align: center;
-    margin-top: 25px;
+.botao-paginacao:hover:not(:disabled) {
+    background-color: #0056b3;
 }
 
-/* ================================
-   RESPONSIVIDADE
-=================================*/
+/* Botões principais fora da tabela */
+.texto-centralizado .botao {
+    margin: 5px;
+    padding: 10px 18px;
+    font-size: 1em;
+}
 
-@media (max-width: 650px) {
-    .cabecalho-tabela {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
+/* Responsividade */
+@media (max-width: 768px) {
     .busca-meus-textos {
-        width: 100%;
+        justify-content: center;
     }
 
     .campo-busca-textos {
-        flex: 1;
-        min-width: 100%;
+        width: 100%;
+        max-width: 300px;
     }
 
-    .botao-paginacao {
-        padding: 8px 14px;
-    }
-}
-
-@media (max-width: 450px) {
-    .titulo-principal {
-        font-size: 1.8rem;
-    }
-
-    .titulo-card-meus-textos {
-        font-size: 1.2rem;
+    .tabela-meus-textos {
+        font-size: 0.9em;
     }
 }

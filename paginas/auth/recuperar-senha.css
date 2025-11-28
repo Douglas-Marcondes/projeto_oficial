@@ -1,70 +1,67 @@
-/* ------------------------------ */
-/*  ESTILO PADRÃO DA PÁGINA       */
-/* ------------------------------ */
+/* ==============================
+   ESTILO PARA A PÁGINA DE RECUPERAÇÃO DE SENHA
+   ============================== */
 
-body.pagina-recuperar-senha {
-    background: linear-gradient(135deg, #4e73df, #224abe);
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
+/* Container principal da página */
+.pagina-recuperar-senha {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/* Container principal */
-.conteudo-recuperar-senha {
-    width: 100%;
-    max-width: 500px;
+    min-height: 100vh;
+    background-color: #f5f5f5;
     padding: 20px;
 }
 
-/* Cabeçalho */
+/* Conteúdo centralizado */
+.conteudo-recuperar-senha {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Cabeçalho da página */
 .cabecalho-recuperar-senha {
     text-align: center;
-    color: white;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .titulo-recuperar-senha {
-    font-size: 1.9rem;
+    font-size: 2rem;
+    color: #222;
     margin-bottom: 5px;
 }
 
 .subtitulo-recuperar-senha {
     font-size: 1rem;
-    opacity: 0.9;
+    color: #555;
 }
 
-/* Card */
+/* Card de recuperação */
 .card-recuperar-senha {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    background-color: #fff;
+    padding: 25px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* Título do card */
 .titulo-card-recuperar-senha {
-    margin: 0 0 20px;
-    text-align: center;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Alerta */
-.alerta-recuperar-senha {
-    background: #e8ecff;
-    border-left: 4px solid #4e73df;
-    padding: 12px;
-    border-radius: 8px;
-    color: #2c2c2c;
-    font-size: 0.95rem;
+    font-size: 1.5rem;
+    color: #222;
     margin-bottom: 20px;
+    text-align: center;
 }
 
-/* Formulário */
+/* Alerta de instrução */
+.alerta-recuperar-senha {
+    background-color: #e9f5ff;
+    color: #007bff;
+    padding: 10px 12px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+/* Grupo de formulário */
 .grupo-formulario-recuperar-senha {
     display: flex;
     flex-direction: column;
@@ -73,92 +70,71 @@ body.pagina-recuperar-senha {
 
 .rotulo-recuperar-senha {
     margin-bottom: 5px;
-    font-weight: bold;
+    font-weight: 600;
     color: #333;
 }
 
 .campo-recuperar-senha {
-    padding: 12px;
-    border: 1px solid #cbd1d8;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    transition: 0.2s;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
 }
 
 .campo-recuperar-senha:focus {
+    border-color: #007bff;
     outline: none;
-    border-color: #4e73df;
-    box-shadow: 0 0 5px rgba(78, 115, 223, 0.5);
 }
 
-/* Botão */
+/* Botão de recuperação */
 .botao-recuperar-senha {
     width: 100%;
     padding: 12px;
-    margin-top: 10px;
-    background-color: #4e73df;
-    color: white;
-    border: none;
-    border-radius: 8px;
     font-size: 1rem;
+    font-weight: 600;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 .botao-recuperar-senha:hover {
-    background-color: #2e59d9;
+    background-color: #0056b3;
 }
 
-.botao-recuperar-senha:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-/* Link voltar */
+/* Link de voltar */
 .voltar-recuperar-senha {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .link-voltar-recuperar {
-    color: #4e73df;
-    font-weight: bold;
+    color: #007bff;
     text-decoration: none;
-    transition: 0.2s;
+    font-size: 0.9rem;
 }
 
 .link-voltar-recuperar:hover {
     text-decoration: underline;
 }
 
-/* ------------------------------ */
-/*  RESPONSIVIDADE                */
-/* ------------------------------ */
-
-@media (max-width: 600px) {
-    .titulo-recuperar-senha {
-        font-size: 1.6rem;
-    }
-
+/* ==============================
+   RESPONSIVIDADE
+   ============================== */
+@media (max-width: 480px) {
     .card-recuperar-senha {
-        padding: 20px;
+        padding: 20px 15px;
     }
 
-    .alerta-recuperar-senha {
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 400px) {
     .titulo-recuperar-senha {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
 
-    .subtitulo-recuperar-senha {
-        font-size: 0.9rem;
-    }
-
-    .card-recuperar-senha {
-        padding: 18px;
+    .titulo-card-recuperar-senha {
+        font-size: 1.25rem;
     }
 }

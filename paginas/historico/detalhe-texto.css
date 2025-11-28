@@ -1,141 +1,220 @@
 /* ===============================
-   DETALHE-TEXTO.CSS
-   Padronizado com o estilo geral
+   ESTILO PARA DETALHE DO TEXTO
    =============================== */
 
-body.pagina-detalhe-texto {
-    font-family: "Poppins", sans-serif;
-    background: #f4f6f9;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+.pagina-detalhe-texto .container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-/* Container principal */
-.conteudo-detalhe-texto {
-    width: 100%;
-    max-width: 900px;
-    background: #fff;
-    border-radius: 14px;
-    padding: 25px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    animation: fadeIn 0.3s ease;
-}
-
-/* Header */
+/* Cabeçalho */
 .cabecalho-detalhe-texto {
-    margin-bottom: 25px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-.titulo-detalhe-texto {
-    font-size: 26px;
-    color: #1a1a1a;
+.cabecalho-detalhe-texto h1 {
+    font-size: 2rem;
+    color: #222;
     margin-bottom: 5px;
 }
 
-.subtitulo-detalhe-texto {
-    font-size: 16px;
+.cabecalho-detalhe-texto .subtitulo {
+    font-size: 1rem;
     color: #555;
 }
 
-/* Card */
-.card-detalhe-texto {
-    background: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    border: 1px solid #e5e5e5;
-}
-
-.titulo-card-detalhe-texto {
-    font-size: 20px;
-    margin-bottom: 15px;
-    color: #222;
-}
-
-/* Texto analisado */
-.texto-analisado-box {
-    background: #fafafa;
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-
-/* Lista de palavras */
-.lista-palavras-detalhe {
+/* Navegação */
+.navegacao .lista-navegacao {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
-.palavra-item {
-    background: #f7f7f7;
-    border: 1px solid #ddd;
-    padding: 12px 15px;
+/* Card principal */
+.card-detalhe-texto {
+    background-color: #fff;
+    padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Cabeçalho dentro do card */
+.cabecalho-detalhe {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    font-size: 15px;
-    transition: 0.25s;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-.palavra-item:hover {
-    background: #ececec;
+.info-texto-detalhe h2 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
 }
 
-.palavra-texto {
-    font-weight: 600;
+.meta-info-texto {
+    font-size: 0.9rem;
+    color: #666;
 }
 
-.palavra-contagem {
-    font-size: 14px;
-    color: #444;
-}
-
-/* Botão voltar */
-.botao-voltar-detalhe {
-    margin-top: 25px;
-    display: inline-block;
-    background: #3a6cf4;
-    color: #fff;
-    padding: 12px 18px;
-    border-radius: 8px;
-    font-size: 15px;
-    text-decoration: none;
-    font-weight: 500;
+.acoes-detalhe-texto button {
+    margin-left: 10px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
     transition: 0.3s;
 }
 
-.botao-voltar-detalhe:hover {
-    background: #224dcc;
+.botao-reanalisar {
+    background-color: #3498db;
+    color: #fff;
 }
 
-/* Animação leve */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+.botao-reanalisar:hover {
+    background-color: #2980b9;
+}
+
+.botao-excluir-texto {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.botao-excluir-texto:hover {
+    background-color: #c0392b;
+}
+
+/* Grade de estatísticas e texto */
+.grade-dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.item-grade {
+    flex: 1 1 45%;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Área do texto original */
+.area-texto-original {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    border-radius: 6px;
+}
+
+/* Estatísticas */
+.lista-metricas-detalhe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.item-metrica-detalhe {
+    flex: 1 1 45%;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.valor-metrica {
+    font-size: 1.3rem;
+    font-weight: bold;
+    display: block;
+}
+
+.rotulo-metrica {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* Top palavras */
+.lista-top-palavras-detalhe {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.item-top-palavra {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+.palavra-destaque {
+    font-weight: bold;
+    color: #3498db;
+}
+
+.frequencia-destaque {
+    color: #555;
+}
+
+/* Botões de navegação inferior */
+.texto-centralizado .botao {
+    margin: 5px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.botao-secundario {
+    background-color: #bdc3c7;
+    color: #fff;
+}
+
+.botao-secundario:hover {
+    background-color: #95a5a6;
+}
+
+.botao-sucesso {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.botao-sucesso:hover {
+    background-color: #27ae60;
 }
 
 /* Responsividade */
-@media (max-width: 600px) {
-    .conteudo-detalhe-texto {
-        padding: 18px;
+@media (max-width: 768px) {
+    .grade-dashboard {
+        flex-direction: column;
     }
 
-    .titulo-detalhe-texto {
-        font-size: 22px;
+    .item-grade {
+        flex: 1 1 100%;
     }
 
-    .palavra-item {
+    .cabecalho-detalhe {
         flex-direction: column;
         align-items: flex-start;
-        gap: 5px;
+    }
+
+    .acoes-detalhe-texto button {
+        margin-left: 0;
+        margin-top: 10px;
     }
 }
