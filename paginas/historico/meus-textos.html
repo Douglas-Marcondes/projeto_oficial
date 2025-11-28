@@ -67,13 +67,12 @@
             <a href="estatisticas-progresso.html" class="botao">📈 Ver Estatísticas de Progresso</a>
         </div>
     </div>
-
-    <!-- Firebase SDK Compatível com seu código de salvar -->
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
     <script>
-        // Inicializar Firebase compat
+        
         const firebaseConfig = {
             apiKey: "AIzaSyBb4Rlzw-z9GSUFCS6TQ35SIyKETEgqg7g",
             authDomain: "cadastro-tb-61070.firebaseapp.com",
@@ -90,7 +89,7 @@
 
         const db = firebase.database();
 
-        // Usuário logado
+        // usuário logado
         const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
         if (!usuarioLogado) {
             window.location.href = '../auth/login.html';
@@ -100,7 +99,7 @@
         let paginaAtual = 1;
         const textosPorPagina = 10;
 
-        // 🔥 CARREGAR TEXTOS
+        // carregar textos
         function carregarTextos() {
             const refAnalises = db.ref('analises');
 
@@ -124,7 +123,6 @@
                 .catch(err => console.error("Erro ao carregar análises:", err));
         }
 
-        // 🔎 FILTRAR
         function filtrarTextos() {
             const termo = document.getElementById("buscar-textos").value.toLowerCase();
             let resultado = textosFiltrados;
@@ -139,8 +137,7 @@
             exibirTextos(resultado);
             atualizarPaginacao(resultado.length);
         }
-
-        // 📄 EXIBIR NA TABELA
+        
         function exibirTextos(textos) {
             const inicio = (paginaAtual - 1) * textosPorPagina;
             const fim = inicio + textosPorPagina;
@@ -177,7 +174,6 @@
             `).join("");
         }
 
-        // 📌 PAGINAÇÃO
         function atualizarPaginacao(total) {
             const totalPag = Math.ceil(total / textosPorPagina);
             document.getElementById("info-paginacao").innerText = `Página ${paginaAtual} de ${totalPag}`;
@@ -196,12 +192,10 @@
             }
         }
 
-        // 👁️ VISUALIZAR
         function visualizarTexto(id) {
             window.location.href = `detalhe-texto.html?id=${id}`;
         }
 
-        // ❌ EXCLUIR
         function excluirTexto(id) {
             if (!confirm("Tem certeza que deseja excluir este texto?")) return;
 
@@ -216,7 +210,7 @@
                 });
         }
 
-        // ✏️ EDITAR
+        // editar o tezto
         function editarTexto(id) {
             const novoTitulo = prompt("Digite o novo título:");
             if (novoTitulo === null) return;
@@ -237,7 +231,6 @@
             });
         }
 
-        // 🚪 SAIR
         function sair() {
             localStorage.removeItem("usuarioLogado");
             window.location.href = "../auth/login.html";
