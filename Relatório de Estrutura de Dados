@@ -1,0 +1,12 @@
+Estrutura do Firebase Realtime Database
+Optei por uma estrutura hierárquica em JSON que organiza os dados por usuário, garantindo segurança e isolamento entre diferentes usuários do sistema.
+
+Justificativa da Estrutura
+Organização por Usuário: Decidi estruturar todos os dados dentro do nó do usuário porque isso simplifica drasticamente as regras de segurança. Cada usuário só acessa seus próprios dados, sem risco de vazamento entre contas.
+
+Dados de Análise Incorporados: Armazeno os resultados da análise diretamente dentro de cada texto porque essas informações são sempre acessadas em conjunto. Evito consultas adicionais ao database, melhorando a performance.
+
+Dicionário Pessoal como Nó Separado: Criei um nó específico para o dicionário pessoal porque ele é atualizado frequentemente e consultado de forma independente dos textos. Essa separação otimiza as operações de leitura/escrita.
+
+Conclusão da Estrutura de Dados
+A estrutura implementada no Firebase Realtime Database atende perfeitamente aos requisitos do projeto. A organização hierárquica por usuário garante segurança e isolamento de dados, enquanto a modelagem em JSON simplifica o desenvolvimento e manutenção.
