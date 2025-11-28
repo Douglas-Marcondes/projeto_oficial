@@ -47,12 +47,11 @@
         </div>
     </div>
 
-    <!-- Firebase (versão compat — ideal para HTML) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
-        // Configuração do Firebase
+        
         const firebaseConfig = {
             apiKey: "AIzaSyBb4Rlzw-z9GSUFCS6TQ35SIyKETEgqg7g",
             authDomain: "cadastro-tb-61070.firebaseapp.com",
@@ -62,8 +61,7 @@
             messagingSenderId: "80187170645",
             appId: "1:80187170645:web:552d5cb4ab1972766019dc"
         };
-
-        // Inicializar Firebase
+        
         firebase.initializeApp(firebaseConfig);
 
         // Inicializar Realtime Database
@@ -131,7 +129,6 @@
             }
         }
 
-        // Enter para cadastrar
         document.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 fazerCadastro();
