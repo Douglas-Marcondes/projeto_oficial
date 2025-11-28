@@ -1,187 +1,245 @@
-/* Estilos específicos para Comparar Textos */
+/* ===========================================
+      COMPARAR TEXTOS - ESTILO PADRÃO
+=========================================== */
+
 .pagina-comparar-textos {
-    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    background: var(--cor-fundo);
     min-height: 100vh;
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
 }
+
+.container {
+    max-width: 1100px;
+    width: 100%;
+}
+
+/* ---------- Cabeçalho ---------- */
 
 .cabecalho-comparar-textos {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    margin-bottom: 25px;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.card-comparar-textos {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.titulo-card-comparar-textos {
-    color: var(--cor-texto);
-    margin-bottom: 25px;
     text-align: center;
-    font-size: 1.8em;
-    border-bottom: 3px solid #fab1a0;
-    padding-bottom: 15px;
-}
-
-/* Seleção de Textos */
-.selecao-textos-comparacao {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
     margin-bottom: 30px;
 }
 
+.titulo-principal {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--cor-primaria);
+}
+
+.subtitulo {
+    color: var(--cor-texto-claro);
+    margin-top: -5px;
+}
+
+/* ---------- Navegação ---------- */
+
+.lista-navegacao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.botao-pequeno {
+    padding: 7px 14px;
+}
+
+/* ---------- Card principal ---------- */
+
+.card-comparar-textos {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,.08);
+    margin-bottom: 30px;
+}
+
+.titulo-card-comparar-textos {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--cor-primaria);
+    margin-bottom: 20px;
+}
+
+/* ---------- Seleção de textos ---------- */
+
+.selecao-textos-comparacao {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
 .texto-selecao-container {
-    background: rgba(250, 177, 160, 0.1);
-    padding: 20px;
+    background: #f7f9fc;
+    border: 1px solid #e5e7eb;
     border-radius: 10px;
-    border: 2px dashed #fab1a0;
+    padding: 20px;
+    flex: 1;
+    min-width: 280px;
 }
 
-.titulo-selecao-texto {
-    color: var(--cor-texto);
+.texto-selecao-container h3 {
+    font-size: 1.2rem;
     margin-bottom: 15px;
-    text-align: center;
-    font-size: 1.2em;
+    color: var(--cor-primaria);
 }
 
+/* Inputs */
 .campo-selecao-texto {
     width: 100%;
     padding: 12px;
-    border: 2px solid #fab1a0;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    background: white;
-    font-size: 14px;
-    transition: all 0.3s ease;
 }
 
-.campo-selecao-texto:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(250, 177, 160, 0.1);
-}
-
-.info-texto-selecionado {
-    margin-top: 15px;
-    padding: 15px;
-    background: white;
+/* Informações do texto */
+#info-texto1, 
+#info-texto2 {
+    background: #fff;
     border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 12px;
+    border: 1px solid #e4e4e4;
+    margin-top: 10px;
 }
 
-.botao-comparar-container {
-    text-align: center;
-    margin: 25px 0;
+#info-texto1 p,
+#info-texto2 p {
+    margin: 4px 0;
 }
 
+/* Oculto */
+.oculto {
+    display: none;
+}
+
+/* Botão comparar */
 .botao-comparar-textos {
-    background: linear-gradient(135deg, #fab1a0 0%, #e17055 100%);
-    color: white;
+    background: var(--cor-primaria);
+    color: #fff;
+    padding: 14px 20px;
     border: none;
-    padding: 15px 40px;
-    border-radius: 25px;
-    font-size: 1.1em;
-    font-weight: 600;
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: .2s ease;
 }
 
 .botao-comparar-textos:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(225, 112, 85, 0.3);
+    background: var(--cor-primaria-hover);
 }
 
-/* Resultados da Comparação */
+/* ---------- Resultados ---------- */
+
 .resultados-comparacao-container {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    margin-top: 25px;
+    background: #fff;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,.08);
+    margin-bottom: 25px;
 }
+
+.titulo-card {
+    font-size: 1.5rem;
+    color: var(--cor-primaria);
+    margin-bottom: 20px;
+}
+
+/* ---------- Grade ---------- */
+
+.grade-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.item-grade {
+    background: #f7f9fc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* ---------- Tabela de métricas ---------- */
 
 .tabela-comparacao {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    overflow: hidden;
 }
 
 .tabela-comparacao th {
-    background: linear-gradient(135deg, #fab1a0 0%, #e17055 100%);
-    color: white;
-    padding: 15px;
-    text-align: center;
-    font-weight: 600;
+    background: var(--cor-primaria);
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+    border-radius: 5px 5px 0 0;
 }
 
 .tabela-comparacao td {
-    padding: 12px 15px;
-    text-align: center;
-    border-bottom: 1px solid #e1e8ed;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 .tabela-comparacao tr:nth-child(even) {
-    background: rgba(250, 177, 160, 0.05);
+    background: #f3f6fb;
 }
 
-.diferenca-positiva {
-    color: #27ae60;
-    font-weight: bold;
-}
-
-.diferenca-negativa {
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-/* Palavras em Comum e Exclusivas */
-.palavras-comuns-container,
-.palavras-exclusivas-container {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-.lista-palavras-comuns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-}
+/* ---------- Palavras em comum ---------- */
 
 .tag-palavra-comum {
-    background: rgba(52, 152, 219, 0.1);
-    color: #3498db;
-    padding: 6px 12px;
-    border-radius: 15px;
-    font-size: 0.85em;
-    border: 1px solid rgba(52, 152, 219, 0.3);
+    display: inline-block;
+    background: var(--cor-primaria-clara);
+    color: var(--cor-primaria);
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin: 4px;
+    font-size: .9rem;
+    border: 1px solid var(--cor-primaria);
 }
 
-.grade-palavras-exclusivas {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.lista-palavras-exclusivas {
-    max-height: 200px;
-    overflow-y: auto;
+/* Container */
+.palavras-comuns-container {
     padding: 10px;
-    background: rgba(250, 177, 160, 0.05);
+    min-height: 50px;
+}
+
+/* ---------- Palavras exclusivas ---------- */
+
+.lista-palavras {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.item-palavra {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 8px 12px;
     border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: .95rem;
+}
+
+/* ---------- Responsividade ---------- */
+
+@media (max-width: 900px) {
+    .grade-dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .titulo-principal {
+        font-size: 1.7rem;
+    }
+
+    .tag-palavra-comum {
+        font-size: .85rem;
+    }
+
+    .item-palavra {
+        font-size: .9rem;
+    }
 }

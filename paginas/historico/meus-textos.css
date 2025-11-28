@@ -1,197 +1,243 @@
-/* Estilos específicos para Meus Textos */
-.pagina-meus-textos {
-    background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
-    min-height: 100vh;
+/* ================================
+   ESTILO — MEUS TEXTOS
+   Segue o mesmo padrão visual de todas as páginas
+=================================*/
+
+.pagina-meus-textos .cabecalho-meus-textos {
+    text-align: center;
+    margin-bottom: 25px;
 }
 
-.cabecalho-meus-textos {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    margin-bottom: 25px;
-    border: 1px solid rgba(255,255,255,0.2);
+.pagina-meus-textos .titulo-principal {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+    font-weight: 700;
 }
+
+.pagina-meus-textos .subtitulo {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* ================================
+   NAV BAR
+=================================*/
+.navegacao {
+    margin-bottom: 30px;
+}
+
+.lista-navegacao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* ================================
+   CARD PRINCIPAL
+=================================*/
 
 .card-meus-textos {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    margin-bottom: 30px;
 }
+
+/* ================================
+   CABEÇALHO DO CARD
+=================================*/
 
 .cabecalho-tabela {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
     gap: 15px;
+    margin-bottom: 20px;
 }
 
 .titulo-card-meus-textos {
-    color: var(--cor-texto);
-    margin: 0;
-    font-size: 1.8em;
+    font-size: 1.4rem;
+    font-weight: 700;
 }
 
 .busca-meus-textos {
     display: flex;
-    gap: 10px;
-    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .campo-busca-textos {
-    padding: 10px 15px;
-    border: 2px solid #fd79a8;
-    border-radius: 25px;
-    font-size: 14px;
-    width: 300px;
-    transition: all 0.3s ease;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 220px;
+    transition: 0.2s;
 }
 
 .campo-busca-textos:focus {
+    border-color: #5a8dee;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(253, 121, 168, 0.1);
+    box-shadow: 0 0 4px rgba(90,141,238,0.4);
 }
 
-/* Tabela de Textos */
+/* ================================
+   TABELA
+=================================*/
+
 .tabela-container {
     overflow-x: auto;
-    border-radius: 10px;
-    background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .tabela-meus-textos {
     width: 100%;
     border-collapse: collapse;
-    min-width: 800px;
 }
 
 .tabela-meus-textos th {
-    background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
-    color: white;
-    padding: 15px;
+    background: #f4f4f4;
+    padding: 12px;
     text-align: left;
     font-weight: 600;
-    position: sticky;
-    top: 0;
 }
 
 .tabela-meus-textos td {
-    padding: 15px;
-    border-bottom: 1px solid #e1e8ed;
-    transition: background 0.3s ease;
+    padding: 10px;
+    border-bottom: 1px solid #e6e6e6;
 }
 
-.tabela-meus-textos tr:hover td {
-    background: rgba(253, 121, 168, 0.05);
-}
-
-.coluna-data {
-    width: 120px;
-    color: var(--cor-texto-claro);
-}
-
-.coluna-titulo {
-    font-weight: 500;
+.tabela-meus-textos tr:nth-child(even) {
+    background: #fafafa;
 }
 
 .coluna-numeros {
     text-align: center;
-    width: 100px;
 }
 
 .coluna-acoes {
-    width: 150px;
     text-align: center;
-}
-
-.botoes-acao {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-}
-
-.botao-visualizar {
-    background: #74b9ff;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.8em;
-    transition: all 0.3s ease;
-}
-
-.botao-visualizar:hover {
-    background: #0984e3;
-    transform: scale(1.05);
-}
-
-.botao-excluir {
-    background: #e17055;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.8em;
-    transition: all 0.3s ease;
-}
-
-.botao-excluir:hover {
-    background: #d63031;
-    transform: scale(1.05);
-}
-
-/* Paginação */
-.paginacao-meus-textos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-top: 25px;
-    padding: 15px;
-}
-
-.botao-paginacao {
-    background: #fd79a8;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.botao-paginacao:hover:not(:disabled) {
-    background: #e84393;
-    transform: translateY(-2px);
-}
-
-.botao-paginacao:disabled {
-    background: #b2bec3;
-    cursor: not-allowed;
-}
-
-.info-paginacao {
-    color: var(--cor-texto);
-    font-weight: 500;
 }
 
 .sem-textos {
     text-align: center;
-    padding: 50px;
-    color: var(--cor-texto-claro);
+    padding: 30px;
+    color: #555;
 }
 
 .sem-textos .icone {
-    font-size: 3em;
-    margin-bottom: 15px;
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+}
+
+/* ================================
+   BOTÕES DE AÇÕES NA TABELA
+=================================*/
+
+.botoes-acao {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.botao-visualizar,
+.botao-excluir {
+    padding: 7px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: none;
+    transition: 0.2s;
+}
+
+.botao-visualizar {
+    background: #5a8dee;
+    color: #fff;
+}
+
+.botao-visualizar:hover {
+    background: #3f71d1;
+}
+
+.botao-excluir {
+    background: #e84747;
+    color: white;
+}
+
+.botao-excluir:hover {
+    background: #c93b3b;
+}
+
+/* ================================
+   PAGINAÇÃO
+=================================*/
+
+.paginacao-meus-textos {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.botao-paginacao {
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+    background: #f3f3f3;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.botao-paginacao:hover:not(:disabled) {
+    background: #ddd;
+}
+
+.botao-paginacao:disabled {
     opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ================================
+   BOTÕES INFERIORES
+=================================*/
+
+.texto-centralizado {
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* ================================
+   RESPONSIVIDADE
+=================================*/
+
+@media (max-width: 650px) {
+    .cabecalho-tabela {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .busca-meus-textos {
+        width: 100%;
+    }
+
+    .campo-busca-textos {
+        flex: 1;
+        min-width: 100%;
+    }
+
+    .botao-paginacao {
+        padding: 8px 14px;
+    }
+}
+
+@media (max-width: 450px) {
+    .titulo-principal {
+        font-size: 1.8rem;
+    }
+
+    .titulo-card-meus-textos {
+        font-size: 1.2rem;
+    }
 }

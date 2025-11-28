@@ -1,104 +1,152 @@
-/* Estilos específicos para a página de Cadastro */
-.pagina-cadastro {
+/* ------------------------------ */
+/*  ESTILO PADRÃO DA PÁGINA       */
+/* ------------------------------ */
+
+body.pagina-cadastro {
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    align-items: center;
 }
 
+/* Container principal */
 .conteudo-cadastro {
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
     padding: 20px;
 }
 
+/* Cabeçalho / título */
 .cabecalho-cadastro {
     text-align: center;
-    margin-bottom: 30px;
+    color: white;
+    margin-bottom: 25px;
 }
 
 .titulo-cadastro {
-    color: white;
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-size: 1.9rem;
+    margin-bottom: 5px;
 }
 
 .subtitulo-cadastro {
-    color: rgba(255,255,255,0.8);
-    font-size: 1.1em;
+    font-size: 1rem;
+    opacity: 0.9;
 }
 
+/* Card */
 .card-cadastro {
-    background: white;
-    padding: 35px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
 }
 
 .titulo-card-cadastro {
-    color: var(--cor-texto);
-    margin-bottom: 25px;
+    margin: 0 0 20px;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
 }
 
+/* Formulário */
 .grupo-formulario-cadastro {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .rotulo-cadastro {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--cor-texto);
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
 }
 
 .campo-cadastro {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e1e8ed;
+    padding: 12px;
+    border: 1px solid #cbd1d8;
     border-radius: 8px;
-    font-size: 16px;
-    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    transition: 0.2s;
 }
 
 .campo-cadastro:focus {
-    border-color: #f5576c;
-    box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
     outline: none;
+    border-color: #4e73df;
+    box-shadow: 0 0 5px rgba(78, 115, 223, 0.5);
 }
 
+/* Botão */
 .botao-cadastro {
     width: 100%;
-    background: #f5576c;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #4e73df;
     color: white;
     border: none;
-    padding: 14px;
     border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
 .botao-cadastro:hover {
-    background: #e84a5f;
-    transform: translateY(-1px);
+    background-color: #2e59d9;
 }
 
+/* Link voltar */
 .voltar-cadastro {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .link-voltar {
-    color: #f5576c;
+    color: #4e73df;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: bold;
+    transition: 0.2s;
 }
 
 .link-voltar:hover {
     text-decoration: underline;
+}
+
+/* ------------------------------ */
+/*  RESPONSIVIDADE                */
+/* ------------------------------ */
+
+@media (max-width: 600px) {
+    .titulo-cadastro {
+        font-size: 1.6rem;
+    }
+
+    .card-cadastro {
+        padding: 20px;
+    }
+    
+    .campo-cadastro {
+        font-size: 0.9rem;
+    }
+
+    .botao-cadastro {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .titulo-cadastro {
+        font-size: 1.4rem;
+    }
+
+    .cabecalho-cadastro p {
+        font-size: 0.9rem;
+    }
+
+    .card-cadastro {
+        padding: 18px;
+    }
 }
